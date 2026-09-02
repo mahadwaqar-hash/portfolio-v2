@@ -78,41 +78,41 @@ export default function DynamicShowroom() {
           return (
             <div 
               key={project.id} 
-              className="w-[85vw] md:min-w-[45vw] lg:min-w-[32vw] flex-shrink-0 snap-center"
+              className="w-[70vw] md:min-w-[35vw] lg:min-w-[25vw] flex-shrink-0 snap-center"
             >
               <MouseParallax intensity={10} className="w-full h-full">
                 <a 
                   href={project.liveUrl && project.liveUrl !== '#' ? project.liveUrl : undefined}
                   target={project.liveUrl && project.liveUrl.startsWith('http') ? "_blank" : undefined}
                   rel={project.liveUrl && project.liveUrl.startsWith('http') ? "noopener noreferrer" : undefined}
-                  className={`block w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[16/10] lg:aspect-[16/11] rounded-3xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 md:p-6 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 md:hover:shadow-[0_0_50px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
+                  className={`block w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[16/10] lg:aspect-[16/11] rounded-3xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 md:p-5 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 md:hover:shadow-[0_0_50px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
                   data-cursor="image"
                   style={{ textDecoration: 'none' }}
                 >
                   {/* Card Top / Browser Mockup Bar */}
                   <div className="flex items-center justify-between z-10">
                     <div className="flex items-center gap-1.5 md:gap-2">
-                      <span className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-red-500/80" />
-                      <span className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-yellow-500/80" />
-                      <span className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-green-500/80" />
+                      <span className="w-2 h-2 rounded-full bg-red-500/80" />
+                      <span className="w-2 h-2 rounded-full bg-yellow-500/80" />
+                      <span className="w-2 h-2 rounded-full bg-green-500/80" />
                       <span className="font-mono text-[9px] md:text-[10px] text-brand-mutedsilver ml-1 md:ml-2 px-2 py-0.5 rounded-full bg-black/40 border border-white/5 truncate max-w-[100px] md:max-w-none">
                         {project.client}
                       </span>
                     </div>
-                    <span className="font-tech text-[10px] md:text-xs text-brand-neon uppercase tracking-wider group-hover:scale-105 transition-transform flex items-center gap-1 md:gap-1.5">
-                      <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-brand-neon animate-pulse" />
+                    <span className="font-tech text-[9px] md:text-[10px] text-brand-neon uppercase tracking-wider group-hover:scale-105 transition-transform flex items-center gap-1 md:gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-neon animate-pulse" />
                       Open Site ↗
                     </span>
                   </div>
 
                   {/* Card Center / High-Fidelity UI Visual Preview */}
-                  <div className="my-auto z-10 py-3 md:py-4">
+                  <div className="my-auto z-10 py-2 md:py-3">
                     {isVanguard && (
-                      <div className="border border-[#D4AF37]/30 bg-black/60 backdrop-blur-md rounded-xl p-4 md:p-5 shadow-2xl">
-                        <p className="font-tech text-[#D4AF37] text-[8px] md:text-[10px] tracking-[0.25em] uppercase mb-1">
-                          Vanguard & Partners // Corporate Counsel
+                      <div className="border border-[#D4AF37]/30 bg-black/60 backdrop-blur-md rounded-xl p-3 md:p-4 shadow-2xl scale-95 md:scale-100 transform origin-left">
+                        <p className="font-tech text-[#D4AF37] text-[8px] md:text-[9px] tracking-[0.25em] uppercase mb-1">
+                          Vanguard & Partners
                         </p>
-                        <h4 className="font-serif italic text-xl md:text-2xl text-white font-normal leading-tight mb-2">
+                        <h4 className="font-serif italic text-lg md:text-xl text-white font-normal leading-tight mb-2">
                           Ruthless Precision.<br />
                           <span className="text-[#D4AF37]">Global Architecture.</span>
                         </h4>
@@ -128,19 +128,19 @@ export default function DynamicShowroom() {
                     )}
 
                     {isToothcare && (
-                      <div className="border border-sky-500/30 bg-black/60 backdrop-blur-md rounded-xl p-5 shadow-2xl">
-                        <p className="font-tech text-sky-400 text-[10px] tracking-[0.25em] uppercase mb-1">
-                          Tooth Care Clinic // Clinical Aesthetics
+                      <div className="border border-sky-500/30 bg-black/60 backdrop-blur-md rounded-xl p-4 shadow-2xl scale-95 md:scale-100 transform origin-left">
+                        <p className="font-tech text-sky-400 text-[8px] md:text-[9px] tracking-[0.25em] uppercase mb-1">
+                          Tooth Care Clinic
                         </p>
-                        <h4 className="font-tech font-bold text-2xl md:text-3xl text-white uppercase leading-tight mb-2">
+                        <h4 className="font-tech font-bold text-lg md:text-2xl text-white uppercase leading-tight mb-2">
                           Elevated Clinical<br />
                           <span className="text-sky-400">Minimalism.</span>
                         </h4>
-                        <div className="flex gap-2 mt-3">
-                          <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/30">
-                            Instant Booking Flow
+                        <div className="flex gap-1.5 mt-2 md:mt-3">
+                          <span className="font-mono text-[8px] md:text-[9px] px-1.5 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/30">
+                            Instant Booking
                           </span>
-                          <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-white/5 text-brand-mutedsilver border border-white/10">
+                          <span className="font-mono text-[8px] md:text-[9px] px-1.5 py-0.5 rounded bg-white/5 text-brand-mutedsilver border border-white/10">
                             SEO Dominance
                           </span>
                         </div>
