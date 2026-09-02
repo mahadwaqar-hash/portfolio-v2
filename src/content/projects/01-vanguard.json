@@ -1,12 +1,12 @@
 {
   "id": "01",
   "client": "Vanguard & Partners",
-  "title": "Global Corporate Counsel",
-  "category": "Legal Architecture",
-  "description": "A brutalist, cinematic digital footprint engineered for a cross-border law firm.",
-  "techStack": ["React", "Framer Motion", "Tailwind", "WebGL"],
-  "metrics": "2x Faster Load Time • High-Ticket Lead Gen",
-  "liveUrl": "#",
-  "imagePlaceholder": "bg-gradient-to-br from-brand-surface to-brand-abyss",
-  "accentColor": "rgba(184, 151, 90, 0.3)"
+  "title": "Corporate Legal Counsel",
+  "category": "Corporate Law & M&A",
+  "description": "An ultra-premium digital flagship engineered for a premier corporate law firm specializing in M&A, Cross-Border Pathways, and Commercial Litigation.",
+  "techStack": ["React 18", "Tailwind CSS", "Framer Motion", "TypeScript", "Vite"],
+  "metrics": "Sub-0.4s FCP • International High-Ticket Lead Gen",
+  "liveUrl": "https://vanguardpartners.law",
+  "imagePlaceholder": "bg-gradient-to-br from-[#12110E] via-[#1C1A14] to-[#0A0908]",
+  "accentColor": "rgba(212, 175, 55, 0.35)"
 }
