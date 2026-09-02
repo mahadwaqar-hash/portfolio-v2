@@ -1,0 +1,26 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "projects"
+    label: "Projects"
+    folder: "src/content/projects"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - {label: "ID (e.g. 03)", name: "id", widget: "string"}
+      - {label: "Client", name: "client", widget: "string"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Category", name: "category", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Tech Stack", name: "techStack", widget: "list"}
+      - {label: "Metrics/Results", name: "metrics", widget: "string", required: false}
+      - {label: "Live URL", name: "liveUrl", widget: "string", default: "#"}
+      - {label: "Image Placeholder Classes", name: "imagePlaceholder", widget: "string", default: "bg-gradient-to-br from-brand-surface to-brand-abyss"}
+      - {label: "Accent Color (rgba)", name: "accentColor", widget: "string", default: "rgba(147, 51, 234, 0.3)"}

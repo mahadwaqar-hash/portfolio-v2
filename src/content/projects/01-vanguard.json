@@ -1,0 +1,12 @@
+{
+  "id": "01",
+  "client": "Vanguard & Partners",
+  "title": "Global Corporate Counsel",
+  "category": "Legal Architecture",
+  "description": "A brutalist, cinematic digital footprint engineered for a cross-border law firm.",
+  "techStack": ["React", "Framer Motion", "Tailwind", "WebGL"],
+  "metrics": "2x Faster Load Time • High-Ticket Lead Gen",
+  "liveUrl": "#",
+  "imagePlaceholder": "bg-gradient-to-br from-brand-surface to-brand-abyss",
+  "accentColor": "rgba(184, 151, 90, 0.3)"
+}
