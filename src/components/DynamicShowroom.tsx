@@ -43,6 +43,14 @@ export default function DynamicShowroom() {
           </h2>
           <p className="font-body text-xs md:text-sm text-brand-mutedsilver">
             Click any project to launch the interactive live case study preview.
+            <span className="relative ml-2 group cursor-help inline-flex items-center">
+              <span className="text-brand-mutedsilver/60 hover:text-brand-neon transition-colors text-[10px] md:text-xs border border-brand-mutedsilver/30 rounded-full px-1.5 py-0.5 font-tech tracking-wider">
+                ⓘ Disclaimer
+              </span>
+              <span className="absolute bottom-full left-0 mb-2 w-64 md:w-80 p-3 rounded-xl bg-brand-surface border border-brand-amethyst/30 text-[10px] md:text-xs text-brand-mutedsilver leading-relaxed opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-300 z-50 shadow-xl">
+                All showcased projects are either fictional demonstration pieces created for portfolio reference purposes, or live client sites displayed with the explicit consent of the respective owners.
+              </span>
+            </span>
           </p>
         </div>
         <div className="flex gap-4">
