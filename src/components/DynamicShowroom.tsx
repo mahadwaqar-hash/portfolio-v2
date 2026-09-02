@@ -93,19 +93,11 @@ export default function DynamicShowroom() {
               className="w-[70vw] md:min-w-[35vw] lg:min-w-[25vw] flex-shrink-0 snap-center"
             >
               <MouseParallax intensity={10} className="w-full h-full">
-                <a 
-                  href={project.liveUrl && project.liveUrl !== '#' ? project.liveUrl : undefined}
-                  target={project.liveUrl && project.liveUrl.startsWith('http') ? "_blank" : undefined}
-                  rel={project.liveUrl && project.liveUrl.startsWith('http') ? "noopener noreferrer" : undefined}
-                  onClick={(e) => {
-                    if (project.liveUrl && project.liveUrl !== '#' && !project.liveUrl.startsWith('http')) {
-                      // Explicitly force navigation for internal pages if standard click fails
-                      window.location.assign(project.liveUrl);
-                    }
-                  }}
-                  className={`block w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[16/10] lg:aspect-[16/11] rounded-3xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 md:p-5 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 md:hover:shadow-[0_0_50px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
+                <div 
+                  onClick={() => setSelectedProject(project)}
+                  className={`w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[16/10] lg:aspect-[16/11] rounded-3xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 md:p-5 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 md:hover:shadow-[0_0_50px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
                   data-cursor="image"
-                  style={{ textDecoration: 'none' }}
+                  style={{ transform: "translateZ(20px)" }}
                 >
                   {/* Card Top / Browser Mockup Bar */}
                   <div className="flex items-center justify-between z-10">
@@ -198,12 +190,18 @@ export default function DynamicShowroom() {
 
                   {/* Ambient Glow */}
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-abyss via-brand-abyss/40 to-transparent opacity-80 pointer-events-none" />
-                </a>
+                </div>
               </MouseParallax>
             </div>
           );
         })}
       </div>
+
+      {/* Full-Screen Interactive Showcase Case-Study Modal */}
+      <ProjectShowcaseModal
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
     </section>
   );
 }
