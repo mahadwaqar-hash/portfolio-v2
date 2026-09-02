@@ -93,6 +93,11 @@ export default function DynamicShowroom() {
               <MouseParallax intensity={10} className="w-full h-full">
                 <a 
                   href={project.liveUrl && project.liveUrl !== '#' ? project.liveUrl : undefined}
+                  onClick={(e) => {
+                    if (project.liveUrl && project.liveUrl !== '#') {
+                      window.location.href = project.liveUrl;
+                    }
+                  }}
                   className={`block w-full aspect-[4/3] rounded-3xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-5 md:p-6 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 hover:shadow-[0_0_50px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
                   data-cursor="image"
                   style={{ textDecoration: 'none' }}
