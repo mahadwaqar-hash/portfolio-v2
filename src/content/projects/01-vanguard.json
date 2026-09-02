@@ -6,7 +6,7 @@
   "description": "An ultra-premium digital flagship engineered for a premier corporate law firm specializing in M&A, Cross-Border Pathways, and Commercial Litigation.",
   "techStack": ["React 18", "Tailwind CSS", "Framer Motion", "TypeScript", "Vite"],
   "metrics": "Sub-0.4s FCP • International High-Ticket Lead Gen",
-  "liveUrl": "/vanguard/index.html",
+  "liveUrl": "/vanguard/",
   "imagePlaceholder": "bg-gradient-to-br from-[#12110E] via-[#1C1A14] to-[#0A0908]",
   "accentColor": "rgba(212, 175, 55, 0.35)"
 }

@@ -6,7 +6,7 @@
   "description": "Zero-friction patient onboarding wrapped in an ultra-clean, high-trust luxury aesthetic.",
   "techStack": ["React", "Vite", "JSON-LD Schema"],
   "metrics": "Instant Booking Flow • Local SEO Dominance",
-  "liveUrl": "/toothcare/index.html",
+  "liveUrl": "/toothcare/",
   "imagePlaceholder": "bg-gradient-to-br from-blue-900/20 to-brand-abyss",
   "accentColor": "rgba(56, 189, 248, 0.3)"
 }
