@@ -91,19 +91,18 @@ export default function DynamicShowroom() {
               className="w-[80vw] md:min-w-[45vw] lg:min-w-[32vw] flex-shrink-0 snap-center pr-4 md:pr-10"
             >
               <MouseParallax intensity={10} className="w-full h-full">
-                <a 
-                  href={project.liveUrl && project.liveUrl !== '#' ? project.liveUrl : undefined}
-                  onClick={(e) => {
+                <button 
+                  onClick={() => {
                     if (project.liveUrl && project.liveUrl !== '#') {
                       window.location.href = project.liveUrl;
                     }
                   }}
-                  className={`block w-full aspect-[4/3] rounded-3xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-5 md:p-6 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 hover:shadow-[0_0_50px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
+                  type="button"
+                  className={`text-left block w-full aspect-[4/3] rounded-3xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-5 md:p-6 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 hover:shadow-[0_0_50px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
                   data-cursor="image"
-                  style={{ textDecoration: 'none' }}
                 >
                   {/* Card Top / Browser Mockup Bar */}
-                  <div className="flex items-center justify-between z-10">
+                  <div className="flex items-center justify-between z-10 pointer-events-none">
                     <div className="flex items-center gap-1.5 md:gap-2">
                       <span className="w-2 h-2 rounded-full bg-red-500/80" />
                       <span className="w-2 h-2 rounded-full bg-yellow-500/80" />
@@ -114,12 +113,12 @@ export default function DynamicShowroom() {
                     </div>
                     <span className="font-tech text-[9px] md:text-[10px] text-brand-neon uppercase tracking-wider group-hover:scale-105 transition-transform flex items-center gap-1 md:gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-brand-neon animate-pulse" />
-                      Open Site ↗
+                      Open Site +-
                     </span>
                   </div>
 
                   {/* Card Center / High-Fidelity UI Visual Preview */}
-                  <div className="my-auto z-10 py-2 md:py-3">
+                  <div className="my-auto z-10 py-2 md:py-3 pointer-events-none">
                     {isVanguard && (
                       <div className="border border-[#D4AF37]/30 bg-black/60 backdrop-blur-md rounded-xl p-3 md:p-4 shadow-2xl scale-95 md:scale-100 transform origin-left">
                         <p className="font-tech text-[#D4AF37] text-[8px] md:text-[9px] tracking-[0.25em] uppercase mb-1">
@@ -134,7 +133,7 @@ export default function DynamicShowroom() {
                             Mergers & Acquisitions
                           </span>
                           <span className="font-mono text-[8px] md:text-[9px] px-1.5 py-0.5 rounded bg-white/5 text-brand-mutedsilver border border-white/10">
-                            UK • US • PK
+                            UK ? US ? PK
                           </span>
                         </div>
                       </div>
@@ -176,7 +175,7 @@ export default function DynamicShowroom() {
                   </div>
 
                   {/* Card Bottom / Info Bar */}
-                  <div className="relative z-10 pt-3 border-t border-white/10 flex items-center justify-between" style={{ transform: "translateZ(50px)" }}>
+                  <div className="relative z-10 pt-3 border-t border-white/10 flex items-center justify-between pointer-events-none" style={{ transform: "translateZ(50px)" }}>
                     <div className="flex flex-wrap gap-1.5">
                       {project.techStack.slice(0, 3).map(tech => (
                         <span key={tech} className="px-2 py-0.5 rounded bg-brand-surface border border-brand-amethyst/20 font-tech text-[10px] text-brand-mutedsilver">
@@ -186,14 +185,14 @@ export default function DynamicShowroom() {
                     </div>
                     {project.metrics && (
                       <p className="font-tech text-[10px] text-green-400 font-medium">
-                        {project.metrics.split('•')[0]}
+                        {project.metrics.split('?')[0]}
                       </p>
                     )}
                   </div>
 
                   {/* Ambient Glow */}
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-abyss via-brand-abyss/40 to-transparent opacity-80 pointer-events-none" />
-                </a>
+                </button>
               </MouseParallax>
             </div>
           );
