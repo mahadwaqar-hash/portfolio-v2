@@ -26,10 +26,10 @@ const HeroSection: React.FC = () => {
   const line2 = 'Waqar Piracha';
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col justify-center items-start overflow-hidden px-4 md:px-16 lg:px-32">
+    <div className="relative w-full min-h-screen flex flex-col justify-center items-start overflow-hidden px-4 sm:px-8 md:px-16 lg:px-32">
       {/* Ambient Background */}
       <motion.div 
-        className="absolute w-[800px] h-[800px] bg-brand-amethyst rounded-full blur-[160px] opacity-20 pointer-events-none"
+        className="absolute w-[300px] h-[300px] md:w-[800px] md:h-[800px] bg-brand-amethyst rounded-full blur-[80px] md:blur-[160px] opacity-30 md:opacity-20 pointer-events-none transform-gpu"
         style={{ 
           x: springX, 
           y: springY,
@@ -38,10 +38,10 @@ const HeroSection: React.FC = () => {
         }}
       />
 
-      <MouseParallax intensity={15} className="relative z-10 w-full">
+      <MouseParallax intensity={15} className="relative z-10 w-full mt-16 md:mt-0">
         <div className="flex flex-col justify-center items-start w-full">
           <motion.p 
-            className="font-tech text-brand-mutedsilver tracking-[0.4em] text-xs md:text-sm uppercase mb-4 md:mb-6 drop-shadow-[0_0_10px_rgba(192,132,252,0.3)]"
+            className="font-tech text-brand-mutedsilver tracking-[0.2em] md:tracking-[0.4em] text-[10px] md:text-sm uppercase mb-4 md:mb-6 drop-shadow-[0_0_10px_rgba(192,132,252,0.3)] break-words"
             initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             transition={{ delay: 2.2, duration: 1, ease: customEase }}
@@ -53,41 +53,41 @@ const HeroSection: React.FC = () => {
           <h1 className="flex flex-col w-full" data-cursor="text" style={{ transformStyle: "preserve-3d" }}>
             <span className="sr-only">Muhammad Mahad Waqar Piracha. Frontend Architect & Designer.</span>
             
-            <div className="flex flex-wrap overflow-visible" aria-hidden="true" style={{ transform: "translateZ(80px)" }}>
+            <div className="flex flex-wrap overflow-visible w-full" aria-hidden="true" style={{ transform: "translateZ(80px)" }}>
               {line1.split('').map((char, index) => (
                 <span key={`l1-${index}`} className="inline-block overflow-visible">
                   <motion.span
-                    className="inline-block font-tech font-bold text-5xl sm:text-6xl md:text-8xl lg:text-[7rem] xl:text-[8rem] text-white uppercase tracking-tighter whitespace-pre"
+                    className="inline-block font-tech font-bold text-4xl sm:text-6xl md:text-8xl lg:text-[7rem] xl:text-[8rem] text-white uppercase tracking-tighter"
                     initial={{ y: '100%', opacity: 0, rotateZ: 10 }}
                     animate={{ y: '0%', opacity: 1, rotateZ: 0 }}
                     transition={{ delay: 2.4 + index * 0.03, duration: 0.8, ease: customEase }}
                   >
-                    {char}
+                    {char === ' ' ? '\u00A0' : char}
                   </motion.span>
                 </span>
               ))}
             </div>
 
-            <div className="flex flex-wrap overflow-visible mt-2 md:mt-4" aria-hidden="true" style={{ transform: "translateZ(120px)" }}>
+            <div className="flex flex-wrap overflow-visible mt-1 md:mt-4 w-full" aria-hidden="true" style={{ transform: "translateZ(120px)" }}>
               {line2.split('').map((char, index) => (
                 <span key={`l2-${index}`} className="inline-block overflow-visible">
                   <motion.span
-                    className="inline-block font-cinematic italic text-5xl sm:text-6xl md:text-9xl lg:text-[8rem] xl:text-[9.5rem] text-brand-neon whitespace-pre drop-shadow-[0_0_20px_rgba(192,132,252,0.5)] leading-none"
+                    className="inline-block font-cinematic italic text-[2.5rem] sm:text-6xl md:text-9xl lg:text-[8rem] xl:text-[9.5rem] text-brand-neon drop-shadow-[0_0_20px_rgba(192,132,252,0.5)] leading-[1.1] md:leading-none"
                     initial={{ y: '100%', opacity: 0, rotateZ: -10 }}
                     animate={{ y: '0%', opacity: 1, rotateZ: 0 }}
                     transition={{ delay: 2.8 + index * 0.03, duration: 0.8, ease: customEase }}
                   >
-                    {char}
+                    {char === ' ' ? '\u00A0' : char}
                   </motion.span>
                 </span>
               ))}
             </div>
           </h1>
 
-          <motion.div style={{ transform: "translateZ(60px)" }} className="mt-8 md:mt-12">
+          <motion.div style={{ transform: "translateZ(60px)" }} className="mt-6 md:mt-12 w-full max-w-[90vw]">
             <ScrambleText 
               text="Premium Web Architecture for Ambitious Brands" 
-              className="text-base sm:text-lg md:text-2xl drop-shadow-[0_0_10px_rgba(147,51,234,0.3)]" 
+              className="text-sm sm:text-lg md:text-2xl drop-shadow-[0_0_10px_rgba(147,51,234,0.3)] leading-snug" 
             />
           </motion.div>
         </div>

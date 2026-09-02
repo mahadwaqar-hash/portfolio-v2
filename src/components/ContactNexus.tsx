@@ -46,7 +46,7 @@ export default function ContactNexus() {
     >
       {/* Background Multi-Layer Bioluminescent Pulse Orbs (Mouse Tracking) */}
       <motion.div 
-        className="absolute w-[450px] h-[450px] md:w-[700px] md:h-[700px] bg-brand-amethyst/30 rounded-full blur-[160px] -z-10 pointer-events-none"
+        className="absolute w-[250px] h-[250px] md:w-[700px] md:h-[700px] bg-brand-amethyst/30 rounded-full blur-[80px] md:blur-[160px] -z-10 pointer-events-none transform-gpu"
         style={{ x: orb1X, y: orb1Y }}
         animate={{ 
           scale: [0.85, 1.25, 0.85],
@@ -55,7 +55,7 @@ export default function ContactNexus() {
         transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
       />
       <motion.div 
-        className="absolute w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-brand-neon/30 rounded-full blur-[130px] -z-10 pointer-events-none"
+        className="absolute w-[200px] h-[200px] md:w-[500px] md:h-[500px] bg-brand-neon/30 rounded-full blur-[60px] md:blur-[130px] -z-10 pointer-events-none transform-gpu"
         style={{ x: orb2X, y: orb2Y }}
         animate={{ 
           scale: [1, 1.5, 1],
@@ -66,25 +66,25 @@ export default function ContactNexus() {
 
       {/* Main Content */}
       <MouseParallax intensity={10} className="w-full flex-1 flex flex-col items-center justify-center relative z-10 text-center max-w-5xl my-auto">
-        <div style={{ transform: "translateZ(30px)" }}>
+        <div style={{ transform: "translateZ(30px)" }} className="w-full">
           {/* Live Signal Badge */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, ease: customEase }}
-            className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full cyber-glass mb-8 border border-brand-amethyst/40 shadow-[0_0_20px_rgba(147,51,234,0.15)]"
+            className="inline-flex items-center gap-2.5 px-4 md:px-5 py-2 rounded-full cyber-glass mb-8 border border-brand-amethyst/40 shadow-[0_0_20px_rgba(147,51,234,0.15)]"
           >
-            <span className="relative flex h-3 w-3">
+            <span className="relative flex h-2 w-2 md:h-3 md:w-3">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500" />
+              <span className="relative inline-flex rounded-full h-2 w-2 md:h-3 md:w-3 bg-green-500" />
             </span>
-            <span className="font-tech text-xs tracking-widest uppercase text-brand-mercury">
-              Signal Active // Open for Strategic Engagements
+            <span className="font-tech text-[10px] md:text-xs tracking-widest uppercase text-brand-mercury">
+              Signal Active // Open for Engagements
             </span>
           </motion.div>
 
           {/* Hero Title */}
-          <h2 className="font-cinematic italic text-6xl md:text-8xl lg:text-[9.5rem] text-brand-neon leading-[0.88] mb-8 flex flex-wrap justify-center overflow-hidden drop-shadow-[0_0_40px_rgba(192,132,252,0.3)]">
+          <h2 className="font-cinematic italic text-5xl sm:text-6xl md:text-8xl lg:text-[9.5rem] text-brand-neon leading-[1.1] md:leading-[0.88] mb-8 flex flex-wrap justify-center overflow-visible drop-shadow-[0_0_40px_rgba(192,132,252,0.3)]">
             {chars.map((char, index) => (
               <motion.span
                 key={index}
