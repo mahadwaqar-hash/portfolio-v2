@@ -85,8 +85,8 @@ export default function DynamicShowroom() {
                     <span className="font-tech text-brand-neon text-xs md:text-sm hidden sm:block">{project.id}</span>
                   </div>
                   
-                  <div className="h-0 group-hover:h-auto opacity-0 group-hover:opacity-100 transition-all duration-500 overflow-hidden">
-                    <p className="font-mono text-xs md:text-sm text-brand-mercury mb-3 md:mb-4 max-w-md hidden sm:block">
+                  <div className="h-auto opacity-100 md:h-0 md:group-hover:h-auto md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 overflow-hidden">
+                    <p className="font-mono text-xs md:text-sm text-brand-mercury mb-2 md:mb-4 max-w-md">
                       {project.description}
                     </p>
                     <div className="flex flex-wrap gap-1.5 md:gap-2 mb-2 md:mb-4">
@@ -97,9 +97,19 @@ export default function DynamicShowroom() {
                       ))}
                     </div>
                     {project.metrics && (
-                      <p className="font-tech text-[10px] md:text-xs text-green-400">
+                      <p className="font-tech text-[10px] md:text-xs text-green-400 mb-3">
                         {project.metrics}
                       </p>
+                    )}
+                    {project.liveUrl && project.liveUrl !== '#' && (
+                      <a 
+                        href={project.liveUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 font-tech text-xs tracking-wider uppercase text-brand-neon hover:text-white transition-colors"
+                      >
+                        Launch Site ↗
+                      </a>
                     )}
                   </div>
                 </div>
