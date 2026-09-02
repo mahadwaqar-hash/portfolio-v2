@@ -43,14 +43,18 @@ export default function DynamicShowroom() {
           </h2>
           <p className="font-body text-xs md:text-sm text-brand-mutedsilver">
             Click any project to launch the interactive live case study preview.
-            <span className="relative ml-2 group cursor-help inline-flex items-center">
-              <span className="text-brand-mutedsilver/60 hover:text-brand-neon transition-colors text-[10px] md:text-xs border border-brand-mutedsilver/30 rounded-full px-1.5 py-0.5 font-tech tracking-wider">
+            <button 
+              type="button"
+              className="relative ml-2 group cursor-help inline-flex items-center focus:outline-none"
+              onClick={(e) => e.preventDefault()}
+            >
+              <span className="text-brand-mutedsilver/60 group-hover:text-brand-neon group-focus:text-brand-neon transition-colors text-[10px] md:text-xs border border-brand-mutedsilver/30 rounded-full px-1.5 py-0.5 font-tech tracking-wider">
                 ⓘ Disclaimer
               </span>
-              <span className="absolute bottom-full left-0 mb-2 w-64 md:w-80 p-3 rounded-xl bg-brand-surface border border-brand-amethyst/30 text-[10px] md:text-xs text-brand-mutedsilver leading-relaxed opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-300 z-50 shadow-xl">
+              <span className="absolute top-full left-0 mt-2 w-[80vw] max-w-[320px] p-4 rounded-xl bg-brand-surface border border-brand-amethyst/30 text-[11px] md:text-xs text-brand-mutedsilver leading-relaxed opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-focus:opacity-100 group-focus:pointer-events-auto transition-opacity duration-300 z-50 shadow-2xl text-left">
                 All showcased projects are either fictional demonstration pieces created for portfolio reference purposes, or live client sites displayed with the explicit consent of the respective owners.
               </span>
-            </span>
+            </button>
           </p>
         </div>
         <div className="flex gap-4">
@@ -91,8 +95,8 @@ export default function DynamicShowroom() {
               <MouseParallax intensity={10} className="w-full h-full">
                 <a 
                   href={project.liveUrl && project.liveUrl !== '#' ? project.liveUrl : undefined}
-                  target={project.liveUrl && project.liveUrl.startsWith('http') ? "_blank" : undefined}
-                  rel={project.liveUrl && project.liveUrl.startsWith('http') ? "noopener noreferrer" : undefined}
+                  target={project.liveUrl && project.liveUrl !== '#' ? "_blank" : undefined}
+                  rel={project.liveUrl && project.liveUrl !== '#' ? "noopener noreferrer" : undefined}
                   className={`block w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[16/10] lg:aspect-[16/11] rounded-3xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 md:p-5 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 md:hover:shadow-[0_0_50px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
                   data-cursor="image"
                   style={{ textDecoration: 'none' }}
