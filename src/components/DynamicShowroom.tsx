@@ -1,13 +1,13 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
-import { PORTFOLIO_PROJECTS } from '../data/portfolioData';
+import React, { useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { PORTFOLIO_PROJECTS, PortfolioProject } from '../data/portfolioData';
 import MouseParallax from './MouseParallax';
-
-const customEase: [number, number, number, number] = [0.76, 0, 0.24, 1];
+import ProjectShowcaseModal from './ProjectShowcaseModal';
 
 export default function DynamicShowroom() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [selectedProject, setSelectedProject] = useState<PortfolioProject | null>(null);
 
   // For horizontal manual scrolling (if no trackpad)
   const scrollBy = (amount: number) => {
@@ -20,7 +20,7 @@ export default function DynamicShowroom() {
   const handleScroll = () => {
     if (scrollContainerRef.current) {
       const scrollLeft = scrollContainerRef.current.scrollLeft;
-      const cardWidth = window.innerWidth * 0.8; // roughly 80vw
+      const cardWidth = window.innerWidth * 0.8;
       const newIndex = Math.round(scrollLeft / cardWidth);
       if (newIndex !== activeIndex && newIndex >= 0 && newIndex < PORTFOLIO_PROJECTS.length) {
         setActiveIndex(newIndex);
@@ -37,14 +37,20 @@ export default function DynamicShowroom() {
       />
 
       <div className="px-6 md:px-12 lg:px-24 mb-12 flex justify-between items-end relative z-10">
-        <h2 className="font-tech text-brand-neon tracking-widest uppercase text-sm">
-          03 // Showroom
-        </h2>
+        <div>
+          <h2 className="font-tech text-brand-neon tracking-widest uppercase text-xs md:text-sm mb-2">
+            03 // Showroom
+          </h2>
+          <p className="font-body text-xs md:text-sm text-brand-mutedsilver">
+            Click any project to launch the interactive live case study preview.
+          </p>
+        </div>
         <div className="flex gap-4">
           <button 
             onClick={() => scrollBy(-window.innerWidth * 0.5)}
             className="w-12 h-12 rounded-full border border-brand-amethyst/30 flex items-center justify-center text-brand-mutedsilver hover:text-brand-neon hover:border-brand-neon transition-colors"
             data-cursor="text"
+            aria-label="Scroll left"
           >
             ←
           </button>
@@ -52,6 +58,7 @@ export default function DynamicShowroom() {
             onClick={() => scrollBy(window.innerWidth * 0.5)}
             className="w-12 h-12 rounded-full border border-brand-amethyst/30 flex items-center justify-center text-brand-mutedsilver hover:text-brand-neon hover:border-brand-neon transition-colors"
             data-cursor="text"
+            aria-label="Scroll right"
           >
             →
           </button>
@@ -64,63 +71,125 @@ export default function DynamicShowroom() {
         onScroll={handleScroll}
         className="flex w-full overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 md:px-12 lg:px-24 pb-12 relative z-10"
       >
-        {PORTFOLIO_PROJECTS.map((project, i) => (
-          <div 
-            key={project.id} 
-            className="w-[90vw] md:min-w-[60vw] lg:min-w-[45vw] flex-shrink-0 snap-center pr-4 md:pr-12"
-          >
-            <MouseParallax intensity={10} className="w-full h-full">
-              <div 
-                className={`w-full aspect-square sm:aspect-[4/3] rounded-2xl overflow-hidden cyber-glass group relative flex flex-col justify-end p-4 md:p-8 ${project.imagePlaceholder}`}
-                data-cursor="image"
-                style={{ transform: "translateZ(20px)" }}
-              >
-                {/* Project Info Overlay */}
-                <div className="relative z-10 transform translate-y-2 md:translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out" style={{ transform: "translateZ(50px)" }}>
-                  <div className="flex justify-between items-end mb-2 md:mb-4">
-                    <div>
-                      <p className="font-tech text-[10px] md:text-xs text-brand-mutedsilver mb-1 md:mb-2">{project.client}</p>
-                      <h3 className="font-cinematic text-2xl md:text-4xl text-white">{project.title}</h3>
+        {PORTFOLIO_PROJECTS.map((project) => {
+          const isVanguard = project.id === '01' || project.client.toLowerCase().includes('vanguard');
+          const isToothcare = project.id === '02' || project.client.toLowerCase().includes('tooth');
+
+          return (
+            <div 
+              key={project.id} 
+              className="w-[90vw] md:min-w-[60vw] lg:min-w-[48vw] flex-shrink-0 snap-center pr-4 md:pr-12"
+            >
+              <MouseParallax intensity={10} className="w-full h-full">
+                <div 
+                  onClick={() => setSelectedProject(project)}
+                  className={`w-full aspect-[4/3] rounded-3xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-6 md:p-8 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 hover:shadow-[0_0_50px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
+                  data-cursor="image"
+                  style={{ transform: "translateZ(20px)" }}
+                >
+                  {/* Card Top / Browser Mockup Bar */}
+                  <div className="flex items-center justify-between z-10">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+                      <span className="font-mono text-[10px] text-brand-mutedsilver ml-2 px-3 py-0.5 rounded-full bg-black/40 border border-white/5">
+                        {project.client}
+                      </span>
                     </div>
-                    <span className="font-tech text-brand-neon text-xs md:text-sm hidden sm:block">{project.id}</span>
+                    <span className="font-tech text-xs text-brand-neon uppercase tracking-wider group-hover:scale-105 transition-transform flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-brand-neon animate-pulse" />
+                      View Live ↗
+                    </span>
                   </div>
-                  
-                  <div className="h-auto opacity-100 md:h-0 md:group-hover:h-auto md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 overflow-hidden">
-                    <p className="font-mono text-xs md:text-sm text-brand-mercury mb-2 md:mb-4 max-w-md">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-1.5 md:gap-2 mb-2 md:mb-4">
-                      {project.techStack.map(tech => (
-                        <span key={tech} className="px-1.5 py-0.5 md:px-2 md:py-1 rounded bg-brand-surface border border-brand-amethyst/20 font-tech text-[10px] md:text-xs text-brand-mutedsilver">
+
+                  {/* Card Center / High-Fidelity UI Visual Preview */}
+                  <div className="my-auto z-10 py-4">
+                    {isVanguard && (
+                      <div className="border border-[#D4AF37]/30 bg-black/60 backdrop-blur-md rounded-xl p-5 shadow-2xl">
+                        <p className="font-tech text-[#D4AF37] text-[10px] tracking-[0.25em] uppercase mb-1">
+                          Vanguard & Partners // Corporate Counsel
+                        </p>
+                        <h4 className="font-serif italic text-2xl md:text-3xl text-white font-normal leading-tight mb-2">
+                          Ruthless Precision.<br />
+                          <span className="text-[#D4AF37]">Global Architecture.</span>
+                        </h4>
+                        <div className="flex gap-2 mt-3">
+                          <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/30">
+                            Mergers & Acquisitions
+                          </span>
+                          <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-white/5 text-brand-mutedsilver border border-white/10">
+                            UK • US • PK
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {isToothcare && (
+                      <div className="border border-sky-500/30 bg-black/60 backdrop-blur-md rounded-xl p-5 shadow-2xl">
+                        <p className="font-tech text-sky-400 text-[10px] tracking-[0.25em] uppercase mb-1">
+                          Tooth Care Clinic // Clinical Aesthetics
+                        </p>
+                        <h4 className="font-tech font-bold text-2xl md:text-3xl text-white uppercase leading-tight mb-2">
+                          Elevated Clinical<br />
+                          <span className="text-sky-400">Minimalism.</span>
+                        </h4>
+                        <div className="flex gap-2 mt-3">
+                          <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/30">
+                            Instant Booking Flow
+                          </span>
+                          <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-white/5 text-brand-mutedsilver border border-white/10">
+                            SEO Dominance
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {!isVanguard && !isToothcare && (
+                      <div className="border border-brand-amethyst/30 bg-black/60 backdrop-blur-md rounded-xl p-5 shadow-2xl">
+                        <p className="font-tech text-brand-neon text-[10px] tracking-[0.25em] uppercase mb-1">
+                          {project.category}
+                        </p>
+                        <h4 className="font-cinematic italic text-2xl md:text-3xl text-white leading-tight mb-2">
+                          {project.title}
+                        </h4>
+                        <p className="font-body text-xs text-brand-mutedsilver line-clamp-2">
+                          {project.description}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Card Bottom / Info Bar */}
+                  <div className="relative z-10 pt-3 border-t border-white/10 flex items-center justify-between" style={{ transform: "translateZ(50px)" }}>
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.techStack.slice(0, 3).map(tech => (
+                        <span key={tech} className="px-2 py-0.5 rounded bg-brand-surface border border-brand-amethyst/20 font-tech text-[10px] text-brand-mutedsilver">
                           {tech}
                         </span>
                       ))}
                     </div>
                     {project.metrics && (
-                      <p className="font-tech text-[10px] md:text-xs text-green-400 mb-3">
-                        {project.metrics}
+                      <p className="font-tech text-[10px] text-green-400 font-medium">
+                        {project.metrics.split('•')[0]}
                       </p>
                     )}
-                    {project.liveUrl && project.liveUrl !== '#' && (
-                      <a 
-                        href={project.liveUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 font-tech text-xs tracking-wider uppercase text-brand-neon hover:text-white transition-colors"
-                      >
-                        Launch Site ↗
-                      </a>
-                    )}
                   </div>
-                </div>
 
-                {/* Subtle gradient overlay to ensure text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-abyss via-brand-abyss/60 sm:via-brand-abyss/40 to-transparent opacity-90 sm:opacity-80" />
-              </div>
-            </MouseParallax>
-          </div>
-        ))}
+                  {/* Ambient Glow */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-abyss via-brand-abyss/40 to-transparent opacity-80 pointer-events-none" />
+                </div>
+              </MouseParallax>
+            </div>
+          );
+        })}
       </div>
+
+      {/* Full-Screen Interactive Showcase Case-Study Modal */}
+      <ProjectShowcaseModal
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
     </section>
   );
 }
