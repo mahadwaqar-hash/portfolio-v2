@@ -73,9 +73,10 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   const progress = count / 100;
   // Normalized angle from -PI/2 (left) to 0 (middle, peak) to PI/2 (right)
   const angle = (progress - 0.5) * Math.PI;
-  // Arc radius in pixels
-  const arcRadiusX = 260;
-  const arcRadiusY = 120;
+  // Arc radius in pixels — smaller on mobile
+  const isMobilePreloader = typeof window !== 'undefined' && window.innerWidth < 640;
+  const arcRadiusX = isMobilePreloader ? 120 : 260;
+  const arcRadiusY = isMobilePreloader ? 60 : 120;
   const arcX = Math.sin(angle) * arcRadiusX;
   const arcY = -Math.cos(angle) * arcRadiusY + (arcRadiusY * 0.4);
 
@@ -93,7 +94,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
 
       {/* Ambient background glow that follows the arc */}
       <motion.div 
-        className="absolute w-80 h-80 rounded-full blur-[120px] pointer-events-none transition-colors duration-500"
+        className="absolute w-40 h-40 md:w-80 md:h-80 rounded-full blur-[60px] md:blur-[120px] pointer-events-none transition-colors duration-500 transform-gpu"
         style={{
           backgroundColor: isAfter67 ? 'rgba(192, 132, 252, 0.25)' : 'rgba(109, 40, 217, 0.15)',
           x: arcX,
@@ -102,10 +103,10 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       />
 
       {/* Track line visualization of the semi-circle arc */}
-      <div className="absolute w-[520px] h-[240px] border-t border-brand-amethyst/20 rounded-t-[260px] pointer-events-none opacity-40" />
+      <div className="absolute w-[260px] h-[120px] sm:w-[520px] sm:h-[240px] border-t border-brand-amethyst/20 rounded-t-full pointer-events-none opacity-40" />
 
       {/* Main Counter in semi-circle arc */}
-      <div className="relative flex items-center justify-center h-64 w-full">
+      <div className="relative flex items-center justify-center h-40 md:h-64 w-full">
         <motion.div
           className="relative flex items-center justify-center"
           animate={{
@@ -121,7 +122,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           }}
         >
           <span
-            className={`text-8xl md:text-[11rem] tracking-tight transition-all duration-300 ${
+            className={`text-6xl sm:text-8xl md:text-[11rem] tracking-tight transition-all duration-300 ${
               isAfter67
                 ? 'font-cinematic italic text-brand-neon drop-shadow-[0_0_35px_rgba(192,132,252,0.6)]'
                 : 'font-tech font-bold text-brand-mercury'
@@ -130,7 +131,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
             {count}
           </span>
           <span 
-            className={`text-2xl md:text-4xl ml-2 transition-colors duration-300 ${
+            className={`text-xl sm:text-2xl md:text-4xl ml-1 md:ml-2 transition-colors duration-300 ${
               isAfter67 ? 'font-cinematic italic text-brand-neon' : 'font-tech text-brand-mutedsilver'
             }`}
           >

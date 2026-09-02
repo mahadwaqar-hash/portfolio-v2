@@ -62,42 +62,42 @@ export default function DynamicShowroom() {
       <div 
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="flex w-full overflow-x-auto no-scrollbar snap-x snap-mandatory px-6 md:px-12 lg:px-24 pb-12 relative z-10"
+        className="flex w-full overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 md:px-12 lg:px-24 pb-12 relative z-10"
       >
         {PORTFOLIO_PROJECTS.map((project, i) => (
           <div 
             key={project.id} 
-            className="min-w-[85vw] md:min-w-[60vw] lg:min-w-[45vw] flex-shrink-0 snap-center pr-6 md:pr-12"
+            className="w-[90vw] md:min-w-[60vw] lg:min-w-[45vw] flex-shrink-0 snap-center pr-4 md:pr-12"
           >
             <MouseParallax intensity={10} className="w-full h-full">
               <div 
-                className={`w-full aspect-[4/3] rounded-2xl overflow-hidden cyber-glass group relative flex flex-col justify-end p-8 ${project.imagePlaceholder}`}
+                className={`w-full aspect-square sm:aspect-[4/3] rounded-2xl overflow-hidden cyber-glass group relative flex flex-col justify-end p-4 md:p-8 ${project.imagePlaceholder}`}
                 data-cursor="image"
                 style={{ transform: "translateZ(20px)" }}
               >
                 {/* Project Info Overlay */}
-                <div className="relative z-10 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out" style={{ transform: "translateZ(50px)" }}>
-                  <div className="flex justify-between items-end mb-4">
+                <div className="relative z-10 transform translate-y-2 md:translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out" style={{ transform: "translateZ(50px)" }}>
+                  <div className="flex justify-between items-end mb-2 md:mb-4">
                     <div>
-                      <p className="font-tech text-xs text-brand-mutedsilver mb-2">{project.client}</p>
-                      <h3 className="font-cinematic text-3xl md:text-4xl text-white">{project.title}</h3>
+                      <p className="font-tech text-[10px] md:text-xs text-brand-mutedsilver mb-1 md:mb-2">{project.client}</p>
+                      <h3 className="font-cinematic text-2xl md:text-4xl text-white">{project.title}</h3>
                     </div>
-                    <span className="font-tech text-brand-neon text-sm hidden md:block">{project.id}</span>
+                    <span className="font-tech text-brand-neon text-xs md:text-sm hidden sm:block">{project.id}</span>
                   </div>
                   
                   <div className="h-0 group-hover:h-auto opacity-0 group-hover:opacity-100 transition-all duration-500 overflow-hidden">
-                    <p className="font-mono text-sm text-brand-mercury mb-4 max-w-md">
+                    <p className="font-mono text-xs md:text-sm text-brand-mercury mb-3 md:mb-4 max-w-md hidden sm:block">
                       {project.description}
                     </p>
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-1.5 md:gap-2 mb-2 md:mb-4">
                       {project.techStack.map(tech => (
-                        <span key={tech} className="px-2 py-1 rounded bg-brand-surface border border-brand-amethyst/20 font-tech text-xs text-brand-mutedsilver">
+                        <span key={tech} className="px-1.5 py-0.5 md:px-2 md:py-1 rounded bg-brand-surface border border-brand-amethyst/20 font-tech text-[10px] md:text-xs text-brand-mutedsilver">
                           {tech}
                         </span>
                       ))}
                     </div>
                     {project.metrics && (
-                      <p className="font-tech text-xs text-green-400">
+                      <p className="font-tech text-[10px] md:text-xs text-green-400">
                         {project.metrics}
                       </p>
                     )}
@@ -105,7 +105,7 @@ export default function DynamicShowroom() {
                 </div>
 
                 {/* Subtle gradient overlay to ensure text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-abyss via-brand-abyss/40 to-transparent opacity-80" />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-abyss via-brand-abyss/60 sm:via-brand-abyss/40 to-transparent opacity-90 sm:opacity-80" />
               </div>
             </MouseParallax>
           </div>

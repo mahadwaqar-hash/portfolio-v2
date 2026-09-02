@@ -42,22 +42,22 @@ export default function TerminalSection() {
   }, [currentLineIndex, currentCharIndex, isInView]);
 
   return (
-    <section ref={containerRef} className="py-24 px-6 relative z-10">
-      <h2 className="font-tech text-brand-neon tracking-widest uppercase text-sm mb-12">
+    <section ref={containerRef} className="py-12 md:py-24 relative z-10 w-full overflow-hidden">
+      <h2 className="font-tech text-brand-neon tracking-widest uppercase text-xs md:text-sm mb-8 md:mb-12">
         02 // Arsenal
       </h2>
-      <div className="max-w-4xl mx-auto">
+      <div className="w-full max-w-4xl mx-auto">
         <MouseParallax intensity={10}>
           <div className="cyber-glass rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(109,40,217,0.15)]" style={{ transform: "translateZ(30px)" }}>
             <header className="flex items-center gap-2 px-4 py-3 border-b border-brand-amethyst/20">
               <div className="w-3 h-3 rounded-full bg-red-500" aria-hidden="true" />
               <div className="w-3 h-3 rounded-full bg-yellow-500" aria-hidden="true" />
               <div className="w-3 h-3 rounded-full bg-green-500" aria-hidden="true" />
-              <div className="font-tech text-xs text-brand-mutedsilver ml-4">
+              <div className="font-tech text-[10px] sm:text-xs text-brand-mutedsilver ml-2 sm:ml-4">
                 mahad@portfolio:~
               </div>
             </header>
-            <div className="p-6 md:p-8 font-mono text-sm md:text-base">
+            <div className="p-4 sm:p-6 md:p-8 font-mono text-xs sm:text-sm md:text-base break-words whitespace-pre-wrap">
               {displayedLines.map((line, i) => (
                 <div key={i} className="mb-2">
                   <span className="text-brand-mutedsilver">{line.prompt}</span>

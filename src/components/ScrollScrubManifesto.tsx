@@ -43,9 +43,9 @@ const ScrollScrubManifesto: React.FC<ScrollScrubManifestoProps> = ({ text }) => 
   const words = text.split(' ');
 
   return (
-    <div ref={containerRef} className="max-w-6xl mx-auto py-32 px-8">
+    <div ref={containerRef} className="max-w-6xl mx-auto py-16 md:py-32 px-4 md:px-8">
       <MouseParallax intensity={10}>
-        <p className="text-4xl lg:text-6xl font-tech leading-tight" style={{ transform: 'translateZ(50px)' }}>
+        <p className="text-2xl sm:text-3xl lg:text-6xl font-tech leading-tight" style={{ transform: 'translateZ(50px)' }}>
           {words.map((word, index) => (
             <AnimatedWord 
               key={index}

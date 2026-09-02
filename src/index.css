@@ -7,7 +7,13 @@ html, body {
   color: #E2E8F0;
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
-  cursor: none;
+}
+
+/* Only hide cursor on devices with a mouse */
+@media (hover: hover) and (pointer: fine) {
+  html, body {
+    cursor: none;
+  }
 }
 
 /* Restore cursor for keyboard/accessibility users */
