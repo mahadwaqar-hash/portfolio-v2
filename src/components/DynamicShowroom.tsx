@@ -69,7 +69,7 @@ export default function DynamicShowroom() {
       <div 
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="flex w-full overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 md:px-12 lg:px-24 pb-12 relative z-10"
+        className="flex w-full overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 md:px-12 lg:px-24 pb-12 relative z-10 gap-4 md:gap-10"
       >
         {PORTFOLIO_PROJECTS.map((project) => {
           const isVanguard = project.id === '01' || project.client.toLowerCase().includes('vanguard');
@@ -78,16 +78,16 @@ export default function DynamicShowroom() {
           return (
             <div 
               key={project.id} 
-              className="w-[80vw] md:min-w-[45vw] lg:min-w-[32vw] flex-shrink-0 snap-center pr-4 md:pr-10"
+              className="w-[85vw] md:min-w-[45vw] lg:min-w-[32vw] flex-shrink-0 snap-center"
             >
               <MouseParallax intensity={10} className="w-full h-full">
                 <a 
                   href={project.liveUrl && project.liveUrl !== '#' ? project.liveUrl : undefined}
                   target={project.liveUrl && project.liveUrl.startsWith('http') ? "_blank" : undefined}
                   rel={project.liveUrl && project.liveUrl.startsWith('http') ? "noopener noreferrer" : undefined}
-                  className={`block w-full aspect-[4/3] rounded-3xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-5 md:p-6 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 hover:shadow-[0_0_50px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
+                  className={`block w-full aspect-[4/3] sm:aspect-[3/2] md:aspect-[4/3] rounded-3xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 md:p-6 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 md:hover:shadow-[0_0_50px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
                   data-cursor="image"
-                  style={{ transform: "translateZ(20px)", textDecoration: 'none' }}
+                  style={{ textDecoration: 'none' }}
                 >
                   {/* Card Top / Browser Mockup Bar */}
                   <div className="flex items-center justify-between z-10">
