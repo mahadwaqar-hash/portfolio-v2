@@ -88,12 +88,12 @@ export default function DynamicShowroom() {
           return (
             <div 
               key={project.id} 
-              className="w-[70vw] md:min-w-[35vw] lg:min-w-[25vw] flex-shrink-0 snap-center"
+              className="w-[80vw] md:min-w-[45vw] lg:min-w-[32vw] flex-shrink-0 snap-center pr-4 md:pr-10"
             >
               <MouseParallax intensity={10} className="w-full h-full">
                 <a 
                   href={project.liveUrl && project.liveUrl !== '#' ? project.liveUrl : undefined}
-                  className={`block w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[16/10] lg:aspect-[16/11] rounded-3xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 md:p-5 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 md:hover:shadow-[0_0_50px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
+                  className={`block w-full aspect-[4/3] rounded-3xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-5 md:p-6 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 hover:shadow-[0_0_50px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
                   data-cursor="image"
                   style={{ textDecoration: 'none' }}
                 >
