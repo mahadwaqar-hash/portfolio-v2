@@ -85,7 +85,7 @@ export default function DynamicShowroom() {
                   href={project.liveUrl && project.liveUrl !== '#' ? project.liveUrl : undefined}
                   target={project.liveUrl && project.liveUrl.startsWith('http') ? "_blank" : undefined}
                   rel={project.liveUrl && project.liveUrl.startsWith('http') ? "noopener noreferrer" : undefined}
-                  className={`block w-full aspect-[4/3] sm:aspect-[3/2] md:aspect-[4/3] rounded-3xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 md:p-6 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 md:hover:shadow-[0_0_50px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
+                  className={`block w-full aspect-[16/10] sm:aspect-[16/9] md:aspect-[16/10] lg:aspect-[16/11] rounded-3xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 md:p-6 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 md:hover:shadow-[0_0_50px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
                   data-cursor="image"
                   style={{ textDecoration: 'none' }}
                 >
