@@ -110,7 +110,7 @@ export default function ContactNexus() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl mb-12 mx-auto" style={{ transform: "translateZ(60px)" }}>
             {/* WhatsApp Card */}
             <a
-              href="https://wa.me/92334379962"
+              href="https://wa.me/923334379962"
               target="_blank"
               rel="noopener noreferrer"
               data-cursor="text"
@@ -139,7 +139,7 @@ export default function ContactNexus() {
 
             {/* Direct Line Card */}
             <a
-              href="tel:0334379962"
+              href="tel:03334379962"
               data-cursor="text"
               className="group relative cyber-glass p-8 rounded-3xl border border-brand-amethyst/40 hover:border-brand-neon transition-all duration-500 flex flex-col items-start text-left overflow-hidden hover:scale-[1.03] hover:shadow-[0_0_35px_rgba(192,132,252,0.25)]"
             >
@@ -153,7 +153,7 @@ export default function ContactNexus() {
                 </span>
               </div>
               <h3 className="font-tech font-bold text-2xl text-white mb-2 group-hover:text-brand-neon transition-colors">
-                +92 334 379962
+                +92 333 4379962
               </h3>
               <p className="font-body text-sm text-brand-mutedsilver group-hover:text-brand-mercury transition-colors">
                 Direct voice connection for immediate consultations & partnerships.
