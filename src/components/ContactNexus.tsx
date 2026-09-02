@@ -8,6 +8,7 @@ export default function ContactNexus() {
   const containerRef = useRef<HTMLElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
   const [copied, setCopied] = React.useState(false);
+  const [copiedPhone, setCopiedPhone] = React.useState(false);
 
   const headingText = "Initiate Contact.";
   const chars = headingText.split('');
@@ -126,20 +127,23 @@ export default function ContactNexus() {
                   Instant Ping
                 </span>
               </div>
-              <h3 className="font-tech font-bold text-2xl text-white mb-2 group-hover:text-green-300 transition-colors">
-                WhatsApp Direct
+              <h3 className="font-tech font-bold text-2xl text-white mb-1 group-hover:text-green-300 transition-colors">
+                0333 4379962
               </h3>
+              <p className="font-tech text-xs tracking-widest uppercase text-green-400 mb-2">
+                WhatsApp Direct // +92 333 4379962
+              </p>
               <p className="font-body text-sm text-brand-mutedsilver group-hover:text-brand-mercury transition-colors">
                 Fast response for project inquiries, scope discussions & audits.
               </p>
               <span className="mt-6 font-tech text-xs tracking-widest uppercase text-green-400 flex items-center gap-2 group-hover:translate-x-1.5 transition-transform">
-                Launch Chat ↗
+                Launch WhatsApp Chat ↗
               </span>
             </a>
 
             {/* Direct Line Card */}
             <a
-              href="tel:03334379962"
+              href="tel:+923334379962"
               data-cursor="text"
               className="group relative cyber-glass p-8 rounded-3xl border border-brand-amethyst/40 hover:border-brand-neon transition-all duration-500 flex flex-col items-start text-left overflow-hidden hover:scale-[1.03] hover:shadow-[0_0_35px_rgba(192,132,252,0.25)]"
             >
@@ -152,30 +156,51 @@ export default function ContactNexus() {
                   Priority Call
                 </span>
               </div>
-              <h3 className="font-tech font-bold text-2xl text-white mb-2 group-hover:text-brand-neon transition-colors">
-                +92 333 4379962
+              <h3 className="font-tech font-bold text-2xl text-white mb-1 group-hover:text-brand-neon transition-colors">
+                0333 4379962
               </h3>
+              <p className="font-tech text-xs tracking-widest uppercase text-brand-neon mb-2">
+                Direct Line // +92 333 4379962
+              </p>
               <p className="font-body text-sm text-brand-mutedsilver group-hover:text-brand-mercury transition-colors">
                 Direct voice connection for immediate consultations & partnerships.
               </p>
               <span className="mt-6 font-tech text-xs tracking-widest uppercase text-brand-neon flex items-center gap-2 group-hover:translate-x-1.5 transition-transform">
-                Dial Line ↗
+                Call Direct Line ↗
               </span>
             </a>
           </div>
 
-          {/* 1-Click Copy Email & Direct Copy Banner */}
-          <button
-            type="button"
-            onClick={copyEmail}
-            data-cursor="text"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full cyber-glass border border-brand-amethyst/40 hover:border-brand-neon text-brand-mercury hover:text-white transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(147,51,234,0.1)]"
-          >
-            <span className="text-base">{copied ? '✓' : '✉️'}</span>
-            <span className="font-tech text-sm tracking-wider">
-              {copied ? 'Copied to Clipboard!' : 'Copy Email: mahad.waqar@gmail.com'}
-            </span>
-          </button>
+          {/* 1-Click Copy Buttons (Phone & Email) */}
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <button
+              type="button"
+              onClick={() => {
+                navigator.clipboard.writeText('03334379962');
+                setCopiedPhone(true);
+                setTimeout(() => setCopiedPhone(false), 2500);
+              }}
+              data-cursor="text"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full cyber-glass border border-green-500/40 hover:border-green-400 text-brand-mercury hover:text-white transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(34,197,94,0.15)]"
+            >
+              <span className="text-base">{copiedPhone ? '✓' : '📱'}</span>
+              <span className="font-tech text-sm tracking-wider">
+                {copiedPhone ? 'Copied Phone Number!' : 'Copy Phone: 0333 4379962'}
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={copyEmail}
+              data-cursor="text"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full cyber-glass border border-brand-amethyst/40 hover:border-brand-neon text-brand-mercury hover:text-white transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(147,51,234,0.1)]"
+            >
+              <span className="text-base">{copied ? '✓' : '✉️'}</span>
+              <span className="font-tech text-sm tracking-wider">
+                {copied ? 'Copied to Clipboard!' : 'Copy Email: mahad.waqar@gmail.com'}
+              </span>
+            </button>
+          </div>
         </div>
       </MouseParallax>
 
