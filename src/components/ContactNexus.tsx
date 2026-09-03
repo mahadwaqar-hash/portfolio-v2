@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from 'react';
-import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import MouseParallax from './MouseParallax';
 
 const customEase: [number, number, number, number] = [0.76, 0, 0.24, 1];
@@ -13,27 +13,6 @@ export default function ContactNexus() {
   const headingText = "Initiate Contact.";
   const chars = headingText.split('');
 
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const springConfig = { damping: 25, stiffness: 50 };
-  const springX = useSpring(mouseX, springConfig);
-  const springY = useSpring(mouseY, springConfig);
-
-  const orb1X = useTransform(springX, [0, window.innerWidth || 1000], [-100, 100]);
-  const orb1Y = useTransform(springY, [0, window.innerHeight || 1000], [-100, 100]);
-  const orb2X = useTransform(springX, [0, window.innerWidth || 1000], [100, -100]);
-  const orb2Y = useTransform(springY, [0, window.innerHeight || 1000], [100, -100]);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mouseX, mouseY]);
-
   const copyEmail = () => {
     navigator.clipboard.writeText('mahad.waqar@gmail.com');
     setCopied(true);
@@ -43,26 +22,12 @@ export default function ContactNexus() {
   return (
     <section 
       ref={containerRef} 
-      className="relative z-10 w-full min-h-screen flex flex-col items-center justify-between py-24 px-6 md:px-12 lg:px-24 overflow-hidden perspective-1000"
+      className="relative z-10 w-full min-h-screen flex flex-col items-center justify-between py-24 px-6 md:px-12 lg:px-24 overflow-hidden"
     >
-      {/* Background Multi-Layer Bioluminescent Pulse Orbs (Mouse Tracking) */}
-      <motion.div 
-        className="absolute w-[250px] h-[250px] md:w-[700px] md:h-[700px] bg-brand-amethyst/30 rounded-full blur-[80px] md:blur-[160px] -z-10 pointer-events-none transform-gpu"
-        style={{ x: orb1X, y: orb1Y }}
-        animate={{ 
-          scale: [0.85, 1.25, 0.85],
-          opacity: [0.3, 0.6, 0.3]
-        }}
-        transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
-      />
-      <motion.div 
-        className="absolute w-[200px] h-[200px] md:w-[500px] md:h-[500px] bg-brand-neon/30 rounded-full blur-[60px] md:blur-[130px] -z-10 pointer-events-none transform-gpu"
-        style={{ x: orb2X, y: orb2Y }}
-        animate={{ 
-          scale: [1, 1.5, 1],
-          opacity: [0.3, 0.5, 0.3]
-        }}
-        transition={{ repeat: Infinity, duration: 7, ease: 'easeInOut' }}
+      {/* Lightweight, Hardware-Accelerated Ambient Glows (Zero-Lag CSS) */}
+      <div 
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] md:w-[650px] h-[350px] md:h-[650px] bg-gradient-to-tr from-brand-amethyst/20 via-brand-neon/15 to-transparent rounded-full blur-[90px] md:blur-[140px] -z-10 pointer-events-none transform-gpu animate-pulse"
+        style={{ animationDuration: '6s' }}
       />
 
       {/* Main Content */}
@@ -85,7 +50,7 @@ export default function ContactNexus() {
           </motion.div>
 
           {/* Hero Title */}
-          <h2 className="font-cinematic italic text-5xl sm:text-6xl md:text-8xl lg:text-[9.5rem] text-brand-neon leading-[1.1] md:leading-[0.88] mb-8 flex flex-wrap justify-center overflow-visible drop-shadow-[0_0_40px_rgba(192,132,252,0.3)]">
+          <h2 className="font-cinematic italic text-5xl sm:text-6xl md:text-8xl lg:text-[9.5rem] text-brand-neon leading-[1.1] md:leading-[0.88] mb-8 flex flex-wrap justify-center overflow-visible">
             {chars.map((char, index) => (
               <motion.span
                 key={index}
