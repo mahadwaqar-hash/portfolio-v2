@@ -83,7 +83,7 @@ export default function DynamicShowroom() {
       >
         {PORTFOLIO_PROJECTS.map((project) => {
           const isVanguard = project.id === '01' || project.client.toLowerCase().includes('vanguard');
-          const isToothcare = project.id === '02' || project.client.toLowerCase().includes('tooth');
+
 
           return (
             <div 
@@ -139,27 +139,7 @@ export default function DynamicShowroom() {
                       </div>
                     )}
 
-                    {isToothcare && (
-                      <div className="border border-sky-500/30 bg-black/60 backdrop-blur-md rounded-xl p-4 shadow-2xl scale-95 md:scale-100 transform origin-left">
-                        <p className="font-tech text-sky-400 text-[8px] md:text-[9px] tracking-[0.25em] uppercase mb-1">
-                          Tooth Care Clinic
-                        </p>
-                        <h4 className="font-tech font-bold text-lg md:text-2xl text-white uppercase leading-tight mb-2">
-                          Elevated Clinical<br />
-                          <span className="text-sky-400">Minimalism.</span>
-                        </h4>
-                        <div className="flex gap-1.5 mt-2 md:mt-3">
-                          <span className="font-mono text-[8px] md:text-[9px] px-1.5 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/30">
-                            Instant Booking
-                          </span>
-                          <span className="font-mono text-[8px] md:text-[9px] px-1.5 py-0.5 rounded bg-white/5 text-brand-mutedsilver border border-white/10">
-                            SEO Dominance
-                          </span>
-                        </div>
-                      </div>
-                    )}
-
-                    {!isVanguard && !isToothcare && (
+                    {!isVanguard && (
                       <div className="border border-brand-amethyst/30 bg-black/60 backdrop-blur-md rounded-xl p-5 shadow-2xl">
                         <p className="font-tech text-brand-neon text-[10px] tracking-[0.25em] uppercase mb-1">
                           {project.category}

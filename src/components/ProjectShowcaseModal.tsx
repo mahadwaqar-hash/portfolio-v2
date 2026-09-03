@@ -27,7 +27,7 @@ export default function ProjectShowcaseModal({ project, onClose }: ProjectShowca
   if (!project) return null;
 
   const isVanguard = project.id === '01' || project.client.toLowerCase().includes('vanguard');
-  const isToothcare = project.id === '02' || project.client.toLowerCase().includes('tooth');
+
 
   return (
     <AnimatePresence>
@@ -161,52 +161,7 @@ export default function ProjectShowcaseModal({ project, onClose }: ProjectShowca
                 </div>
               )}
 
-              {isToothcare && (
-                <div className="flex flex-col justify-between h-full">
-                  <div>
-                    <div className="flex items-center justify-between border-b border-sky-500/20 pb-4 mb-8">
-                      <span className="font-tech font-bold text-xl text-sky-400 tracking-wider">
-                        TOOTH CARE CLINIC
-                      </span>
-                      <span className="font-mono text-[10px] text-brand-mutedsilver uppercase tracking-widest hidden sm:inline">
-                        Advanced Clinical Aesthetics
-                      </span>
-                    </div>
-
-                    <p className="font-tech text-sky-400 text-xs tracking-[0.3em] uppercase mb-4">
-                      Frictionless Patient Onboarding
-                    </p>
-                    <h1 className="font-tech font-bold text-4xl sm:text-6xl text-white uppercase tracking-tight mb-6">
-                      Elevated Clinical<br />
-                      <span className="text-sky-400">Minimalism.</span>
-                    </h1>
-                    <p className="font-body text-brand-mutedsilver text-sm sm:text-base max-w-xl leading-relaxed">
-                      A zero-friction medical booking experience designed to maximize high-trust conversion and local search dominance.
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-white/5 mt-8">
-                    <div>
-                      <p className="font-tech text-[10px] text-brand-mutedsilver uppercase">Booking Flow</p>
-                      <p className="font-mono text-xs text-white mt-1">Instant 2-Step</p>
-                    </div>
-                    <div>
-                      <p className="font-tech text-[10px] text-brand-mutedsilver uppercase">SEO Schema</p>
-                      <p className="font-mono text-xs text-sky-400 mt-1">JSON-LD Verified</p>
-                    </div>
-                    <div>
-                      <p className="font-tech text-[10px] text-brand-mutedsilver uppercase">Framework</p>
-                      <p className="font-mono text-xs text-white mt-1">React + Tailwind</p>
-                    </div>
-                    <div>
-                      <p className="font-tech text-[10px] text-brand-mutedsilver uppercase">Conversion</p>
-                      <p className="font-mono text-xs text-green-400 mt-1">+240% Inquiries</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {!isVanguard && !isToothcare && (
+              {!isVanguard && (
                 <div className="flex flex-col justify-between h-full">
                   <div>
                     <div className="flex items-center justify-between border-b border-brand-amethyst/20 pb-4 mb-8">
