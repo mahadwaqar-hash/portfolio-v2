@@ -57,7 +57,7 @@ const HeroSection: React.FC = () => {
               {line1.split('').map((char, index) => (
                 <span key={`l1-${index}`} className="inline-block overflow-visible">
                   <motion.span
-                    className="inline-block font-tech font-bold text-4xl sm:text-6xl md:text-8xl lg:text-[7rem] xl:text-[8rem] text-white uppercase tracking-tighter"
+                    className="inline-block font-tech font-bold text-4xl sm:text-6xl md:text-8xl lg:text-[7rem] xl:text-[8rem] text-brand-neon drop-shadow-[0_0_20px_rgba(192,132,252,0.5)] uppercase tracking-tighter"
                     initial={{ y: '100%', opacity: 0, rotateZ: 10 }}
                     animate={{ y: '0%', opacity: 1, rotateZ: 0 }}
                     transition={{ delay: 2.4 + index * 0.03, duration: 0.8, ease: customEase }}
