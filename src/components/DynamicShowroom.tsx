@@ -107,8 +107,7 @@ export default function DynamicShowroom() {
                     }
                   }}
                   type="button"
-                  className={`text-left block w-full h-[345px] sm:h-[355px] md:h-[365px] rounded-2xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 sm:p-4.5 md:p-5 cursor-pointer border border-brand-amethyst/40 hover:border-brand-neon hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 hover:shadow-[0_0_40px_rgba(192,132,252,0.35)] ${project.imagePlaceholder}`}
-                  data-cursor="image"
+                  className={`text-left block w-full h-[345px] sm:h-[355px] md:h-[365px] rounded-2xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 sm:p-4.5 md:p-5 cursor-pointer border border-brand-amethyst/40 hover:border-brand-neon transition-colors duration-300 hover:shadow-[0_0_40px_rgba(192,132,252,0.35)] ${project.imagePlaceholder}`}
                 >
                   {/* Card Top / Browser Mockup Bar */}
                   <div className="flex items-center justify-between z-10 pointer-events-none">

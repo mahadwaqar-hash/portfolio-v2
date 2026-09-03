@@ -63,15 +63,12 @@ export default function CustomCursor() {
       scale: 3,
     },
     image: {
-      width: 64,
-      height: 64,
-      backgroundColor: 'rgba(147, 51, 234, 0.85)',
-      backdropFilter: 'blur(8px)',
-      border: '1.5px solid rgba(192, 132, 252, 0.9)',
-      boxShadow: '0 0 25px rgba(192, 132, 252, 0.5)',
+      width: 12,
+      height: 12,
+      backgroundColor: 'rgba(192, 132, 252, 0.6)',
       mixBlendMode: 'normal' as const,
       opacity: 1,
-      scale: 1,
+      scale: 2.5,
     }
   };
 
@@ -87,13 +84,8 @@ export default function CustomCursor() {
         }}
         variants={variants}
         animate={cursorVariant}
-      >
-        {cursorVariant === 'image' && (
-          <span className="text-[10px] font-tech text-white uppercase tracking-wider font-bold text-center leading-none">
-            LAUNCH<br/><span className="text-brand-neon">SITE ↗</span>
-          </span>
-        )}
-      </motion.div>
+        transition={{ duration: 0.2 }}
+      />
       <motion.div
         className="hidden md:block fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-[100] bg-[#C084FC] mix-blend-difference"
         style={{
