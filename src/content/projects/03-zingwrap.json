@@ -1,0 +1,12 @@
+{
+  "id": "03",
+  "client": "Zing & Wrap",
+  "title": "Inviting Pastel Pop Fast-Food",
+  "category": "QSR & Direct WhatsApp Commerce",
+  "description": "A high-conversion, mobile-first fast-food web application featuring bouncy Framer Motion interactions, real-time cart state management, and direct WhatsApp 1-click checkout ordering.",
+  "techStack": ["React 18", "Tailwind CSS", "Framer Motion", "TypeScript", "Vite", "WhatsApp API"],
+  "metrics": "Zero App Fees • 1-Click WhatsApp Checkout",
+  "liveUrl": "/zingwrap/index.html",
+  "imagePlaceholder": "bg-gradient-to-br from-[#FF6B6B] via-[#FFA06A] to-[#4A3B32]",
+  "accentColor": "rgba(255, 107, 107, 0.4)"
+}

@@ -87,6 +87,7 @@ export default function DynamicShowroom() {
         {PORTFOLIO_PROJECTS.map((project) => {
           const isVanguard = project.id === '01' || project.client.toLowerCase().includes('vanguard');
           const isAura = project.id === '02' || project.client.toLowerCase().includes('aura');
+          const isZingWrap = project.id === '03' || project.client.toLowerCase().includes('zing');
 
           return (
             <div 
@@ -162,7 +163,32 @@ export default function DynamicShowroom() {
                       </div>
                     )}
 
-                    {!isVanguard && !isAura && (
+                    {isZingWrap && (
+                      <div className="border border-[#FF6B6B]/40 bg-[#1f1614]/80 backdrop-blur-md rounded-xl p-3 shadow-xl transform origin-left">
+                        <div className="flex items-center justify-between mb-1">
+                          <p className="font-heading font-bold text-[#FF9E9E] text-[8px] tracking-wider uppercase">
+                            Zing & Wrap • Fast Food
+                          </p>
+                          <span className="text-[8px] px-1.5 py-0.2 rounded-full bg-[#FFD93D] text-[#4A3B32] font-bold">
+                            WhatsApp Live
+                          </span>
+                        </div>
+                        <h4 className="font-heading font-bold text-base md:text-lg text-white leading-tight mb-1.5">
+                          Hot Loaded Zingers.<br />
+                          <span className="text-[#FFA06A]">Direct Cart Delivery.</span>
+                        </h4>
+                        <div className="flex gap-1.5 mt-2">
+                          <span className="font-mono text-[8px] px-1.5 py-0.5 rounded bg-[#FF6B6B]/20 text-[#FF9E9E] border border-[#FF6B6B]/40">
+                            0% App Fees
+                          </span>
+                          <span className="font-mono text-[8px] px-1.5 py-0.5 rounded bg-white/10 text-white border border-white/15">
+                            Lahore • 20-30m
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {!isVanguard && !isAura && !isZingWrap && (
                       <div className="border border-brand-amethyst/30 bg-black/60 backdrop-blur-md rounded-xl p-4 shadow-xl">
                         <p className="font-tech text-brand-neon text-[9px] tracking-[0.25em] uppercase mb-1">
                           {project.category}
