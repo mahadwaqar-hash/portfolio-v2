@@ -6,7 +6,7 @@
   "description": "An immaculate, high-end cosmetic dental clinic website designed to evoke the serenity of a luxury spa. Built with a mobile-first philosophy, cinematic scroll reveals, and elegant typography to elevate the standard of care and conversion.",
   "techStack": ["React 18", "Tailwind CSS", "Framer Motion", "TypeScript", "Vite", "JSON-LD Schema"],
   "metrics": "Cinematic Parallax • High-Trust Booking Flow",
-  "liveUrl": "/aura/",
+  "liveUrl": "/aura/index.html",
   "imagePlaceholder": "bg-gradient-to-br from-[#8A9A86] via-[#D5D0C5] to-[#2C2C2A]",
   "accentColor": "rgba(138, 154, 134, 0.4)"
 }
