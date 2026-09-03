@@ -29,7 +29,8 @@ export default function CustomCursor() {
   useEffect(() => {
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (target.closest('[data-cursor="text"]')) {
+      if (!target) return;
+      if (target.closest('[data-cursor="text"]') || target.closest('button, a, [role="button"], input, textarea, select')) {
         setCursorVariant('text');
       } else if (target.closest('[data-cursor="image"]')) {
         setCursorVariant('image');
