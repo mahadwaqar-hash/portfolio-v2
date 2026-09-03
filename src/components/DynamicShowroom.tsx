@@ -92,7 +92,7 @@ export default function DynamicShowroom() {
           return (
             <div 
               key={project.id} 
-              className="w-[72vw] sm:w-[48vw] md:min-w-[34vw] lg:min-w-[26vw] max-w-[380px] flex-shrink-0 snap-center pr-3 md:pr-6"
+              className="w-[78vw] sm:w-[50vw] md:min-w-[34vw] lg:min-w-[26vw] max-w-[380px] flex-shrink-0 snap-center pr-3 md:pr-6"
             >
               <MouseParallax intensity={8} className="w-full h-full">
                 <button 
@@ -102,7 +102,7 @@ export default function DynamicShowroom() {
                     }
                   }}
                   type="button"
-                  className={`text-left block w-full aspect-[16/11] rounded-2xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 md:p-5 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 hover:shadow-[0_0_35px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
+                  className={`text-left block w-full h-[315px] sm:h-[325px] md:h-[335px] rounded-2xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 sm:p-4.5 md:p-5 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 hover:shadow-[0_0_35px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
                   data-cursor="image"
                 >
                   {/* Card Top / Browser Mockup Bar */}
