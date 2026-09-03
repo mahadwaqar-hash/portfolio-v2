@@ -36,11 +36,16 @@ export default function DynamicShowroom() {
 
       <div className="px-6 md:px-12 lg:px-24 mb-8 md:mb-12 flex justify-between items-end relative z-40">
         <div>
-          <h2 className="font-tech text-brand-neon tracking-widest uppercase text-xs md:text-sm mb-2">
-            03 // Showroom
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-neon/15 border border-brand-neon/40 text-brand-neon text-[10px] md:text-[11px] font-tech tracking-wider uppercase mb-3 shadow-[0_0_15px_rgba(192,132,252,0.2)]">
+            <span className="w-2 h-2 rounded-full bg-brand-neon animate-ping" />
+            <span>Interactive Deployments • 100% Functional</span>
+          </div>
+          <h2 className="font-tech text-white text-2xl md:text-3xl font-bold tracking-tight mb-2">
+            03 // Live Showroom
           </h2>
           <p className="font-body text-xs md:text-sm text-brand-mutedsilver flex items-center flex-wrap gap-2">
-            <span>Click any project to launch the interactive live case study preview.</span>
+            <span className="text-white font-medium">Every card below is a real, live website.</span>
+            <span>Tap or click any project to launch and test it live in your browser.</span>
             <span className="relative inline-block group">
               <button 
                 type="button"
@@ -102,7 +107,7 @@ export default function DynamicShowroom() {
                     }
                   }}
                   type="button"
-                  className={`text-left block w-full h-[315px] sm:h-[325px] md:h-[335px] rounded-2xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 sm:p-4.5 md:p-5 cursor-pointer border border-brand-amethyst/30 hover:border-brand-neon transition-all duration-500 hover:shadow-[0_0_35px_rgba(192,132,252,0.2)] ${project.imagePlaceholder}`}
+                  className={`text-left block w-full h-[345px] sm:h-[355px] md:h-[365px] rounded-2xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 sm:p-4.5 md:p-5 cursor-pointer border border-brand-amethyst/40 hover:border-brand-neon hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 hover:shadow-[0_0_40px_rgba(192,132,252,0.35)] ${project.imagePlaceholder}`}
                   data-cursor="image"
                 >
                   {/* Card Top / Browser Mockup Bar */}
@@ -115,10 +120,10 @@ export default function DynamicShowroom() {
                         {project.client}
                       </span>
                     </div>
-                    <span className="font-tech text-[9px] text-brand-neon uppercase tracking-wider group-hover:scale-105 transition-transform flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-brand-neon animate-pulse" />
-                      Open Site ↗
-                    </span>
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-neon/15 border border-brand-neon/50 text-brand-neon text-[10px] font-tech tracking-wider uppercase group-hover:bg-brand-neon group-hover:text-black transition-all duration-300 shadow-sm">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                      <span className="font-bold">LIVE SITE ↗</span>
+                    </div>
                   </div>
 
                   {/* Card Center / High-Fidelity UI Visual Preview */}
@@ -203,6 +208,20 @@ export default function DynamicShowroom() {
                     )}
                   </div>
 
+                  {/* Prominent Clickable Action Bar (Unmistakable CTA) */}
+                  <div className="relative z-10 w-full pointer-events-none py-1">
+                    <div className="w-full py-2 px-3 rounded-xl bg-black/65 border border-brand-amethyst/40 group-hover:border-brand-neon group-hover:bg-brand-neon/20 group-hover:shadow-[0_0_25px_rgba(192,132,252,0.4)] transition-all duration-300 flex items-center justify-between">
+                      <span className="font-tech text-[10px] sm:text-[11px] text-white font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand-neon group-hover:scale-125 transition-transform" />
+                        Launch Live App
+                      </span>
+                      <span className="font-tech text-[10px] text-brand-neon group-hover:text-white uppercase tracking-wider font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                        <span>Visit Site</span>
+                        <span>↗</span>
+                      </span>
+                    </div>
+                  </div>
+
                   {/* Card Bottom / Info Bar */}
                   <div className="relative z-10 pt-2 border-t border-white/10 flex items-center justify-between pointer-events-none" style={{ transform: "translateZ(30px)" }}>
                     <div className="flex flex-wrap gap-1">
@@ -226,6 +245,14 @@ export default function DynamicShowroom() {
             </div>
           );
         })}
+      </div>
+
+      {/* Touch & Click Prompt Indicator */}
+      <div className="px-6 text-center mt-6 relative z-30 flex items-center justify-center">
+        <span className="font-tech text-[10px] sm:text-[11px] uppercase tracking-widest text-brand-mutedsilver/80 flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 shadow-sm">
+          <span className="text-brand-neon animate-bounce">👆</span>
+          <span>Tap or click any project above to launch live site in browser</span>
+        </span>
       </div>
     </section>
   );
