@@ -10,6 +10,8 @@ export default {
         tech: ["'Space Grotesk'", 'sans-serif'],
         cinematic: ["'Instrument Serif'", 'serif'],
         body: ["'Inter'", 'sans-serif'],
+        "ms-heading": ["'Cormorant Garamond'", 'serif'],
+        "ms-body": ["'Montserrat'", 'sans-serif'],
       },
       colors: {
         brand: {
@@ -20,6 +22,12 @@ export default {
           neon: '#C084FC',
           mercury: '#E2E8F0',
           mutedsilver: '#64748B',
+          "ms-obsidian": '#121212',
+          "ms-graphite": '#1C1C1C',
+          "ms-bronze": '#B89768',
+          "ms-bronzeGlow": '#D4B890',
+          "ms-alabaster": '#F5F5F0',
+          "ms-linen": '#E8E5DF'
         },
       },
     },

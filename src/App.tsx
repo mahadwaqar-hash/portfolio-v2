@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import LenisScroller from './components/LenisScroller';
 import CustomCursor from './components/CustomCursor';
 import NoiseOverlay from './components/NoiseOverlay';
@@ -9,9 +9,21 @@ import ScrollScrubManifesto from './components/ScrollScrubManifesto';
 import TerminalSection from './components/TerminalSection';
 import DynamicShowroom from './components/DynamicShowroom';
 import ContactNexus from './components/ContactNexus';
+import MaisonStoneApp from './pages/maison-stone/MaisonStoneApp';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+
+  useEffect(() => {
+    const handlePopState = () => setCurrentPath(window.location.pathname);
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  if (currentPath === '/maison-stone' || currentPath === '/maison-stone/') {
+    return <MaisonStoneApp />;
+  }
 
   return (
     <LenisScroller>

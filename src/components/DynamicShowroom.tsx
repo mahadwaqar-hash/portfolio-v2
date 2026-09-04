@@ -102,8 +102,11 @@ export default function DynamicShowroom() {
               <MouseParallax intensity={8} className="w-full h-full">
                 <button 
                   onClick={() => {
-                    if (project.liveUrl && project.liveUrl !== '#') {
-                      window.location.href = project.liveUrl;
+                    if (project.liveUrl.startsWith('/')) {
+                      window.history.pushState({}, '', project.liveUrl);
+                      window.dispatchEvent(new PopStateEvent('popstate'));
+                    } else if (project.liveUrl && project.liveUrl !== '#') {
+                      window.open(project.liveUrl, '_blank');
                     }
                   }}
                   type="button"

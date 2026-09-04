@@ -90,3 +90,12 @@ html, body {
   background: rgba(109, 40, 217, 0.4);
   color: #C084FC;
 }
+
+/* Image Reveal Masks for Maison Stone */
+.mask-up {
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+  transition: clip-path 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+}
+.mask-up.in-view {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}

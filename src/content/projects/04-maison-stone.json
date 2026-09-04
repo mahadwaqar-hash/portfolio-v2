@@ -6,7 +6,7 @@
   "description": "An extravagant, multi-section personal portfolio for a high-end luxury interior design firm. Features flawless parallax scrolling, a horizontal narrative-driven showcase, architectural image masking, and an exclusive 'Slow Burn' Framer Motion interaction model using a bespoke dot cursor.",
   "techStack": ["React", "Vite", "TypeScript", "Tailwind CSS", "Framer Motion"],
   "metrics": "60fps Parallax, 3D Hardware Acceleration, Zero-Lag Image Masking",
-  "liveUrl": "https://maison-stone.vercel.app",
+  "liveUrl": "/maison-stone",
   "imagePlaceholder": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2000&auto=format&fit=crop",
   "accentColor": "#B89768"
 }
