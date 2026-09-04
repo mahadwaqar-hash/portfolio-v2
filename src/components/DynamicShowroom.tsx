@@ -7,36 +7,15 @@ export default function DynamicShowroom() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [launchingProject, setLaunchingProject] = useState<{ url: string, name: string } | null>(null);
-  const [terminalText, setTerminalText] = useState<string>('');
 
   const handleProjectClick = (url: string, name: string) => {
     if (!url || url === '#') return;
     setLaunchingProject({ url, name });
     
-    setTerminalText(`> INIT PROTOCOL: ${name.toUpperCase()}`);
-    
+    // Simple fade transition before hard redirect
     setTimeout(() => {
-      setTerminalText(prev => prev + '\n> ESTABLISHING SECURE CONNECTION...');
-    }, 500);
-
-    setTimeout(() => {
-      setTerminalText(prev => prev + '\n> BYPASSING MAINFRAME...');
-    }, 1000);
-
-    setTimeout(() => {
-      setTerminalText(prev => prev + '\n> LAUNCHING.');
-    }, 1400);
-
-    setTimeout(() => {
-      if (url.startsWith('/')) {
-        window.history.pushState({}, '', url);
-        window.dispatchEvent(new Event('pushstate'));
-        window.dispatchEvent(new PopStateEvent('popstate'));
-      } else {
-        window.open(url, '_blank');
-      }
-      setLaunchingProject(null);
-    }, 1800);
+      window.location.href = url;
+    }, 800);
   };
 
   // For horizontal manual scrolling (if no trackpad)
@@ -287,33 +266,22 @@ export default function DynamicShowroom() {
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-brand-abyss/95 backdrop-blur-md"
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black"
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.1, duration: 0.3 }}
-              className="w-[90vw] max-w-lg cyber-glass p-8 border border-brand-neon/40 shadow-[0_0_50px_rgba(109,40,217,0.3)] rounded-xl relative overflow-hidden"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-center"
             >
-              <div className="absolute inset-0 bg-brand-neon/5 opacity-50 pointer-events-none" />
-              
-              <div className="flex items-center gap-2 mb-6 border-b border-white/10 pb-3 relative z-10">
-                <div className="w-3 h-3 bg-red-500 rounded-full" />
-                <div className="w-3 h-3 bg-yellow-500 rounded-full" />
-                <div className="w-3 h-3 bg-green-500 rounded-full" />
-                <span className="ml-2 font-mono text-[10px] uppercase tracking-widest text-brand-mutedsilver">SYS.LAUNCH_SEQ</span>
+              <h2 className="font-cinematic italic text-3xl md:text-5xl text-white mb-4">
+                {launchingProject.name}
+              </h2>
+              <div className="flex justify-center gap-2">
+                <motion.div className="w-1.5 h-1.5 bg-brand-neon rounded-full" animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 1, delay: 0 }} />
+                <motion.div className="w-1.5 h-1.5 bg-brand-neon rounded-full" animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} />
+                <motion.div className="w-1.5 h-1.5 bg-brand-neon rounded-full" animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} />
               </div>
-              
-              <pre className="font-mono text-sm md:text-base text-brand-neon whitespace-pre-wrap leading-loose relative z-10 drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
-                {terminalText}
-                <motion.span 
-                  animate={{ opacity: [1, 0] }} 
-                  transition={{ repeat: Infinity, duration: 0.8 }}
-                >
-                  _
-                </motion.span>
-              </pre>
             </motion.div>
           </motion.div>
         )}
