@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 const PROJECTS = [
@@ -20,66 +20,77 @@ const PROJECTS = [
 ];
 
 export default function Showcase() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const horizontalRef = useRef<HTMLDivElement>(null);
   
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
+  useEffect(() => {
+    const el = horizontalRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      if (e.deltaY === 0) return;
+      // Scroll horizontally
+      el.scrollBy({ left: e.deltaY * 2, behavior: 'smooth' });
+      // Prevent vertical scrolling only if we are not at the edges
+      const isAtLeftEnd = el.scrollLeft === 0 && e.deltaY < 0;
+      const isAtRightEnd = el.scrollLeft >= el.scrollWidth - el.clientWidth && e.deltaY > 0;
+      if (!isAtLeftEnd && !isAtRightEnd) {
+        e.preventDefault();
+      }
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, []);
+
+  const { scrollXProgress } = useScroll({
+    container: horizontalRef
   });
 
-  // 3 cards, each takes ~80vw + margin. We translate -66% of track width.
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-66%"]);
+  // Extract a parallax offset that maps scrollXProgress (0 to 1) to -5% to 5%
+  const parallaxX = useTransform(scrollXProgress, [0, 1], ["-5%", "5%"]);
 
   return (
-    <section ref={containerRef} className="h-[300vh] bg-brand-ms-graphite relative">
-      <div className="h-screen sticky top-0 flex items-center overflow-hidden">
-        
-        {/* Section Label */}
-        <div className="absolute top-12 left-8 md:left-24 z-20">
-          <h3 className="text-xs tracking-[0.3em] text-brand-ms-bronze uppercase font-ms-body">02 &mdash; Selected Works</h3>
-        </div>
+    <section className="h-screen bg-brand-ms-graphite relative flex flex-col justify-center">
+      {/* Section Label */}
+      <div className="absolute top-12 left-8 md:left-24 z-20 pointer-events-none">
+        <h3 className="text-xs tracking-[0.3em] text-brand-ms-bronze uppercase font-ms-body">02 &mdash; Selected Works</h3>
+      </div>
 
-        {/* Horizontal Track */}
-        <motion.div 
-          className="flex pl-8 md:pl-24"
-          style={{ x }}
-        >
-          {PROJECTS.map((project, idx) => (
-            <div 
-              key={idx} 
-              className="w-[85vw] md:w-[70vw] h-[75vh] flex-shrink-0 relative overflow-hidden mr-12 md:mr-24 group cursor-none"
-              data-cursor="explore"
+      {/* Native Horizontal Track */}
+      <div 
+        ref={horizontalRef}
+        className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar w-full items-center h-[75vh] px-8 md:px-24"
+      >
+        {PROJECTS.map((project, idx) => (
+          <div 
+            key={idx} 
+            className="w-[85vw] md:w-[70vw] h-full flex-shrink-0 snap-center relative overflow-hidden mr-12 md:mr-24 last:mr-0 group cursor-none"
+            data-cursor="explore"
+          >
+            {/* Image Parallax tracking the horizontal scroll */}
+            <motion.div 
+              className="absolute inset-0 transition-transform duration-1000 group-hover:scale-105"
+              style={{ x: parallaxX }}
             >
-              {/* Image with internal parallax effect on hover/scroll */}
-              <motion.div 
-                className="absolute inset-0 transition-transform duration-1000 group-hover:scale-105"
-                style={{
-                  x: useTransform(scrollYProgress, [0, 1], ["-10%", "10%"])
-                }}
-              >
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
-                  className="w-[120%] h-[120%] max-w-none object-cover -left-[10%] -top-[10%] relative"
-                />
-              </motion.div>
-              
-              {/* Hover Darken Overlay */}
-              <div className="absolute inset-0 bg-brand-ms-obsidian/0 group-hover:bg-brand-ms-obsidian/60 transition-colors duration-700" />
+              <img 
+                src={project.image} 
+                alt={project.title} 
+                className="w-[110%] h-full max-w-none object-cover -left-[5%] relative pointer-events-none"
+              />
+            </motion.div>
+            
+            {/* Hover Darken Overlay */}
+            <div className="absolute inset-0 bg-brand-ms-obsidian/0 group-hover:bg-brand-ms-obsidian/60 transition-colors duration-700 pointer-events-none" />
 
-              {/* Text Content */}
-              <div className="absolute inset-0 p-12 md:p-20 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-y-8 group-hover:translate-y-0">
-                <h4 className="font-ms-heading italic text-5xl md:text-7xl text-brand-ms-alabaster mb-6">
-                  {project.title}
-                </h4>
-                <p className="font-ms-body text-brand-ms-linen max-w-xl leading-relaxed text-sm md:text-base">
-                  {project.description}
-                </p>
-              </div>
+            {/* Text Content */}
+            <div className="absolute inset-0 p-12 md:p-20 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-y-8 group-hover:translate-y-0 pointer-events-none">
+              <h4 className="font-ms-heading italic text-5xl md:text-7xl text-brand-ms-alabaster mb-6">
+                {project.title}
+              </h4>
+              <p className="font-ms-body text-brand-ms-linen max-w-xl leading-relaxed text-sm md:text-base">
+                {project.description}
+              </p>
             </div>
-          ))}
-        </motion.div>
-        
+          </div>
+        ))}
       </div>
     </section>
   );
