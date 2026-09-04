@@ -30,6 +30,7 @@ export default function DynamicShowroom() {
     setTimeout(() => {
       if (url.startsWith('/')) {
         window.history.pushState({}, '', url);
+        window.dispatchEvent(new Event('pushstate'));
         window.dispatchEvent(new PopStateEvent('popstate'));
       } else {
         window.open(url, '_blank');

@@ -18,7 +18,11 @@ export default function App() {
   useEffect(() => {
     const handlePopState = () => setCurrentPath(window.location.pathname);
     window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    window.addEventListener('pushstate', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('pushstate', handlePopState);
+    };
   }, []);
 
   if (currentPath === '/maison-stone' || currentPath === '/maison-stone/') {
