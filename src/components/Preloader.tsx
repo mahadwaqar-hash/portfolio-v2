@@ -72,31 +72,33 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       if (current >= 100) {
         setCount(100);
         setGlitchText('// SYSTEM INITIALIZED • 100% READY');
+        // Dynamic micro-beat then seamless transition into hero
         setTimeout(() => {
           setPhase('exit');
-        }, 550);
+        }, 200);
       } else {
         setCount(current);
         setGlitchText(getTelemetry(current));
-        intervalRef.current = setTimeout(surgeStep, 38);
+        intervalRef.current = setTimeout(surgeStep, 35);
       }
     };
 
-    intervalRef.current = setTimeout(surgeStep, 50);
+    intervalRef.current = setTimeout(surgeStep, 45);
     return () => { if (intervalRef.current) clearTimeout(intervalRef.current); };
   }, [phase]);
 
-  // Phase 4: Smooth Upward Curtain Reveal Exit (~0.9s)
+  // Phase 4: Smooth Curtain Lift Reveal (~0.85s)
   useEffect(() => {
     if (phase !== 'exit') return;
     const exitTimer = setTimeout(() => {
       onComplete();
-    }, 900);
+    }, 850);
     return () => clearTimeout(exitTimer);
   }, [phase, onComplete]);
 
   const isGlitching = phase === 'glitch';
   const isPostGlitch = count >= 67;
+  const isExiting = phase === 'exit';
 
   // Lightweight random 67 ghost clones across screen
   const ghostClones = [
@@ -114,18 +116,18 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       animate={
         isGlitching
           ? { x: [-8, 10, -6, 8, -4, 0], y: [4, -5, 4, -3, 0] }
-          : phase === 'exit'
-          ? { y: '-100%', opacity: 0 }
-          : { y: '0%', opacity: 1 }
+          : isExiting
+          ? { y: '-100%' }
+          : { y: '0%' }
       }
       transition={
         isGlitching
           ? { duration: 0.2, repeat: 5, ease: 'linear' }
-          : phase === 'exit'
+          : isExiting
           ? { duration: 0.85, ease: luxuryEase }
           : { duration: 0.6, ease: luxuryEase }
       }
-      style={{ willChange: 'transform, opacity' }}
+      style={{ willChange: 'transform' }}
     >
       <span className="sr-only">Loading portfolio: {count}%</span>
 
