@@ -1,11 +1,42 @@
-import React, { useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PORTFOLIO_PROJECTS, PortfolioProject } from '../data/portfolioData';
 import MouseParallax from './MouseParallax';
 
 export default function DynamicShowroom() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [launchingProject, setLaunchingProject] = useState<{ url: string, name: string } | null>(null);
+  const [terminalText, setTerminalText] = useState<string>('');
+
+  const handleProjectClick = (url: string, name: string) => {
+    if (!url || url === '#') return;
+    setLaunchingProject({ url, name });
+    
+    setTerminalText(`> INIT PROTOCOL: ${name.toUpperCase()}`);
+    
+    setTimeout(() => {
+      setTerminalText(prev => prev + '\n> ESTABLISHING SECURE CONNECTION...');
+    }, 500);
+
+    setTimeout(() => {
+      setTerminalText(prev => prev + '\n> BYPASSING MAINFRAME...');
+    }, 1000);
+
+    setTimeout(() => {
+      setTerminalText(prev => prev + '\n> LAUNCHING.');
+    }, 1400);
+
+    setTimeout(() => {
+      if (url.startsWith('/')) {
+        window.history.pushState({}, '', url);
+        window.dispatchEvent(new PopStateEvent('popstate'));
+      } else {
+        window.open(url, '_blank');
+      }
+      setLaunchingProject(null);
+    }, 1800);
+  };
 
   // For horizontal manual scrolling (if no trackpad)
   const scrollBy = (amount: number) => {
@@ -101,14 +132,7 @@ export default function DynamicShowroom() {
             >
               <MouseParallax intensity={8} className="w-full h-full">
                 <button 
-                  onClick={() => {
-                    if (project.liveUrl.startsWith('/')) {
-                      window.history.pushState({}, '', project.liveUrl);
-                      window.dispatchEvent(new PopStateEvent('popstate'));
-                    } else if (project.liveUrl && project.liveUrl !== '#') {
-                      window.open(project.liveUrl, '_blank');
-                    }
-                  }}
+                  onClick={() => handleProjectClick(project.liveUrl, project.title)}
                   type="button"
                   className={`text-left block w-full h-[345px] sm:h-[355px] md:h-[365px] rounded-2xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 sm:p-4.5 md:p-5 cursor-pointer border border-brand-amethyst/40 hover:border-brand-neon transition-colors duration-300 hover:shadow-[0_0_40px_rgba(192,132,252,0.35)] ${project.imagePlaceholder}`}
                 >
@@ -256,6 +280,43 @@ export default function DynamicShowroom() {
           <span>Tap or click any project above to launch live site in browser</span>
         </span>
       </div>
+
+      <AnimatePresence>
+        {launchingProject && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-brand-abyss/95 backdrop-blur-md"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.1, duration: 0.3 }}
+              className="w-[90vw] max-w-lg cyber-glass p-8 border border-brand-neon/40 shadow-[0_0_50px_rgba(109,40,217,0.3)] rounded-xl relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-brand-neon/5 opacity-50 pointer-events-none" />
+              
+              <div className="flex items-center gap-2 mb-6 border-b border-white/10 pb-3 relative z-10">
+                <div className="w-3 h-3 bg-red-500 rounded-full" />
+                <div className="w-3 h-3 bg-yellow-500 rounded-full" />
+                <div className="w-3 h-3 bg-green-500 rounded-full" />
+                <span className="ml-2 font-mono text-[10px] uppercase tracking-widest text-brand-mutedsilver">SYS.LAUNCH_SEQ</span>
+              </div>
+              
+              <pre className="font-mono text-sm md:text-base text-brand-neon whitespace-pre-wrap leading-loose relative z-10 drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
+                {terminalText}
+                <motion.span 
+                  animate={{ opacity: [1, 0] }} 
+                  transition={{ repeat: Infinity, duration: 0.8 }}
+                >
+                  _
+                </motion.span>
+              </pre>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
