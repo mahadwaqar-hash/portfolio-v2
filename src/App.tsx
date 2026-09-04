@@ -12,7 +12,9 @@ import ContactNexus from './components/ContactNexus';
 import MaisonStoneApp from './pages/maison-stone/MaisonStoneApp';
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => {
+    return !sessionStorage.getItem('portfolioLoaded');
+  });
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
   useEffect(() => {
@@ -24,6 +26,11 @@ export default function App() {
       window.removeEventListener('pushstate', handlePopState);
     };
   }, []);
+
+  const handlePreloaderComplete = () => {
+    setIsLoading(false);
+    sessionStorage.setItem('portfolioLoaded', 'true');
+  };
 
   if (currentPath === '/maison-stone' || currentPath === '/maison-stone/') {
     return (
@@ -84,7 +91,7 @@ export default function App() {
         </div>
 
       {isLoading && (
-        <Preloader onComplete={() => setIsLoading(false)} />
+        <Preloader onComplete={handlePreloaderComplete} />
       )}
     </LenisScroller>
   );
