@@ -9,7 +9,9 @@ export default function DynamicShowroom() {
   const handleProjectClick = (url: string) => {
     if (!url || url === '#') return;
     if (url.startsWith('/')) {
-      window.location.href = url;
+      window.history.pushState({}, '', url);
+      window.dispatchEvent(new Event('pushstate'));
+      window.dispatchEvent(new PopStateEvent('popstate'));
     } else {
       window.open(url, '_blank');
     }
