@@ -25,7 +25,7 @@ export default function App() {
     };
   }, []);
 
-  if (currentPath === '/maison-stone' || currentPath === '/maison-stone/') {
+  if (currentPath.includes('/maison-stone')) {
     return (
       <LenisScroller>
         <MaisonStoneApp />
