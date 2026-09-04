@@ -45,7 +45,7 @@ const HeroSection: React.FC = () => {
           <motion.div 
             initial={{ opacity: 0, y: 15, filter: 'blur(8px)' }}
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            transition={{ delay: 2.0, duration: 0.9, ease: luxuryEase }}
+            transition={{ delay: 0.1, duration: 0.8, ease: luxuryEase }}
             className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full cyber-glass border border-brand-amethyst/40 mb-6 md:mb-8 shadow-[0_0_20px_rgba(192,132,252,0.15)]"
           >
             <span className="relative flex h-2 w-2">
@@ -75,7 +75,7 @@ const HeroSection: React.FC = () => {
                       filter: 'drop-shadow(0 0 25px rgba(255,255,255,0.9))',
                       transition: { duration: 0.2 }
                     }}
-                    transition={{ delay: 2.2 + index * 0.03, duration: 1.0, ease: luxuryEase }}
+                    transition={{ delay: 0.2 + index * 0.025, duration: 0.9, ease: luxuryEase }}
                   >
                     {char === ' ' ? '\u00A0' : char}
                   </motion.span>
@@ -97,7 +97,7 @@ const HeroSection: React.FC = () => {
                       filter: 'drop-shadow(0 0 25px rgba(255,255,255,0.9))',
                       transition: { duration: 0.2 }
                     }}
-                    transition={{ delay: 2.6 + index * 0.03, duration: 1.0, ease: luxuryEase }}
+                    transition={{ delay: 0.5 + index * 0.025, duration: 0.9, ease: luxuryEase }}
                   >
                     {char === ' ' ? '\u00A0' : char}
                   </motion.span>
@@ -110,7 +110,7 @@ const HeroSection: React.FC = () => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3.1, duration: 0.9, ease: luxuryEase }}
+            transition={{ delay: 0.8, duration: 0.8, ease: luxuryEase }}
             style={{ transform: "translateZ(40px)" }} 
             className="mt-6 md:mt-10 w-full max-w-2xl"
           >
@@ -124,7 +124,7 @@ const HeroSection: React.FC = () => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3.3, duration: 0.9, ease: luxuryEase }}
+            transition={{ delay: 0.95, duration: 0.8, ease: luxuryEase }}
             className="mt-10 pt-8 border-t border-white/10 w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 gap-4 text-left"
             style={{ transform: "translateZ(30px)" }}
           >
@@ -146,7 +146,7 @@ const HeroSection: React.FC = () => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3.5, duration: 0.9, ease: luxuryEase }}
+            transition={{ delay: 1.1, duration: 0.8, ease: luxuryEase }}
             className="flex flex-wrap items-center gap-4 mt-8"
           >
             <a
@@ -171,7 +171,7 @@ const HeroSection: React.FC = () => {
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 3.8, duration: 1 }}
+        transition={{ delay: 1.3, duration: 0.8 }}
         className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
       >
         <span className="font-tech text-[9px] uppercase tracking-[0.4em] text-brand-mutedsilver/60">Scroll</span>

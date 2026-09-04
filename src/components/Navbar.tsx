@@ -30,7 +30,7 @@ export default function Navbar() {
         className="hidden md:block fixed top-6 left-1/2 -translate-x-1/2 z-50 cyber-glass rounded-full px-8 py-4 max-w-[95vw]"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2, duration: 0.8, ease: customEase }}
+        transition={{ delay: 0.3, duration: 0.8, ease: customEase }}
       >
         <nav role="navigation" aria-label="Main navigation">
           <ul className="flex items-center space-x-8">
