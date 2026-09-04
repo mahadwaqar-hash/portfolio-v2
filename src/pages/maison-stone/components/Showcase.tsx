@@ -48,21 +48,21 @@ export default function Showcase() {
   const parallaxX = useTransform(scrollXProgress, [0, 1], ["-5%", "5%"]);
 
   return (
-    <section className="h-screen bg-brand-ms-graphite relative flex flex-col justify-center">
+    <section className="h-[90vh] md:h-screen bg-brand-ms-graphite relative flex flex-col justify-center">
       {/* Section Label */}
-      <div className="absolute top-12 left-8 md:left-24 z-20 pointer-events-none">
-        <h3 className="text-xs tracking-[0.3em] text-brand-ms-bronze uppercase font-ms-body">02 &mdash; Selected Works</h3>
+      <div className="absolute top-6 md:top-12 left-6 md:left-24 z-20 pointer-events-none">
+        <h3 className="text-[10px] md:text-xs tracking-[0.3em] text-brand-ms-bronze uppercase font-ms-body">02 &mdash; Selected Works</h3>
       </div>
 
       {/* Native Horizontal Track */}
       <div 
         ref={horizontalRef}
-        className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar w-full items-center h-[75vh] px-8 md:px-24"
+        className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar w-full items-center h-[65vh] md:h-[75vh] px-6 md:px-24 pb-8"
       >
         {PROJECTS.map((project, idx) => (
           <div 
             key={idx} 
-            className="w-[85vw] md:w-[70vw] h-full flex-shrink-0 snap-center relative overflow-hidden mr-12 md:mr-24 last:mr-0 group cursor-none"
+            className="w-[90vw] md:w-[70vw] h-full flex-shrink-0 snap-center relative overflow-hidden mr-6 md:mr-24 last:mr-0 group cursor-none rounded-sm md:rounded-none"
             data-cursor="explore"
           >
             {/* Image Parallax tracking the horizontal scroll */}
@@ -78,14 +78,14 @@ export default function Showcase() {
             </motion.div>
             
             {/* Hover Darken Overlay */}
-            <div className="absolute inset-0 bg-brand-ms-obsidian/0 group-hover:bg-brand-ms-obsidian/60 transition-colors duration-700 pointer-events-none" />
+            <div className="absolute inset-0 bg-brand-ms-obsidian/40 md:bg-brand-ms-obsidian/0 group-hover:bg-brand-ms-obsidian/60 transition-colors duration-700 pointer-events-none" />
 
             {/* Text Content */}
-            <div className="absolute inset-0 p-12 md:p-20 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-y-8 group-hover:translate-y-0 pointer-events-none">
-              <h4 className="font-ms-heading italic text-5xl md:text-7xl text-brand-ms-alabaster mb-6">
+            <div className="absolute inset-0 p-6 md:p-20 flex flex-col justify-end opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-y-0 md:translate-y-8 group-hover:translate-y-0 pointer-events-none">
+              <h4 className="font-ms-heading italic text-4xl sm:text-5xl md:text-7xl text-brand-ms-alabaster mb-3 md:mb-6 leading-none">
                 {project.title}
               </h4>
-              <p className="font-ms-body text-brand-ms-linen max-w-xl leading-relaxed text-sm md:text-base">
+              <p className="font-ms-body text-brand-ms-linen max-w-xl leading-relaxed text-xs md:text-base drop-shadow-md md:drop-shadow-none">
                 {project.description}
               </p>
             </div>

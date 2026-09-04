@@ -27,16 +27,16 @@ export default function Services() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="py-32 px-6 md:px-24 bg-brand-ms-obsidian">
+    <section ref={ref} className="py-20 md:py-32 px-6 md:px-24 bg-brand-ms-obsidian">
       
-      <div className="mb-20 text-center">
-        <h3 className="text-xs tracking-[0.3em] text-brand-ms-bronze uppercase font-ms-body mb-6">03 &mdash; Anatomy of Luxury</h3>
+      <div className="mb-12 md:mb-20 text-center md:text-left">
+        <h3 className="text-[10px] md:text-xs tracking-[0.3em] text-brand-ms-bronze uppercase font-ms-body mb-6">03 &mdash; Anatomy of Luxury</h3>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 max-w-7xl mx-auto">
         {SERVICES.map((srv, idx) => (
           <div key={idx} className="flex flex-col">
-            <div className={`overflow-hidden mb-8 h-[60vh] mask-up ${isInView ? 'in-view' : ''}`} style={{ transitionDelay: `${idx * 0.2}s` }}>
+            <div className={`overflow-hidden mb-6 md:mb-8 h-[40vh] md:h-[60vh] mask-up ${isInView ? 'in-view' : ''}`} style={{ transitionDelay: `${idx * 0.2}s` }}>
               <img 
                 src={srv.img} 
                 alt={srv.title} 

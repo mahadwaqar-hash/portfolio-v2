@@ -24,13 +24,13 @@ export default function Vision() {
   });
 
   return (
-    <section className="py-40 px-6 md:px-24 bg-brand-ms-obsidian text-center flex flex-col items-center relative z-10">
-      <h3 className="text-xs tracking-[0.3em] text-brand-ms-bronze uppercase mb-12 font-ms-body">
+    <section className="py-24 md:py-40 px-6 md:px-24 bg-brand-ms-obsidian text-center flex flex-col items-center relative z-10">
+      <h3 className="text-[10px] md:text-xs tracking-[0.3em] text-brand-ms-bronze uppercase mb-8 md:mb-12 font-ms-body">
         01 &mdash; The Approach
       </h3>
       
       <div ref={containerRef} className="max-w-4xl mx-auto">
-        <p className="text-3xl md:text-5xl font-ms-heading leading-relaxed text-brand-ms-alabaster">
+        <p className="text-2xl sm:text-3xl md:text-5xl font-ms-heading leading-relaxed text-brand-ms-alabaster">
           {words.map((word, i) => (
             <AnimatedWord 
               key={i} 
