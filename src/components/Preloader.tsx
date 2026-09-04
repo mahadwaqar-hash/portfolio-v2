@@ -99,11 +99,35 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   const isGlitching = phase === 'glitch';
   const isPostGlitch = count >= 67;
 
+  // Random 67 ghost clones across the entire screen during anomaly
+  const ghostClones = [
+    { text: '67', top: '12%', left: '8%', size: 'text-6xl sm:text-8xl', color: 'text-red-500/80', rot: -15, font: 'font-cinematic italic' },
+    { text: '67%', top: '18%', right: '14%', size: 'text-7xl sm:text-9xl', color: 'text-cyan-400/70', rot: 12, font: 'font-tech font-bold' },
+    { text: '67', bottom: '22%', left: '12%', size: 'text-5xl sm:text-7xl', color: 'text-brand-neon/80', rot: -8, font: 'font-cinematic italic' },
+    { text: '67%', bottom: '15%', right: '10%', size: 'text-6xl sm:text-8xl', color: 'text-red-400/70', rot: 20, font: 'font-tech font-bold' },
+    { text: '67', top: '8%', right: '38%', size: 'text-4xl sm:text-6xl', color: 'text-white/80', rot: -5, font: 'font-tech font-bold' },
+    { text: '67', bottom: '38%', left: '6%', size: 'text-5xl sm:text-7xl', color: 'text-cyan-300/80', rot: 25, font: 'font-cinematic italic' },
+    { text: '67%', top: '42%', right: '6%', size: 'text-6xl sm:text-8xl', color: 'text-brand-neon/90', rot: -18, font: 'font-cinematic italic' },
+    { text: '67', top: '72%', left: '42%', size: 'text-5xl sm:text-7xl', color: 'text-red-500/80', rot: 8, font: 'font-tech font-bold' },
+    { text: '67', top: '28%', left: '26%', size: 'text-4xl sm:text-5xl', color: 'text-purple-400/80', rot: -12, font: 'font-cinematic italic' },
+    { text: '67%', bottom: '28%', right: '28%', size: 'text-5xl sm:text-6xl', color: 'text-cyan-400/80', rot: 16, font: 'font-tech font-bold' },
+  ];
+
   return (
     <motion.div
       className="fixed inset-0 z-[100] bg-[#010103] flex flex-col justify-between items-center p-6 sm:p-10 md:p-16 overflow-hidden select-none"
-      animate={phase === 'exit' ? { opacity: 0, scale: 1.08, filter: 'blur(16px)' } : { opacity: 1, scale: 1, filter: 'blur(0px)' }}
-      transition={{ duration: 0.85, ease: luxuryEase }}
+      animate={
+        isGlitching
+          ? { x: [-10, 12, -8, 10, -5, 8, 0], y: [5, -7, 6, -5, 3, 0] }
+          : phase === 'exit'
+          ? { opacity: 0, scale: 1.08, filter: 'blur(16px)' }
+          : { opacity: 1, scale: 1, filter: 'blur(0px)' }
+      }
+      transition={
+        isGlitching
+          ? { duration: 0.2, repeat: 5, ease: 'linear' }
+          : { duration: 0.85, ease: luxuryEase }
+      }
     >
       <span className="sr-only">Loading portfolio: {count}%</span>
 
@@ -116,16 +140,84 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         }}
       />
 
+      {/* FULL-SCREEN GLITCH FLASH & HORIZONTAL TEAR LINES (AT 67) */}
+      {isGlitching && (
+        <>
+          {/* Chromatic Strobe Flash */}
+          <motion.div 
+            className="absolute inset-0 bg-brand-neon/10 mix-blend-color-dodge pointer-events-none z-40"
+            animate={{ opacity: [0, 0.6, 0, 0.4, 0] }}
+            transition={{ duration: 0.15, repeat: 7 }}
+          />
+
+          {/* Random Horizontal Glitch Slices */}
+          <motion.div 
+            className="absolute left-0 right-0 h-4 bg-red-500/20 pointer-events-none z-40"
+            animate={{ top: ['15%', '65%', '30%', '80%', '45%'], x: [-30, 40, -20, 30, 0] }}
+            transition={{ duration: 0.12, repeat: 8 }}
+          />
+          <motion.div 
+            className="absolute left-0 right-0 h-2 bg-cyan-400/30 pointer-events-none z-40"
+            animate={{ top: ['75%', '25%', '55%', '10%', '70%'], x: [40, -30, 20, -40, 0] }}
+            transition={{ duration: 0.1, repeat: 10 }}
+          />
+          <motion.div 
+            className="absolute left-0 right-0 h-8 bg-brand-neon/20 pointer-events-none z-40"
+            animate={{ top: ['35%', '85%', '20%', '50%', '35%'], x: [-20, 25, -15, 30, 0] }}
+            transition={{ duration: 0.14, repeat: 7 }}
+          />
+
+          {/* RANDOM 67s FLYING EVERYWHERE ACROSS THE SCREEN */}
+          {ghostClones.map((ghost, idx) => (
+            <motion.div
+              key={`ghost-${idx}`}
+              className={`absolute pointer-events-none z-30 select-none ${ghost.size} ${ghost.color} ${ghost.font} drop-shadow-[0_0_20px_currentColor]`}
+              style={{
+                top: ghost.top,
+                bottom: ghost.bottom,
+                left: ghost.left,
+                right: ghost.right,
+                transform: `rotate(${ghost.rot}deg)`,
+              }}
+              animate={{
+                x: [0, (idx % 2 === 0 ? 15 : -15), (idx % 3 === 0 ? -12 : 12), 0],
+                y: [0, (idx % 2 === 0 ? -12 : 12), (idx % 3 === 0 ? 10 : -10), 0],
+                opacity: [0.3, 1, 0.6, 0.9, 0.4],
+                scale: [0.95, 1.1, 0.98, 1.05, 1],
+              }}
+              transition={{
+                duration: 0.18 + (idx * 0.02),
+                repeat: 6,
+                ease: 'easeInOut',
+              }}
+            >
+              {ghost.text}
+            </motion.div>
+          ))}
+
+          {/* Floating System Glitch Error Tags */}
+          <div className="absolute top-1/4 left-10 font-mono text-[10px] text-red-400/90 z-30 pointer-events-none animate-pulse">
+            ERR_0x67_BUFFER_OVERFLOW // THREADS_HALTED
+          </div>
+          <div className="absolute bottom-1/4 right-10 font-mono text-[10px] text-cyan-400/90 z-30 pointer-events-none animate-pulse">
+            MEM_CORRUPT: SECTOR_67 // OVERCLOCKING_CORE
+          </div>
+          <div className="absolute top-2/3 right-1/4 font-mono text-[10px] text-brand-neon/90 z-30 pointer-events-none animate-pulse">
+            CRITICAL_SURGE: CORE_TEMP 9800K // BYPASSING
+          </div>
+        </>
+      )}
+
       {/* Ambient Pulsing Nebular Core */}
       <motion.div 
         className="absolute w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] rounded-full blur-[100px] sm:blur-[140px] pointer-events-none transform-gpu transition-colors duration-700 -z-10"
         animate={{
-          scale: isGlitching ? [1, 1.3, 0.95, 1.2, 1] : [1, 1.08, 1],
-          opacity: isGlitching ? [0.3, 0.6, 0.4, 0.7, 0.4] : 0.25,
+          scale: isGlitching ? [1, 1.35, 0.9, 1.25, 1] : [1, 1.08, 1],
+          opacity: isGlitching ? [0.4, 0.8, 0.5, 0.85, 0.4] : 0.25,
         }}
         transition={{
-          duration: isGlitching ? 0.3 : 3,
-          repeat: isGlitching ? 3 : Infinity,
+          duration: isGlitching ? 0.25 : 3,
+          repeat: isGlitching ? 5 : Infinity,
           ease: "easeInOut"
         }}
         style={{
@@ -136,28 +228,31 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       {/* Top Header Telemetry Bar */}
       <div className="w-full flex items-center justify-between text-brand-mutedsilver font-tech text-[10px] sm:text-xs tracking-widest uppercase z-10">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-brand-neon animate-pulse" />
-          <span>SYS.INIT // CORE_V2.026</span>
+          <span className={`w-2 h-2 rounded-full ${isGlitching ? 'bg-red-500 animate-ping' : 'bg-brand-neon animate-pulse'}`} />
+          <span className={isGlitching ? 'text-red-400 font-bold' : ''}>
+            {isGlitching ? 'SYS.ALERT // ANOMALY_0x67' : 'SYS.INIT // CORE_V2.026'}
+          </span>
         </div>
         <div className="hidden sm:flex items-center gap-4 text-brand-mutedsilver/70">
           <span>LAHORE, PK [31.52° N]</span>
           <span>•</span>
-          <span>RUNTIME: READY</span>
+          <span className={isGlitching ? 'text-red-400 font-bold' : ''}>
+            {isGlitching ? 'OVERCLOCK ACTIVE' : 'RUNTIME: READY'}
+          </span>
         </div>
       </div>
 
       {/* Center Monumental Counter */}
-      <div className="relative flex flex-col items-center justify-center my-auto z-10">
+      <div className="relative flex flex-col items-center justify-center my-auto z-20">
         
         {/* Shockwave ring during glitch at 67 */}
         <AnimatePresence>
           {isGlitching && (
             <motion.div
-              initial={{ scale: 0.8, opacity: 0.8 }}
-              animate={{ scale: 2.2, opacity: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="absolute w-48 h-48 sm:w-72 sm:h-72 rounded-full border border-brand-neon/60 pointer-events-none"
+              initial={{ scale: 0.6, opacity: 0.9 }}
+              animate={{ scale: [0.6, 2.5, 3.5], opacity: [0.9, 0.4, 0] }}
+              transition={{ duration: 0.9, repeat: 2, ease: "easeOut" }}
+              className="absolute w-56 h-56 sm:w-80 sm:h-80 rounded-full border-2 border-brand-neon pointer-events-none shadow-[0_0_50px_rgba(192,132,252,0.8)]"
             />
           )}
         </AnimatePresence>
@@ -168,9 +263,9 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           {/* Chromatic Aberration Red Ghost (Glitch Only) */}
           {isGlitching && (
             <motion.span
-              animate={{ x: [-6, 6, -3, 5, 0], y: [2, -2, 1, 0] }}
-              transition={{ duration: 0.15, repeat: 7 }}
-              className="absolute inset-0 text-7xl sm:text-9xl md:text-[13rem] lg:text-[15rem] font-cinematic italic text-red-500/70 select-none pointer-events-none mix-blend-screen leading-none"
+              animate={{ x: [-12, 14, -8, 12, 0], y: [4, -5, 3, -2, 0] }}
+              transition={{ duration: 0.12, repeat: 10 }}
+              className="absolute inset-0 text-7xl sm:text-9xl md:text-[13rem] lg:text-[15rem] font-cinematic italic text-red-500 select-none pointer-events-none mix-blend-screen leading-none drop-shadow-[0_0_35px_rgba(239,68,68,0.8)]"
             >
               {count}
             </motion.span>
@@ -179,9 +274,9 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           {/* Chromatic Aberration Cyan Ghost (Glitch Only) */}
           {isGlitching && (
             <motion.span
-              animate={{ x: [6, -6, 4, -4, 0], y: [-2, 2, -1, 0] }}
-              transition={{ duration: 0.15, repeat: 7 }}
-              className="absolute inset-0 text-7xl sm:text-9xl md:text-[13rem] lg:text-[15rem] font-cinematic italic text-cyan-400/70 select-none pointer-events-none mix-blend-screen leading-none"
+              animate={{ x: [12, -14, 8, -10, 0], y: [-4, 5, -3, 2, 0] }}
+              transition={{ duration: 0.12, repeat: 10 }}
+              className="absolute inset-0 text-7xl sm:text-9xl md:text-[13rem] lg:text-[15rem] font-cinematic italic text-cyan-400 select-none pointer-events-none mix-blend-screen leading-none drop-shadow-[0_0_35px_rgba(34,211,238,0.8)]"
             >
               {count}
             </motion.span>
@@ -189,11 +284,15 @@ export default function Preloader({ onComplete }: PreloaderProps) {
 
           {/* Primary Counter Display */}
           <motion.span
-            animate={isGlitching ? { x: [-2, 2, -2, 2, 0], scale: [1, 1.03, 0.98, 1.02, 1] } : {}}
-            transition={{ duration: 0.2, repeat: isGlitching ? 5 : 0 }}
+            animate={
+              isGlitching 
+                ? { x: [-4, 4, -4, 4, 0], y: [-2, 2, -2, 2, 0], scale: [1, 1.06, 0.95, 1.04, 1] } 
+                : {}
+            }
+            transition={{ duration: 0.15, repeat: isGlitching ? 8 : 0 }}
             className={`text-7xl sm:text-9xl md:text-[13rem] lg:text-[15rem] tracking-tighter leading-none transition-colors duration-500 select-none ${
               isPostGlitch
-                ? 'font-cinematic italic text-transparent bg-clip-text bg-gradient-to-r from-white via-[#E9D5FF] to-[#C084FC] drop-shadow-[0_0_40px_rgba(192,132,252,0.65)]'
+                ? 'font-cinematic italic text-transparent bg-clip-text bg-gradient-to-r from-white via-[#E9D5FF] to-[#C084FC] drop-shadow-[0_0_50px_rgba(192,132,252,0.8)]'
                 : 'font-tech font-bold text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.2)]'
             }`}
           >
@@ -220,7 +319,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           <span 
             className={`font-tech text-xs sm:text-sm tracking-[0.25em] uppercase font-semibold transition-colors duration-300 ${
               isGlitching 
-                ? 'text-red-400 drop-shadow-[0_0_15px_rgba(248,113,113,0.8)] animate-pulse' 
+                ? 'text-red-400 drop-shadow-[0_0_15px_rgba(248,113,113,0.8)] animate-pulse font-bold' 
                 : isPostGlitch 
                 ? 'text-brand-neon drop-shadow-[0_0_15px_rgba(192,132,252,0.5)]' 
                 : 'text-brand-mutedsilver'

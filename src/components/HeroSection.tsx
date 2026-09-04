@@ -22,9 +22,6 @@ const HeroSection: React.FC = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
 
-  const line1 = 'Muhammad Mahad';
-  const line2 = 'Waqar Piracha';
-
   return (
     <div className="relative w-full min-h-screen flex flex-col justify-center items-start overflow-hidden px-5 sm:px-10 md:px-16 lg:px-28 py-24">
       {/* Dynamic Multi-Layer Ambient Luminescence (Mouse-Responsive) */}
@@ -58,48 +55,46 @@ const HeroSection: React.FC = () => {
           </motion.div>
 
           {/* Majestic Unified Name Title */}
-          <h1 className="flex flex-col w-full text-left select-none" style={{ transformStyle: "preserve-3d" }}>
+          <h1 className="flex flex-col w-full text-left select-none overflow-visible" style={{ transformStyle: "preserve-3d" }}>
             <span className="sr-only">Muhammad Mahad Waqar Piracha. Frontend Architect & Designer.</span>
             
             {/* Line 1: Muhammad Mahad */}
-            <div className="overflow-hidden py-1 w-full flex flex-wrap" aria-hidden="true" style={{ transform: "translateZ(50px)" }}>
-              {line1.split('').map((char, index) => (
-                <span key={`l1-${index}`} className="inline-block overflow-hidden">
+            <div className="overflow-visible py-1 w-full flex flex-wrap items-baseline gap-x-4 sm:gap-x-6 md:gap-x-8" aria-hidden="true" style={{ transform: "translateZ(40px)" }}>
+              {['Muhammad', 'Mahad'].map((word, wIdx) => (
+                <span key={`w1-${wIdx}`} className="inline-block overflow-visible">
                   <motion.span
-                    className="inline-block font-cinematic italic text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[9rem] text-transparent bg-clip-text bg-gradient-to-r from-white via-[#E9D5FF] to-[#C084FC] drop-shadow-[0_0_30px_rgba(192,132,252,0.4)] leading-[1.0] tracking-tight cursor-default"
-                    initial={{ y: '120%', opacity: 0, filter: 'blur(14px)', rotateX: 30 }}
-                    animate={{ y: '0%', opacity: 1, filter: 'blur(0px)', rotateX: 0 }}
+                    className="inline-block font-cinematic italic text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[8.5rem] text-transparent bg-clip-text bg-gradient-to-r from-white via-[#E9D5FF] to-[#C084FC] drop-shadow-[0_0_30px_rgba(192,132,252,0.4)] leading-[1.15] md:leading-[1.1] tracking-tight cursor-default pb-2 pr-2"
+                    initial={{ y: 35, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
                     whileHover={{ 
-                      y: -8, 
-                      scale: 1.06, 
-                      filter: 'drop-shadow(0 0 25px rgba(255,255,255,0.9))',
-                      transition: { duration: 0.2 }
+                      y: -6, 
+                      transition: { duration: 0.25 }
                     }}
-                    transition={{ delay: 0.2 + index * 0.025, duration: 0.9, ease: luxuryEase }}
+                    transition={{ delay: 0.15 + wIdx * 0.12, duration: 0.8, ease: luxuryEase }}
+                    style={{ willChange: 'transform, opacity' }}
                   >
-                    {char === ' ' ? '\u00A0' : char}
+                    {word}
                   </motion.span>
                 </span>
               ))}
             </div>
 
             {/* Line 2: Waqar Piracha */}
-            <div className="overflow-hidden py-1 w-full flex flex-wrap -mt-2 sm:-mt-4 md:-mt-6" aria-hidden="true" style={{ transform: "translateZ(70px)" }}>
-              {line2.split('').map((char, index) => (
-                <span key={`l2-${index}`} className="inline-block overflow-hidden">
+            <div className="overflow-visible py-1 w-full flex flex-wrap items-baseline gap-x-4 sm:gap-x-6 md:gap-x-8 -mt-1 sm:-mt-2 md:-mt-3" aria-hidden="true" style={{ transform: "translateZ(50px)" }}>
+              {['Waqar', 'Piracha'].map((word, wIdx) => (
+                <span key={`w2-${wIdx}`} className="inline-block overflow-visible">
                   <motion.span
-                    className="inline-block font-cinematic italic text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[9rem] text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#D8B4FE] to-[#C084FC] drop-shadow-[0_0_30px_rgba(192,132,252,0.4)] leading-[1.0] tracking-tight cursor-default"
-                    initial={{ y: '120%', opacity: 0, filter: 'blur(14px)', rotateX: 30 }}
-                    animate={{ y: '0%', opacity: 1, filter: 'blur(0px)', rotateX: 0 }}
+                    className="inline-block font-cinematic italic text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[8.5rem] text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#D8B4FE] to-[#C084FC] drop-shadow-[0_0_30px_rgba(192,132,252,0.4)] leading-[1.15] md:leading-[1.1] tracking-tight cursor-default pb-2 pr-2"
+                    initial={{ y: 35, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
                     whileHover={{ 
-                      y: -8, 
-                      scale: 1.06, 
-                      filter: 'drop-shadow(0 0 25px rgba(255,255,255,0.9))',
-                      transition: { duration: 0.2 }
+                      y: -6, 
+                      transition: { duration: 0.25 }
                     }}
-                    transition={{ delay: 0.5 + index * 0.025, duration: 0.9, ease: luxuryEase }}
+                    transition={{ delay: 0.4 + wIdx * 0.12, duration: 0.8, ease: luxuryEase }}
+                    style={{ willChange: 'transform, opacity' }}
                   >
-                    {char === ' ' ? '\u00A0' : char}
+                    {word}
                   </motion.span>
                 </span>
               ))}
