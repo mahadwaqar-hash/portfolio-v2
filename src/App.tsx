@@ -18,13 +18,8 @@ export default function App() {
       <CustomCursor />
       <NoiseOverlay />
 
-      {isLoading && (
-        <Preloader onComplete={() => setIsLoading(false)} />
-      )}
-
-      {!isLoading && (
-        <div className="font-body text-brand-mercury">
-          <Navbar />
+      <div className="font-body text-brand-mercury">
+        <Navbar />
 
           <main>
             <section
@@ -67,6 +62,9 @@ export default function App() {
             </section>
           </main>
         </div>
+
+      {isLoading && (
+        <Preloader onComplete={() => setIsLoading(false)} />
       )}
     </LenisScroller>
   );

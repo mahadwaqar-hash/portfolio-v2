@@ -9,7 +9,7 @@ interface PreloaderProps {
 
 export default function Preloader({ onComplete }: PreloaderProps) {
   const [count, setCount] = useState(0);
-  const [phase, setPhase] = useState<'counting' | 'glitch' | 'resume' | 'exit'>('counting');
+  const [phase, setPhase] = useState<'counting' | 'glitch' | 'resume' | 'reveal' | 'exit'>('counting');
   const [glitchText, setGlitchText] = useState('SYSTEM CALIBRATING');
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -21,7 +21,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     if (c === 67) return '⚠️ QUANTUM ANOMALY DETECTED AT 67%';
     if (c < 85) return '// BYPASSING PROTOCOLS... OVERCLOCKING CORE';
     if (c < 100) return '// FINALIZING HIGH-PERFORMANCE RUNTIME';
-    return '// SYSTEM READY • LAUNCHING MAHAD.PORTFOLIO';
+    return '// INITIALIZATION COMPLETE • 100%';
   };
 
   // Phase 1: Dynamic acceleration from 0 → 67
@@ -30,7 +30,6 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     
     let current = 0;
     const step = () => {
-      // Non-linear acceleration: quick start, slows slightly as it nears 67
       const increment = current < 30 ? 2 : current < 55 ? 3 : 1;
       current += increment;
 
@@ -72,10 +71,10 @@ export default function Preloader({ onComplete }: PreloaderProps) {
 
       if (current >= 100) {
         setCount(100);
-        setGlitchText('// INITIALIZATION COMPLETE • 100%');
+        setGlitchText('// SYSTEM ONLINE • 100%');
         setTimeout(() => {
-          setPhase('exit');
-        }, 300);
+          setPhase('reveal');
+        }, 200);
       } else {
         setCount(current);
         setGlitchText(getTelemetry(current));
@@ -87,12 +86,21 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     return () => { if (intervalRef.current) clearTimeout(intervalRef.current); };
   }, [phase]);
 
-  // Phase 4: Smooth Iris Exit
+  // Phase 4: Fitting Manifesto Reveal at 100%
+  useEffect(() => {
+    if (phase !== 'reveal') return;
+    const revealTimer = setTimeout(() => {
+      setPhase('exit');
+    }, 900);
+    return () => clearTimeout(revealTimer);
+  }, [phase]);
+
+  // Phase 5: Smooth Upward Curtain Scroll & Blur Exit
   useEffect(() => {
     if (phase !== 'exit') return;
     const exitTimer = setTimeout(() => {
       onComplete();
-    }, 850);
+    }, 950);
     return () => clearTimeout(exitTimer);
   }, [phase, onComplete]);
 
@@ -120,12 +128,14 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         isGlitching
           ? { x: [-10, 12, -8, 10, -5, 8, 0], y: [5, -7, 6, -5, 3, 0] }
           : phase === 'exit'
-          ? { opacity: 0, scale: 1.08, filter: 'blur(16px)' }
-          : { opacity: 1, scale: 1, filter: 'blur(0px)' }
+          ? { y: '-100%', opacity: 0, filter: 'blur(28px)' }
+          : { y: '0%', opacity: 1, filter: 'blur(0px)' }
       }
       transition={
         isGlitching
           ? { duration: 0.2, repeat: 5, ease: 'linear' }
+          : phase === 'exit'
+          ? { duration: 1.0, ease: luxuryEase }
           : { duration: 0.85, ease: luxuryEase }
       }
     >
@@ -242,8 +252,8 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         </div>
       </div>
 
-      {/* Center Monumental Counter */}
-      <div className="relative flex flex-col items-center justify-center my-auto z-20">
+      {/* Center Monumental Counter or Reveal Manifesto */}
+      <div className="relative flex flex-col items-center justify-center my-auto z-20 w-full max-w-5xl px-4">
         
         {/* Shockwave ring during glitch at 67 */}
         <AnimatePresence>
@@ -257,77 +267,100 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           )}
         </AnimatePresence>
 
-        {/* Counter Number Display */}
-        <div className="relative flex items-baseline justify-center">
-          
-          {/* Chromatic Aberration Red Ghost (Glitch Only) */}
-          {isGlitching && (
+        {phase === 'reveal' ? (
+          /* Fitting Reveal Manifesto at 100% */
+          <motion.div
+            initial={{ opacity: 0, y: 35, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 0.55, ease: luxuryEase }}
+            className="flex flex-col items-center justify-center text-center px-4"
+          >
+            <span className="font-tech text-[10px] sm:text-xs text-brand-neon uppercase tracking-[0.4em] mb-3 inline-flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-neon animate-ping" />
+              SYSTEM INITIALIZED // 100%
+            </span>
+            <h2 className="font-cinematic italic text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-white via-[#E9D5FF] to-[#C084FC] drop-shadow-[0_0_35px_rgba(192,132,252,0.6)] leading-tight pb-2">
+              Engineering Unfair<br />Digital Advantages.
+            </h2>
+            <p className="font-tech text-[10px] sm:text-xs text-brand-mutedsilver tracking-[0.3em] uppercase mt-4">
+              Muhammad Mahad Waqar Piracha // Portfolio
+            </p>
+          </motion.div>
+        ) : (
+          /* Counter Number Display */
+          <div className="relative flex items-baseline justify-center overflow-visible px-4 w-full text-center">
+            
+            {/* Chromatic Aberration Red Ghost (Glitch Only) */}
+            {isGlitching && (
+              <motion.span
+                animate={{ x: [-12, 14, -8, 12, 0], y: [4, -5, 3, -2, 0] }}
+                transition={{ duration: 0.12, repeat: 10 }}
+                className="absolute inset-0 text-6xl sm:text-8xl md:text-[9.5rem] lg:text-[11.5rem] xl:text-[13rem] font-cinematic italic text-red-500 select-none pointer-events-none mix-blend-screen leading-none drop-shadow-[0_0_35px_rgba(239,68,68,0.8)] overflow-visible text-center"
+              >
+                {count}
+              </motion.span>
+            )}
+
+            {/* Chromatic Aberration Cyan Ghost (Glitch Only) */}
+            {isGlitching && (
+              <motion.span
+                animate={{ x: [12, -14, 8, -10, 0], y: [-4, 5, -3, 2, 0] }}
+                transition={{ duration: 0.12, repeat: 10 }}
+                className="absolute inset-0 text-6xl sm:text-8xl md:text-[9.5rem] lg:text-[11.5rem] xl:text-[13rem] font-cinematic italic text-cyan-400 select-none pointer-events-none mix-blend-screen leading-none drop-shadow-[0_0_35px_rgba(34,211,238,0.8)] overflow-visible text-center"
+              >
+                {count}
+              </motion.span>
+            )}
+
+            {/* Primary Counter Display */}
             <motion.span
-              animate={{ x: [-12, 14, -8, 12, 0], y: [4, -5, 3, -2, 0] }}
-              transition={{ duration: 0.12, repeat: 10 }}
-              className="absolute inset-0 text-7xl sm:text-9xl md:text-[13rem] lg:text-[15rem] font-cinematic italic text-red-500 select-none pointer-events-none mix-blend-screen leading-none drop-shadow-[0_0_35px_rgba(239,68,68,0.8)]"
+              animate={
+                isGlitching 
+                  ? { x: [-4, 4, -4, 4, 0], y: [-2, 2, -2, 2, 0], scale: [1, 1.06, 0.95, 1.04, 1] } 
+                  : {}
+              }
+              transition={{ duration: 0.15, repeat: isGlitching ? 8 : 0 }}
+              className={`text-6xl sm:text-8xl md:text-[9.5rem] lg:text-[11.5rem] xl:text-[13rem] tracking-tighter leading-none transition-colors duration-500 select-none overflow-visible ${
+                isPostGlitch
+                  ? 'font-cinematic italic text-transparent bg-clip-text bg-gradient-to-r from-white via-[#E9D5FF] to-[#C084FC] drop-shadow-[0_0_50px_rgba(192,132,252,0.8)]'
+                  : 'font-tech font-bold text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.2)]'
+              }`}
             >
               {count}
             </motion.span>
-          )}
 
-          {/* Chromatic Aberration Cyan Ghost (Glitch Only) */}
-          {isGlitching && (
-            <motion.span
-              animate={{ x: [12, -14, 8, -10, 0], y: [-4, 5, -3, 2, 0] }}
-              transition={{ duration: 0.12, repeat: 10 }}
-              className="absolute inset-0 text-7xl sm:text-9xl md:text-[13rem] lg:text-[15rem] font-cinematic italic text-cyan-400 select-none pointer-events-none mix-blend-screen leading-none drop-shadow-[0_0_35px_rgba(34,211,238,0.8)]"
+            <span 
+              className={`text-xl sm:text-3xl md:text-4xl lg:text-5xl ml-1 sm:ml-2 font-tech tracking-normal select-none transition-colors duration-500 overflow-visible ${
+                isPostGlitch ? 'text-brand-neon drop-shadow-[0_0_20px_rgba(192,132,252,0.6)]' : 'text-brand-mutedsilver'
+              }`}
             >
-              {count}
-            </motion.span>
-          )}
-
-          {/* Primary Counter Display */}
-          <motion.span
-            animate={
-              isGlitching 
-                ? { x: [-4, 4, -4, 4, 0], y: [-2, 2, -2, 2, 0], scale: [1, 1.06, 0.95, 1.04, 1] } 
-                : {}
-            }
-            transition={{ duration: 0.15, repeat: isGlitching ? 8 : 0 }}
-            className={`text-7xl sm:text-9xl md:text-[13rem] lg:text-[15rem] tracking-tighter leading-none transition-colors duration-500 select-none ${
-              isPostGlitch
-                ? 'font-cinematic italic text-transparent bg-clip-text bg-gradient-to-r from-white via-[#E9D5FF] to-[#C084FC] drop-shadow-[0_0_50px_rgba(192,132,252,0.8)]'
-                : 'font-tech font-bold text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.2)]'
-            }`}
-          >
-            {count}
-          </motion.span>
-
-          <span 
-            className={`text-2xl sm:text-4xl md:text-5xl ml-2 sm:ml-4 font-tech tracking-normal select-none transition-colors duration-500 ${
-              isPostGlitch ? 'text-brand-neon drop-shadow-[0_0_20px_rgba(192,132,252,0.6)]' : 'text-brand-mutedsilver'
-            }`}
-          >
-            %
-          </span>
-        </div>
+              %
+            </span>
+          </div>
+        )}
 
         {/* Dynamic Telemetry Status */}
-        <motion.div 
-          key={glitchText}
-          initial={{ opacity: 0, y: 5 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2 }}
-          className="mt-4 sm:mt-6 text-center"
-        >
-          <span 
-            className={`font-tech text-xs sm:text-sm tracking-[0.25em] uppercase font-semibold transition-colors duration-300 ${
-              isGlitching 
-                ? 'text-red-400 drop-shadow-[0_0_15px_rgba(248,113,113,0.8)] animate-pulse font-bold' 
-                : isPostGlitch 
-                ? 'text-brand-neon drop-shadow-[0_0_15px_rgba(192,132,252,0.5)]' 
-                : 'text-brand-mutedsilver'
-            }`}
+        {phase !== 'reveal' && (
+          <motion.div 
+            key={glitchText}
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="mt-4 sm:mt-6 text-center"
           >
-            {glitchText}
-          </span>
-        </motion.div>
+            <span 
+              className={`font-tech text-xs sm:text-sm tracking-[0.25em] uppercase font-semibold transition-colors duration-300 ${
+                isGlitching 
+                  ? 'text-red-400 drop-shadow-[0_0_15px_rgba(248,113,113,0.8)] animate-pulse font-bold' 
+                  : isPostGlitch 
+                  ? 'text-brand-neon drop-shadow-[0_0_15px_rgba(192,132,252,0.5)]' 
+                  : 'text-brand-mutedsilver'
+              }`}
+            >
+              {glitchText}
+            </span>
+          </motion.div>
+        )}
       </div>
 
       {/* Bottom Precision Progress Bar */}
