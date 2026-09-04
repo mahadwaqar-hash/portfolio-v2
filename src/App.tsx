@@ -18,10 +18,10 @@ export default function App() {
   useEffect(() => {
     const handlePopState = () => setCurrentPath(window.location.pathname);
     window.addEventListener('popstate', handlePopState);
-    window.addEventListener('pushstate', handlePopState);
+    window.addEventListener('navigate', handlePopState);
     return () => {
       window.removeEventListener('popstate', handlePopState);
-      window.removeEventListener('pushstate', handlePopState);
+      window.removeEventListener('navigate', handlePopState);
     };
   }, []);
 
