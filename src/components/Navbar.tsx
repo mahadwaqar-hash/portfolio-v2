@@ -50,55 +50,73 @@ export default function Navbar() {
         </nav>
       </motion.header>
 
-      {/* Mobile Pull Tab (Hidden on desktop) */}
-      <div className="md:hidden fixed top-0 left-0 right-0 w-full z-50 flex justify-center pointer-events-none">
-        <motion.button
-          onClick={() => setIsOpen(!isOpen)}
-          className="cyber-glass rounded-b-2xl px-10 py-3 border-t-0 shadow-[0_15px_30px_rgba(0,0,0,0.6)] pointer-events-auto border border-brand-amethyst/30"
-          initial={{ y: -50 }}
-          animate={{ y: 0 }}
-          transition={{ delay: 2, duration: 0.8, ease: customEase }}
+      {/* Mobile Expanding Bottom Menu (Hidden on desktop) */}
+      <div className="md:hidden fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+        <motion.div
+          layout
+          animate={{
+            width: isOpen ? "90vw" : "140px",
+            height: isOpen ? "auto" : "50px",
+            borderRadius: isOpen ? "24px" : "25px",
+          }}
+          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          className="cyber-glass border border-brand-amethyst/40 shadow-[0_10px_40px_rgba(109,40,217,0.3)] overflow-hidden flex flex-col"
         >
-          <div className="w-10 h-1.5 bg-brand-mutedsilver rounded-full mb-2 opacity-50 mx-auto" />
-          <span className="font-tech text-xs tracking-widest uppercase text-brand-neon font-bold">
-            {isOpen ? 'Close' : 'Menu'}
-          </span>
-        </motion.button>
-      </div>
-
-      {/* Mobile Fullscreen Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4, ease: customEase }}
-            className="md:hidden fixed inset-0 z-40 bg-brand-abyss/95 backdrop-blur-xl flex flex-col items-center justify-center pt-16"
-          >
-            <nav role="navigation" aria-label="Mobile navigation" className="w-full">
-              <ul className="flex flex-col items-center space-y-10 w-full">
-                {links.map((link, i) => (
-                  <motion.li 
-                    key={link.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 + i * 0.1, duration: 0.4 }}
+          <AnimatePresence mode="wait">
+            {!isOpen ? (
+              <motion.button
+                key="menu-btn"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, transition: { duration: 0.1 } }}
+                onClick={() => setIsOpen(true)}
+                className="w-full h-[50px] flex items-center justify-center gap-2 font-tech text-xs tracking-[0.2em] uppercase text-white font-bold"
+              >
+                <div className="flex flex-col gap-1 items-center justify-center w-4 h-4">
+                  <span className="w-full h-[1.5px] bg-brand-neon rounded-full" />
+                  <span className="w-full h-[1.5px] bg-brand-neon rounded-full" />
+                </div>
+                <span>Menu</span>
+              </motion.button>
+            ) : (
+              <motion.div
+                key="menu-content"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, transition: { duration: 0.1 } }}
+                className="w-full flex flex-col p-6"
+              >
+                <div className="flex justify-between items-center mb-6 pb-4 border-b border-white/10">
+                  <span className="font-tech text-[10px] tracking-widest uppercase text-brand-mutedsilver">Navigation</span>
+                  <button 
+                    onClick={() => setIsOpen(false)} 
+                    className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-brand-neon hover:bg-white/20 transition-colors"
                   >
-                    <a
+                    &#x2715;
+                  </button>
+                </div>
+                
+                <div className="flex flex-col gap-4">
+                  {links.map((link, i) => (
+                    <motion.a
+                      key={link.label}
                       href={`#${link.href}`}
                       onClick={(e) => handleScroll(e, link.href)}
-                      className="font-cinematic italic text-5xl text-white hover:text-brand-neon transition-colors"
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.05 * i }}
+                      className="font-cinematic italic text-4xl text-white active:text-brand-neon transition-colors flex items-center justify-between group"
                     >
                       {link.label}
-                    </a>
-                  </motion.li>
-                ))}
-              </ul>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                      <span className="text-brand-amethyst text-lg opacity-0 group-active:opacity-100 transition-opacity">&#x2192;</span>
+                    </motion.a>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </div>
     </>
   );
 }

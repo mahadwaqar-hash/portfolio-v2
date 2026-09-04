@@ -37,7 +37,7 @@ const ScrollScrubManifesto: React.FC<ScrollScrubManifestoProps> = ({ text }) => 
   
   const { scrollYProgress } = useScroll({ 
     target: containerRef, 
-    offset: ['start 0.8', 'end 0.2'] 
+    offset: ['start 0.95', 'center center'] 
   });
 
   const words = text.split(' ');
