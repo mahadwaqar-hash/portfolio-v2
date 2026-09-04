@@ -6,16 +6,13 @@ import MouseParallax from './MouseParallax';
 export default function DynamicShowroom() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [launchingProject, setLaunchingProject] = useState<{ url: string, name: string } | null>(null);
-
-  const handleProjectClick = (url: string, name: string) => {
+  const handleProjectClick = (url: string) => {
     if (!url || url === '#') return;
-    setLaunchingProject({ url, name });
-    
-    // Simple fade transition before hard redirect
-    setTimeout(() => {
+    if (url.startsWith('/')) {
       window.location.href = url;
-    }, 800);
+    } else {
+      window.open(url, '_blank');
+    }
   };
 
   // For horizontal manual scrolling (if no trackpad)
@@ -112,7 +109,7 @@ export default function DynamicShowroom() {
             >
               <MouseParallax intensity={8} className="w-full h-full">
                 <button 
-                  onClick={() => handleProjectClick(project.liveUrl, project.title)}
+                  onClick={() => handleProjectClick(project.liveUrl)}
                   type="button"
                   className={`text-left block w-full h-[345px] sm:h-[355px] md:h-[365px] rounded-2xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 sm:p-4.5 md:p-5 cursor-pointer border border-brand-amethyst/40 hover:border-brand-neon transition-colors duration-300 hover:shadow-[0_0_40px_rgba(192,132,252,0.35)] ${project.imagePlaceholder}`}
                 >
@@ -261,31 +258,6 @@ export default function DynamicShowroom() {
         </span>
       </div>
 
-      <AnimatePresence>
-        {launchingProject && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-center"
-            >
-              <h2 className="font-cinematic italic text-3xl md:text-5xl text-white mb-4">
-                {launchingProject.name}
-              </h2>
-              <div className="flex justify-center gap-2">
-                <motion.div className="w-1.5 h-1.5 bg-brand-neon rounded-full" animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 1, delay: 0 }} />
-                <motion.div className="w-1.5 h-1.5 bg-brand-neon rounded-full" animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} />
-                <motion.div className="w-1.5 h-1.5 bg-brand-neon rounded-full" animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} />
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }
