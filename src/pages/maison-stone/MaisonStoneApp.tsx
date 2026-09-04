@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import CustomCursor from './components/CustomCursor';
 import Hero from './components/Hero';
 import Vision from './components/Vision';
@@ -6,6 +7,10 @@ import Services from './components/Services';
 import Contact from './components/Contact';
 
 function App() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <main className="bg-brand-ms-obsidian min-h-screen text-brand-ms-alabaster selection:bg-brand-ms-bronze selection:text-brand-ms-obsidian">
       <CustomCursor />

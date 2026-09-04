@@ -22,7 +22,11 @@ export default function App() {
   }, []);
 
   if (currentPath === '/maison-stone' || currentPath === '/maison-stone/') {
-    return <MaisonStoneApp />;
+    return (
+      <LenisScroller>
+        <MaisonStoneApp />
+      </LenisScroller>
+    );
   }
 
   return (
