@@ -32,7 +32,13 @@ export default function Hero() {
       {/* Floating Header */}
       <header className="fixed w-full top-0 px-4 md:px-8 py-6 md:py-8 z-50 flex justify-between items-center mix-blend-difference">
         <h1 className="font-ms-heading text-lg sm:text-xl md:text-2xl tracking-[0.2em] uppercase text-brand-ms-alabaster">MAISON & STONE</h1>
-        <button className="font-ms-body text-[10px] md:text-xs tracking-widest text-brand-ms-alabaster uppercase hover:text-brand-ms-bronze transition-colors">MENU</button>
+        <button 
+          onClick={() => window.location.href = '/'}
+          className="font-ms-body text-[10px] md:text-xs tracking-widest text-brand-ms-alabaster uppercase hover:text-brand-ms-bronze transition-colors flex items-center gap-2"
+        >
+          <span>&#x2190;</span>
+          <span>PORTFOLIO</span>
+        </button>
       </header>
 
       {/* Center Typography */}

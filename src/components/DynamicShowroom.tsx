@@ -103,8 +103,7 @@ export default function DynamicShowroom() {
                 <button 
                   onClick={() => {
                     if (project.liveUrl.startsWith('/')) {
-                      window.history.pushState({}, '', project.liveUrl);
-                      window.dispatchEvent(new PopStateEvent('popstate'));
+                      window.location.href = project.liveUrl;
                     } else if (project.liveUrl && project.liveUrl !== '#') {
                       window.open(project.liveUrl, '_blank');
                     }
