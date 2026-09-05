@@ -1,11 +1,20 @@
-import React, { useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PORTFOLIO_PROJECTS, PortfolioProject } from '../data/portfolioData';
 import MouseParallax from './MouseParallax';
 
 export default function DynamicShowroom() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const handleProjectClick = (url: string) => {
+    if (!url || url === '#') return;
+    if (url.startsWith('/')) {
+      window.history.pushState({}, '', url);
+      window.dispatchEvent(new CustomEvent('navigate', { detail: { path: url } }));
+    } else {
+      window.open(url, '_blank');
+    }
+  };
 
   // For horizontal manual scrolling (if no trackpad)
   const scrollBy = (amount: number) => {
@@ -101,6 +110,7 @@ export default function DynamicShowroom() {
             >
               <MouseParallax intensity={8} className="w-full h-full">
                 <button 
+<<<<<<< HEAD
                   onClick={() => {
                     if (project.liveUrl.startsWith('/')) {
                       window.location.href = project.liveUrl;
@@ -108,6 +118,9 @@ export default function DynamicShowroom() {
                       window.open(project.liveUrl, '_blank');
                     }
                   }}
+=======
+                  onClick={() => handleProjectClick(project.liveUrl)}
+>>>>>>> 6ee01d03a285e67afd41e96ac789ce3719111081
                   type="button"
                   className={`text-left block w-full h-[345px] sm:h-[355px] md:h-[365px] rounded-2xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 sm:p-4.5 md:p-5 cursor-pointer border border-brand-amethyst/40 hover:border-brand-neon transition-colors duration-300 hover:shadow-[0_0_40px_rgba(192,132,252,0.35)] ${project.imagePlaceholder}`}
                 >
@@ -255,6 +268,7 @@ export default function DynamicShowroom() {
           <span>Tap or click any project above to launch live site in browser</span>
         </span>
       </div>
+
     </section>
   );
 }
