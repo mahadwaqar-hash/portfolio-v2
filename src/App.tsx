@@ -17,20 +17,8 @@ export default function App() {
 
   useEffect(() => {
     const handlePopState = () => setCurrentPath(window.location.pathname);
-    const handleNavigate = (e: Event) => {
-      const customEvent = e as CustomEvent<{ path: string }>;
-      if (customEvent.detail && customEvent.detail.path) {
-        setCurrentPath(customEvent.detail.path);
-      } else {
-        setCurrentPath(window.location.pathname);
-      }
-    };
     window.addEventListener('popstate', handlePopState);
-    window.addEventListener('navigate', handleNavigate);
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-      window.removeEventListener('navigate', handleNavigate);
-    };
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   if (currentPath.includes('/maison-stone')) {

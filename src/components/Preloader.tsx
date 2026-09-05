@@ -87,14 +87,17 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     return () => { if (intervalRef.current) clearTimeout(intervalRef.current); };
   }, [phase]);
 
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
+
   // Phase 4: Smooth Curtain Lift Reveal (~0.85s)
   useEffect(() => {
     if (phase !== 'exit') return;
     const exitTimer = setTimeout(() => {
-      onComplete();
+      onCompleteRef.current();
     }, 850);
     return () => clearTimeout(exitTimer);
-  }, [phase, onComplete]);
+  }, [phase]);
 
   const isGlitching = phase === 'glitch';
   const isPostGlitch = count >= 67;

@@ -33,14 +33,7 @@ export default function Hero() {
       <header className="fixed w-full top-0 px-4 md:px-8 py-6 md:py-8 z-50 flex justify-between items-center mix-blend-difference">
         <h1 className="font-ms-heading text-lg sm:text-xl md:text-2xl tracking-[0.2em] uppercase text-brand-ms-alabaster">MAISON & STONE</h1>
         <button 
-<<<<<<< HEAD
-          onClick={() => window.location.href = '/'}
-=======
-          onClick={() => {
-            window.history.pushState({}, '', '/');
-            window.dispatchEvent(new CustomEvent('navigate', { detail: { path: '/' } }));
-          }}
->>>>>>> 6ee01d03a285e67afd41e96ac789ce3719111081
+          onClick={() => { window.location.href = '/'; }}
           className="font-ms-body text-[10px] md:text-xs tracking-widest text-brand-ms-alabaster uppercase hover:text-brand-ms-bronze transition-colors flex items-center gap-2"
         >
           <span>&#x2190;</span>

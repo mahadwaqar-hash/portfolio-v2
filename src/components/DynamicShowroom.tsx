@@ -8,12 +8,7 @@ export default function DynamicShowroom() {
   const [activeIndex, setActiveIndex] = useState(0);
   const handleProjectClick = (url: string) => {
     if (!url || url === '#') return;
-    if (url.startsWith('/')) {
-      window.history.pushState({}, '', url);
-      window.dispatchEvent(new CustomEvent('navigate', { detail: { path: url } }));
-    } else {
-      window.open(url, '_blank');
-    }
+    window.location.href = url;
   };
 
   // For horizontal manual scrolling (if no trackpad)
@@ -110,17 +105,7 @@ export default function DynamicShowroom() {
             >
               <MouseParallax intensity={8} className="w-full h-full">
                 <button 
-<<<<<<< HEAD
-                  onClick={() => {
-                    if (project.liveUrl.startsWith('/')) {
-                      window.location.href = project.liveUrl;
-                    } else if (project.liveUrl && project.liveUrl !== '#') {
-                      window.open(project.liveUrl, '_blank');
-                    }
-                  }}
-=======
                   onClick={() => handleProjectClick(project.liveUrl)}
->>>>>>> 6ee01d03a285e67afd41e96ac789ce3719111081
                   type="button"
                   className={`text-left block w-full h-[345px] sm:h-[355px] md:h-[365px] rounded-2xl overflow-hidden cyber-glass group relative flex flex-col justify-between p-4 sm:p-4.5 md:p-5 cursor-pointer border border-brand-amethyst/40 hover:border-brand-neon transition-colors duration-300 hover:shadow-[0_0_40px_rgba(192,132,252,0.35)] ${project.imagePlaceholder}`}
                 >
