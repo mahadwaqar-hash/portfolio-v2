@@ -10,8 +10,7 @@ export default function DynamicShowroom() {
     if (!url || url === '#') return;
     if (url.startsWith('/')) {
       window.history.pushState({}, '', url);
-      window.dispatchEvent(new Event('navigate'));
-      window.dispatchEvent(new PopStateEvent('popstate'));
+      window.dispatchEvent(new CustomEvent('navigate', { detail: { path: url } }));
     } else {
       window.open(url, '_blank');
     }

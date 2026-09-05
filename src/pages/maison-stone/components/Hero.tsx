@@ -35,8 +35,7 @@ export default function Hero() {
         <button 
           onClick={() => {
             window.history.pushState({}, '', '/');
-            window.dispatchEvent(new Event('navigate'));
-            window.dispatchEvent(new PopStateEvent('popstate'));
+            window.dispatchEvent(new CustomEvent('navigate', { detail: { path: '/' } }));
           }}
           className="font-ms-body text-[10px] md:text-xs tracking-widest text-brand-ms-alabaster uppercase hover:text-brand-ms-bronze transition-colors flex items-center gap-2"
         >
