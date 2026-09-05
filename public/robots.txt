@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://mahadwaqar.com/sitemap.xml
+Sitemap: https://mahad-works.vercel.app/sitemap.xml
