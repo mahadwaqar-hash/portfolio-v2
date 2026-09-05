@@ -56,7 +56,7 @@ const HeroSection: React.FC = () => {
 
           {/* Majestic Unified Name Title */}
           <h1 className="flex flex-col w-full text-left select-none overflow-visible" style={{ transformStyle: "preserve-3d" }}>
-            <span className="sr-only">Muhammad Mahad Waqar Piracha. Frontend Architect & Designer.</span>
+            <span className="sr-only">Muhammad Mahad Waqar Piracha — Premier Web Developer and Designer in Lahore, Pakistan. Specializing in high-performance React frontend architecture, custom web design, and digital showrooms.</span>
             
             {/* Line 1: Muhammad Mahad */}
             <div className="overflow-visible py-1 w-full flex flex-wrap items-baseline gap-x-4 sm:gap-x-6 md:gap-x-8" aria-hidden="true" style={{ transform: "translateZ(40px)" }}>
