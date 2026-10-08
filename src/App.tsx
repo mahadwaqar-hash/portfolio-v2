@@ -36,7 +36,7 @@ export default function App() {
       <CustomCursor />
       <NoiseOverlay />
 
-      <div className="font-body text-brand-mercury">
+      <div className="font-body text-brand-ms-graphite bg-brand-ms-alabaster min-h-screen selection:bg-brand-ms-graphite selection:text-white">
         <Navbar />
 
           <main>
@@ -51,23 +51,15 @@ export default function App() {
             <section
               id="manifesto"
               aria-label="Personal manifesto"
-              className="py-20 md:py-40 px-4 md:px-8 lg:px-32 bg-brand-abyss relative"
+              className="py-20 md:py-40 px-4 md:px-8 lg:px-32 relative border-t border-brand-ms-graphite/5"
             >
-              <h2 className="font-tech text-brand-neon tracking-widest uppercase text-xs md:text-sm mb-10 md:mb-20">
+              <h2 className="font-tech text-brand-ms-graphite/40 tracking-widest uppercase text-xs md:text-sm mb-10 md:mb-20 text-center md:text-left">
                 01 // Manifesto
               </h2>
-              <ScrollScrubManifesto text="I do not build standard websites. I construct high-performance, cinematic digital showrooms that dominate search engines, load instantly, and ruthlessly convert visitors into clients." />
+              <ScrollScrubManifesto text="I build cinematic digital showrooms. High-performance, meticulously engineered web experiences that instantly position your brand as the premium choice." />
             </section>
 
             <ServicesSection />
-
-            <section
-              id="terminal"
-              aria-label="Technical arsenal"
-              className="py-12 md:py-20 px-4 md:px-8 lg:px-24 bg-brand-abyss"
-            >
-              <TerminalSection />
-            </section>
 
             <div id="showroom">
               <DynamicShowroom />
@@ -78,7 +70,7 @@ export default function App() {
             <section
               id="contact"
               aria-label="Contact information"
-              className="min-h-screen flex flex-col justify-center items-center text-center px-4 md:px-8 relative bg-brand-surface z-10"
+              className="min-h-screen flex flex-col justify-center items-center text-center px-4 md:px-8 relative z-10 border-t border-brand-ms-graphite/5"
             >
               <ContactNexus />
             </section>

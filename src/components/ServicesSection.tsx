@@ -30,18 +30,18 @@ export default function ServicesSection() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(0);
 
   return (
-    <section id="services" className="py-24 md:py-40 px-6 md:px-12 lg:px-24 bg-brand-abyss relative border-t border-white/5">
+    <section id="services" className="py-24 md:py-40 px-6 md:px-12 lg:px-24 relative border-t border-brand-ms-graphite/5">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-8">
           <div className="max-w-2xl">
-            <h2 className="font-tech text-brand-neon tracking-[0.2em] uppercase text-xs mb-6">
+            <h2 className="font-tech text-brand-ms-graphite/40 tracking-[0.2em] uppercase text-xs mb-6">
               02 // Core Capabilities
             </h2>
-            <h3 className="font-cinematic italic text-5xl md:text-7xl text-white leading-[1.1]">
+            <h3 className="font-cinematic italic text-5xl md:text-7xl text-brand-ms-graphite leading-[1.1]">
               Engineered for Unfair Advantages.
             </h3>
           </div>
-          <p className="font-body text-sm md:text-base text-brand-mutedsilver max-w-sm">
+          <p className="font-body text-sm md:text-base text-brand-ms-graphite/60 max-w-sm">
             Fusing high-ticket editorial design with ruthless conversion science. Three pillars to establish absolute market dominance.
           </p>
         </div>
@@ -53,17 +53,17 @@ export default function ServicesSection() {
               <div 
                 key={service.id}
                 onMouseEnter={() => setHoveredIndex(idx)}
-                className={`py-8 border-b transition-colors duration-500 cursor-pointer ${hoveredIndex === idx ? 'border-brand-neon' : 'border-white/10'}`}
+                className={`py-8 border-b transition-all duration-500 cursor-pointer ${hoveredIndex === idx ? 'border-brand-ms-graphite/20' : 'border-brand-ms-graphite/5'}`}
               >
                 <div className="flex items-start gap-6">
-                  <span className={`font-tech text-sm tracking-widest transition-colors duration-500 ${hoveredIndex === idx ? 'text-brand-neon' : 'text-brand-mutedsilver'}`}>
+                  <span className={`font-tech text-sm tracking-widest transition-colors duration-500 ${hoveredIndex === idx ? 'text-brand-ms-graphite' : 'text-brand-ms-graphite/30'}`}>
                     {service.id}
                   </span>
                   <div>
-                    <h4 className={`font-cinematic italic text-3xl md:text-5xl transition-colors duration-500 ${hoveredIndex === idx ? 'text-white' : 'text-brand-mutedsilver'}`}>
+                    <h4 className={`font-cinematic italic text-3xl md:text-5xl transition-colors duration-500 ${hoveredIndex === idx ? 'text-brand-ms-graphite' : 'text-brand-ms-graphite/40'}`}>
                       {service.title}
                     </h4>
-                    <p className={`font-tech text-xs tracking-widest uppercase mt-3 transition-colors duration-500 ${hoveredIndex === idx ? 'text-brand-mercury' : 'text-brand-mutedsilver/50'}`}>
+                    <p className={`font-tech text-xs tracking-widest uppercase mt-3 transition-colors duration-500 ${hoveredIndex === idx ? 'text-brand-ms-graphite/60' : 'text-brand-ms-graphite/30'}`}>
                       {service.subtitle}
                     </p>
                   </div>
@@ -72,30 +72,30 @@ export default function ServicesSection() {
             ))}
           </div>
 
-          {/* Right Column: Dynamic Detail Panel */}
+          {/* Right Column: Dynamic Detail Panel (Bubbly Liquid Glass) */}
           <div className="w-full lg:w-1/2 relative min-h-[400px]">
             <AnimatePresence mode="wait">
               {hoveredIndex !== null && (
                 <motion.div
                   key={hoveredIndex}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
+                  exit={{ opacity: 0, y: -15 }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="p-8 md:p-12 rounded-3xl cyber-glass border border-white/10 bg-brand-surface/40 absolute inset-0"
+                  className="p-8 md:p-12 rounded-[2rem] border border-black/5 bg-white/40 backdrop-blur-2xl shadow-[0_8px_40px_rgba(0,0,0,0.03)] absolute inset-0 flex flex-col justify-center"
                 >
-                  <MouseParallax intensity={5}>
-                    <p className="font-body text-base md:text-lg text-brand-mercury leading-relaxed mb-8">
+                  <MouseParallax intensity={3}>
+                    <p className="font-body text-base md:text-lg text-brand-ms-graphite/80 leading-relaxed mb-10">
                       {services[hoveredIndex].description}
                     </p>
                     
                     <div className="space-y-4">
-                      <p className="font-tech text-xs tracking-[0.2em] text-brand-neon uppercase">Deliverables</p>
-                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <p className="font-tech text-xs tracking-[0.2em] text-brand-ms-graphite/40 uppercase">Deliverables</p>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-2">
                         {services[hoveredIndex].deliverables.map((item, i) => (
                           <li key={i} className="flex items-start gap-3">
-                            <span className="text-brand-neon text-sm leading-none mt-1">✦</span>
-                            <span className="font-tech text-xs tracking-wide text-brand-mutedsilver uppercase">{item}</span>
+                            <span className="text-brand-ms-bronze text-sm leading-none mt-0.5">✦</span>
+                            <span className="font-tech text-xs tracking-wide text-brand-ms-graphite/70 font-medium">{item}</span>
                           </li>
                         ))}
                       </ul>

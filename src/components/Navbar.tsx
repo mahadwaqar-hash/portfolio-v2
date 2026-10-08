@@ -28,7 +28,7 @@ export default function Navbar() {
     <>
       {/* Desktop Navbar (Hidden on mobile) */}
       <motion.header
-        className="hidden md:block fixed top-6 left-1/2 -translate-x-1/2 z-50 cyber-glass rounded-full px-8 py-4 max-w-[95vw]"
+        className="hidden md:block fixed top-6 left-1/2 -translate-x-1/2 z-50 rounded-full px-8 py-4 max-w-[95vw] border border-black/5 bg-white/40 backdrop-blur-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)]"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.8, ease: customEase }}
@@ -41,7 +41,7 @@ export default function Navbar() {
                   href={`#${link.href}`}
                   onClick={(e) => handleScroll(e, link.href)}
                   data-cursor="text"
-                  className="font-tech text-sm tracking-widest uppercase text-[#64748B] hover:text-[#C084FC] transition-colors duration-300"
+                  className="font-tech text-xs tracking-widest uppercase text-brand-ms-graphite/60 hover:text-brand-ms-graphite font-medium transition-colors duration-300"
                 >
                   {link.label}
                 </a>

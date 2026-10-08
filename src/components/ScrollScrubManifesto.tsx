@@ -20,7 +20,7 @@ const AnimatedWord = ({
   const start = index / total;
   const end = (index + 1) / total;
   const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1]);
-  const color = useTransform(scrollYProgress, [start, end], ['#64748B', '#C084FC']);
+  const color = useTransform(scrollYProgress, [start, end], ['#CBD5E1', '#1C1C1C']);
   
   return (
     <motion.span 

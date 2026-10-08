@@ -2,13 +2,12 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import MouseParallax from './MouseParallax';
 
-const customEase: [number, number, number, number] = [0.76, 0, 0.24, 1];
+const customEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function ContactNexus() {
   const containerRef = useRef<HTMLElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
   const [copied, setCopied] = React.useState(false);
-  const [copiedPhone, setCopiedPhone] = React.useState(false);
 
   const headingText = "Initiate Contact.";
   const chars = headingText.split('');
@@ -22,35 +21,32 @@ export default function ContactNexus() {
   return (
     <section 
       ref={containerRef} 
-      className="relative z-10 w-full min-h-screen flex flex-col items-center justify-between py-24 px-6 md:px-12 lg:px-24 overflow-hidden"
+      className="relative z-10 w-full min-h-screen flex flex-col items-center justify-between py-24 px-6 md:px-12 lg:px-24 overflow-hidden bg-brand-ms-alabaster"
     >
-      {/* Lightweight, Hardware-Accelerated Ambient Glows (Zero-Lag CSS) */}
-      <div 
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] md:w-[650px] h-[350px] md:h-[650px] bg-gradient-to-tr from-brand-amethyst/20 via-brand-neon/15 to-transparent rounded-full blur-[90px] md:blur-[140px] -z-10 pointer-events-none transform-gpu animate-pulse"
-        style={{ animationDuration: '6s' }}
-      />
+      {/* Light Bubbly Glows */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] md:w-[650px] h-[350px] md:h-[650px] bg-brand-ms-bronze/5 rounded-full blur-[100px] pointer-events-none transform-gpu -z-10" />
 
       {/* Main Content */}
       <MouseParallax intensity={10} className="w-full flex-1 flex flex-col items-center justify-center relative z-10 text-center max-w-5xl my-auto">
-        <div style={{ transform: "translateZ(30px)" }} className="w-full">
+        <div className="w-full">
           {/* Live Signal Badge */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, ease: customEase }}
-            className="inline-flex items-center gap-2.5 px-4 md:px-5 py-2 rounded-full cyber-glass mb-8 border border-brand-amethyst/40 shadow-[0_0_20px_rgba(147,51,234,0.15)]"
+            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/60 backdrop-blur-xl border border-black/5 shadow-sm mb-12"
           >
-            <span className="relative flex h-2 w-2 md:h-3 md:w-3">
+            <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 md:h-3 md:w-3 bg-green-500" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
             </span>
-            <span className="font-tech text-[10px] md:text-xs tracking-widest uppercase text-brand-mercury">
+            <span className="font-tech text-xs tracking-widest uppercase text-brand-ms-graphite font-medium">
               Signal Active // Open for Engagements
             </span>
           </motion.div>
 
           {/* Hero Title */}
-          <h2 className="font-cinematic italic text-6xl sm:text-8xl md:text-[11rem] text-transparent bg-clip-text bg-gradient-to-r from-brand-neon via-[#D8B4FE] to-white leading-none drop-shadow-[0_0_30px_rgba(192,132,252,0.3)] mb-12 flex flex-wrap justify-center overflow-visible">
+          <h2 className="font-cinematic italic text-6xl sm:text-8xl md:text-[11rem] text-brand-ms-graphite leading-[1.1] md:leading-[0.88] mb-12 flex flex-wrap justify-center overflow-visible">
             {chars.map((char, index) => (
               <motion.span
                 key={index}
@@ -58,8 +54,8 @@ export default function ContactNexus() {
                 animate={isInView ? { y: 0, opacity: 1 } : { y: 110, opacity: 0 }}
                 transition={{
                   duration: 0.85,
+                  delay: index * 0.03,
                   ease: customEase,
-                  delay: index * 0.035
                 }}
                 className="inline-block"
               >
@@ -68,116 +64,54 @@ export default function ContactNexus() {
             ))}
           </h2>
 
-          <p className="font-body text-brand-mutedsilver text-base md:text-xl max-w-2xl mx-auto mb-14 leading-relaxed">
-            Ready to engineer high-velocity digital architecture that outclasses your competition? Connect directly through the channels below.
-          </p>
-
-          {/* Magnetic Interactive Action Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl mb-12 mx-auto" style={{ transform: "translateZ(60px)" }}>
-            {/* WhatsApp Card */}
+          {/* Contact Actions */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.5, duration: 0.8, ease: customEase }}
+            className="flex flex-col md:flex-row items-center justify-center gap-6 mt-8"
+          >
             <a
-              href="https://wa.me/923334379962"
+              href="https://wa.me/92334379962"
               target="_blank"
               rel="noopener noreferrer"
-              data-cursor="text"
-              className="group relative cyber-glass p-8 rounded-3xl border border-green-500/30 hover:border-green-400/80 transition-all duration-500 flex flex-col items-start text-left overflow-hidden hover:scale-[1.03] hover:shadow-[0_0_35px_rgba(34,197,94,0.25)]"
+              data-cursor="hover"
+              className="w-full md:w-auto px-10 py-5 rounded-full bg-white/60 backdrop-blur-2xl border border-black/5 shadow-[0_8px_30px_rgba(0,0,0,0.04)] text-brand-ms-graphite font-tech text-sm tracking-widest uppercase font-semibold transition-all hover:bg-white hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] flex items-center justify-center gap-3 group"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/10 rounded-full blur-2xl group-hover:bg-green-500/25 transition-all duration-500" />
-              <div className="flex items-center justify-between w-full mb-6">
-                <span className="w-12 h-12 rounded-2xl cyber-glass border border-green-500/40 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                  💬
-                </span>
-                <span className="font-tech text-xs tracking-widest text-green-400 uppercase flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                  Instant Ping
-                </span>
-              </div>
-              <h3 className="font-tech font-bold text-2xl text-white mb-1 group-hover:text-green-300 transition-colors">
-                0333 4379962
-              </h3>
-              <p className="font-tech text-xs tracking-widest uppercase text-green-400 mb-2">
-                WhatsApp Direct // +92 333 4379962
-              </p>
-              <p className="font-body text-sm text-brand-mutedsilver group-hover:text-brand-mercury transition-colors">
-                Fast response for project inquiries, scope discussions & audits.
-              </p>
-              <span className="mt-6 font-tech text-xs tracking-widest uppercase text-green-400 flex items-center gap-2 group-hover:translate-x-1.5 transition-transform">
-                Launch WhatsApp Chat ↗
-              </span>
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse group-hover:scale-125 transition-transform" />
+              <span>Ping on WhatsApp</span>
             </a>
 
-            {/* Direct Line Card */}
-            <a
-              href="tel:+923334379962"
-              data-cursor="text"
-              className="group relative cyber-glass p-8 rounded-3xl border border-brand-amethyst/40 hover:border-brand-neon transition-all duration-500 flex flex-col items-start text-left overflow-hidden hover:scale-[1.03] hover:shadow-[0_0_35px_rgba(192,132,252,0.25)]"
-            >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-brand-bioglow/10 rounded-full blur-2xl group-hover:bg-brand-bioglow/25 transition-all duration-500" />
-              <div className="flex items-center justify-between w-full mb-6">
-                <span className="w-12 h-12 rounded-2xl cyber-glass border border-brand-neon/40 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                  ⚡
-                </span>
-                <span className="font-tech text-xs tracking-widest text-brand-neon uppercase">
-                  Priority Call
-                </span>
-              </div>
-              <h3 className="font-tech font-bold text-2xl text-white mb-1 group-hover:text-brand-neon transition-colors">
-                0333 4379962
-              </h3>
-              <p className="font-tech text-xs tracking-widest uppercase text-brand-neon mb-2">
-                Direct Line // +92 333 4379962
-              </p>
-              <p className="font-body text-sm text-brand-mutedsilver group-hover:text-brand-mercury transition-colors">
-                Direct voice connection for immediate consultations & partnerships.
-              </p>
-              <span className="mt-6 font-tech text-xs tracking-widest uppercase text-brand-neon flex items-center gap-2 group-hover:translate-x-1.5 transition-transform">
-                Call Direct Line ↗
-              </span>
-            </a>
-          </div>
-
-          {/* 1-Click Copy Buttons (Phone & Email) */}
-          <div className="flex flex-wrap items-center justify-center gap-4">
             <button
-              type="button"
-              onClick={() => {
-                navigator.clipboard.writeText('03334379962');
-                setCopiedPhone(true);
-                setTimeout(() => setCopiedPhone(false), 2500);
-              }}
-              data-cursor="text"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-full cyber-glass border border-green-500/40 hover:border-green-400 text-brand-mercury hover:text-white transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(34,197,94,0.15)]"
-            >
-              <span className="text-base">{copiedPhone ? '✓' : '📱'}</span>
-              <span className="font-tech text-sm tracking-wider">
-                {copiedPhone ? 'Copied Phone Number!' : 'Copy Phone: 0333 4379962'}
-              </span>
-            </button>
-
-            <button
-              type="button"
               onClick={copyEmail}
-              data-cursor="text"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-full cyber-glass border border-brand-amethyst/40 hover:border-brand-neon text-brand-mercury hover:text-white transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(147,51,234,0.1)]"
+              data-cursor="hover"
+              className="w-full md:w-auto px-10 py-5 rounded-full bg-transparent border border-brand-ms-graphite/20 text-brand-ms-graphite font-tech text-sm tracking-widest uppercase font-semibold transition-all hover:border-brand-ms-graphite hover:-translate-y-1 flex items-center justify-center gap-3 relative overflow-hidden group"
             >
-              <span className="text-base">{copied ? '✓' : '✉️'}</span>
-              <span className="font-tech text-sm tracking-wider">
-                {copied ? 'Copied to Clipboard!' : 'Copy Email: mahad.waqar@gmail.com'}
-              </span>
+              <span className="relative z-10">{copied ? 'Email Copied!' : 'Copy Email Address'}</span>
             </button>
-          </div>
+          </motion.div>
         </div>
       </MouseParallax>
 
-      {/* Footer */}
-      <footer className="mt-16 pt-8 w-full border-t border-brand-amethyst/20 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="font-tech text-xs text-brand-mutedsilver tracking-wider">
-          Engineered in Lahore. Deployed Globally. © 2026.
-        </p>
-        <p className="font-cinematic italic text-base text-brand-neon/80">
-          Muhammad Mahad Waqar Piracha
-        </p>
-      </footer>
+      <motion.footer 
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 1 } : {}}
+        transition={{ delay: 1, duration: 1 }}
+        className="w-full mt-32 pt-8 border-t border-brand-ms-graphite/10 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left"
+      >
+        <div>
+          <p className="font-tech text-[10px] uppercase tracking-widest text-brand-ms-graphite/50 mb-1">
+            Engineered in Lahore. Deployed Globally. © 2026.
+          </p>
+          <p className="font-cinematic italic text-xl text-brand-ms-graphite/80">
+            Muhammad Mahad Waqar Piracha
+          </p>
+        </div>
+        <div className="flex gap-4">
+          <a href="#" className="font-tech text-xs tracking-widest text-brand-ms-graphite/60 hover:text-brand-ms-graphite uppercase transition-colors">LinkedIn</a>
+          <a href="#" className="font-tech text-xs tracking-widest text-brand-ms-graphite/60 hover:text-brand-ms-graphite uppercase transition-colors">GitHub</a>
+        </div>
+      </motion.footer>
     </section>
   );
 }
