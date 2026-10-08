@@ -50,7 +50,7 @@ export default function ContactNexus() {
           </motion.div>
 
           {/* Hero Title */}
-          <h2 className="font-cinematic italic text-5xl sm:text-6xl md:text-8xl lg:text-[9.5rem] text-brand-neon leading-[1.1] md:leading-[0.88] mb-8 flex flex-wrap justify-center overflow-visible">
+          <h2 className="font-cinematic italic text-6xl sm:text-8xl md:text-[11rem] text-transparent bg-clip-text bg-gradient-to-r from-brand-neon via-[#D8B4FE] to-white leading-none drop-shadow-[0_0_30px_rgba(192,132,252,0.3)] mb-12 flex flex-wrap justify-center overflow-visible">
             {chars.map((char, index) => (
               <motion.span
                 key={index}

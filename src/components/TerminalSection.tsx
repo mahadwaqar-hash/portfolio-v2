@@ -48,16 +48,16 @@ export default function TerminalSection() {
       </h2>
       <div className="w-full max-w-4xl mx-auto">
         <MouseParallax intensity={10}>
-          <div className="cyber-glass rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(109,40,217,0.15)]" style={{ transform: "translateZ(30px)" }}>
-            <header className="flex items-center gap-2 px-4 py-3 border-b border-brand-amethyst/20">
-              <div className="w-3 h-3 rounded-full bg-red-500" aria-hidden="true" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500" aria-hidden="true" />
-              <div className="w-3 h-3 rounded-full bg-green-500" aria-hidden="true" />
-              <div className="font-tech text-[10px] sm:text-xs text-brand-mutedsilver ml-2 sm:ml-4">
-                mahad@portfolio:~
+          <div className="cyber-glass rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(109,40,217,0.1)] border border-white/10 bg-brand-surface/80 backdrop-blur-2xl" style={{ transform: "translateZ(30px)" }}>
+            <header className="flex items-center gap-2 px-6 py-4 border-b border-white/5 bg-black/40">
+              <div className="w-2.5 h-2.5 rounded-full bg-white/20 hover:bg-red-500 transition-colors" aria-hidden="true" />
+              <div className="w-2.5 h-2.5 rounded-full bg-white/20 hover:bg-yellow-500 transition-colors" aria-hidden="true" />
+              <div className="w-2.5 h-2.5 rounded-full bg-white/20 hover:bg-green-500 transition-colors" aria-hidden="true" />
+              <div className="font-tech text-[10px] tracking-widest text-brand-mutedsilver ml-4 uppercase">
+                Architecture_Manifest.exe
               </div>
             </header>
-            <div className="p-4 sm:p-6 md:p-8 font-mono text-xs sm:text-sm md:text-base break-words whitespace-pre-wrap">
+            <div className="p-6 md:p-10 font-mono text-xs sm:text-sm text-brand-mercury break-words whitespace-pre-wrap leading-loose">
               {displayedLines.map((line, i) => (
                 <div key={i} className="mb-2">
                   <span className="text-brand-mutedsilver">{line.prompt}</span>

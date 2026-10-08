@@ -2,117 +2,95 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const metrics = [
-  {
-    value: '100%',
-    label: 'Deployment Reliability',
-    detail: 'Zero broken links, 100% functional live interactive codebases.',
-  },
-  {
-    value: '< 0.8s',
-    label: 'Average LCP Speed',
-    detail: 'Optimized assets, GPU layer acceleration, sub-second loads.',
-  },
-  {
-    value: '10km+',
-    label: 'Geo-Radius Dominance',
-    detail: 'Targeted local schema & area-served search engine outranking.',
-  },
-  {
-    value: '95+',
-    label: 'Core Web Vitals',
-    detail: 'Engineered against Google Lighthouse performance standards.',
-  },
-];
-
-const processSteps = [
-  {
-    phase: '01',
-    name: 'Discovery & Market Recon',
-    duration: 'Day 1–3',
-    description:
-      'Deep dive into competitive gaps in your market, search terms, and brand positioning to design an unfair edge.',
-  },
-  {
-    phase: '02',
-    name: 'Art Direction & Architecture',
-    duration: 'Day 4–8',
-    description:
-      'High-fidelity typography, fluid motion systems, and custom UI components built from the ground up in React.',
-  },
-  {
-    phase: '03',
-    name: 'Engineered Launch & SEO Handoff',
-    duration: 'Day 9–14',
-    description:
-      'Production deployment on edge servers, Google Business verification, JSON-LD schema verification, and turn-key client handoff.',
-  },
+  { value: '100%', label: 'Deployment Reliability' },
+  { value: '< 0.8s', label: 'Average LCP Speed' },
+  { value: '10km+', label: 'Geo-Radius Dominance' },
+  { value: '95+', label: 'Core Web Vitals' },
 ];
 
 export default function TrustMetricsSection() {
   return (
-    <section id="process" className="py-24 md:py-36 px-5 sm:px-10 md:px-16 lg:px-28 bg-brand-surface relative border-t border-white/5">
-      <div className="max-w-6xl mx-auto">
-        {/* Metric Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-24">
+    <section id="process" className="py-24 md:py-40 px-6 md:px-12 lg:px-24 bg-brand-surface relative border-t border-white/5">
+      <div className="max-w-7xl mx-auto">
+        
+        {/* Massive Metrics Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16 mb-32">
           {metrics.map((m, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.1, duration: 0.6 }}
-              className="p-6 md:p-8 rounded-2xl cyber-glass border border-white/10 hover:border-brand-neon/40 transition-all flex flex-col justify-between"
+              transition={{ delay: idx * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col border-l border-white/10 pl-6"
             >
-              <div>
-                <p className="font-cinematic italic text-4xl sm:text-5xl md:text-6xl text-brand-neon font-bold mb-2">
-                  {m.value}
-                </p>
-                <p className="font-tech text-xs sm:text-sm text-white uppercase tracking-wider font-semibold mb-2">
-                  {m.label}
-                </p>
-              </div>
-              <p className="font-body text-xs text-brand-mutedsilver leading-relaxed">
-                {m.detail}
+              <p className="font-tech text-4xl md:text-6xl text-brand-neon font-bold tracking-tighter mb-4">
+                {m.value}
+              </p>
+              <p className="font-tech text-xs md:text-sm text-brand-mercury uppercase tracking-widest">
+                {m.label}
               </p>
             </motion.div>
           ))}
         </div>
 
-        {/* Process Timeline */}
-        <div className="mt-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-neon/15 border border-brand-neon/40 text-brand-neon text-[10px] md:text-xs font-tech tracking-widest uppercase mb-4">
-            <span>03 // Proven Methodology</span>
+        {/* Process / Delivery Cadence */}
+        <div className="border-t border-white/10 pt-24 flex flex-col lg:flex-row justify-between gap-16">
+          <div className="lg:w-1/3">
+            <h2 className="font-tech text-brand-neon tracking-[0.2em] uppercase text-xs mb-6">
+              03 // Proven Methodology
+            </h2>
+            <h3 className="font-cinematic italic text-5xl md:text-6xl text-white leading-tight mb-6">
+              The High-Velocity Delivery Cadence.
+            </h3>
+            <p className="font-body text-sm text-brand-mutedsilver leading-relaxed">
+              No endless delays. No amateur templates. A strict, battle-tested pipeline designed to deploy your digital flagship in weeks, not months.
+            </p>
           </div>
-          <h2 className="font-cinematic italic text-4xl sm:text-5xl md:text-6xl text-white mb-12">
-            The High-Velocity Delivery Cadence.
-          </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-            {processSteps.map((step, idx) => (
-              <div 
-                key={step.phase}
-                className="relative flex flex-col justify-between p-8 rounded-2xl bg-brand-abyss/60 border border-white/10 hover:border-brand-neon/30 transition-all"
-              >
-                <div>
-                  <div className="flex justify-between items-center mb-6">
-                    <span className="font-tech text-2xl text-brand-neon font-bold">
-                      {step.phase}
-                    </span>
-                    <span className="font-tech text-xs text-brand-mutedsilver px-3 py-1 rounded-full bg-white/5 border border-white/10">
-                      {step.duration}
-                    </span>
-                  </div>
-                  <h3 className="font-tech text-lg text-white font-semibold mb-3">
-                    {step.name}
-                  </h3>
-                  <p className="font-body text-xs sm:text-sm text-brand-mutedsilver leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
+          <div className="lg:w-2/3 flex flex-col gap-12">
+            <div className="flex gap-6 group">
+              <span className="font-tech text-brand-neon text-xl font-bold pt-1">01</span>
+              <div>
+                <h4 className="font-tech text-xl md:text-2xl text-white uppercase tracking-wider mb-2 group-hover:text-brand-neon transition-colors">
+                  Discovery & Market Recon
+                </h4>
+                <p className="font-body text-brand-mutedsilver text-sm md:text-base leading-relaxed">
+                  We strip your competitors' strategies down to the studs. Identifying local SEO gaps, brand positioning opportunities, and crafting the exact technical architecture needed for you to dominate.
+                </p>
               </div>
-            ))}
+            </div>
+
+            <div className="w-full h-px bg-white/5" />
+
+            <div className="flex gap-6 group">
+              <span className="font-tech text-brand-neon text-xl font-bold pt-1">02</span>
+              <div>
+                <h4 className="font-tech text-xl md:text-2xl text-white uppercase tracking-wider mb-2 group-hover:text-brand-neon transition-colors">
+                  Art Direction & UI Engineering
+                </h4>
+                <p className="font-body text-brand-mutedsilver text-sm md:text-base leading-relaxed">
+                  Where the magic happens. I construct the front-end using React, Framer Motion, and Tailwind CSS. Implementing cinematic preloaders, custom cursors, and buttery smooth scroll physics.
+                </p>
+              </div>
+            </div>
+
+            <div className="w-full h-px bg-white/5" />
+
+            <div className="flex gap-6 group">
+              <span className="font-tech text-brand-neon text-xl font-bold pt-1">03</span>
+              <div>
+                <h4 className="font-tech text-xl md:text-2xl text-white uppercase tracking-wider mb-2 group-hover:text-brand-neon transition-colors">
+                  Deployment & SEO Handoff
+                </h4>
+                <p className="font-body text-brand-mutedsilver text-sm md:text-base leading-relaxed">
+                  The site is launched to global edge servers. I execute the final technical SEO sweep, verify JSON-LD schemas, and hand over your custom 6-month SEO growth plan.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
     </section>
   );

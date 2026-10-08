@@ -1,21 +1,23 @@
 import React, { useEffect } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import ScrambleText from './ScrambleText';
 import MouseParallax from './MouseParallax';
 
 const luxuryEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-const HeroSection: React.FC = () => {
+export default function HeroSection() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const springX = useSpring(mouseX, { stiffness: 25, damping: 35 });
-  const springY = useSpring(mouseY, { stiffness: 25, damping: 35 });
+  const springX = useSpring(mouseX, { stiffness: 20, damping: 40 });
+  const springY = useSpring(mouseY, { stiffness: 20, damping: 40 });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
+      // Calculate normalized mouse position (-1 to 1)
+      const x = (e.clientX / window.innerWidth) * 2 - 1;
+      const y = (e.clientY / window.innerHeight) * 2 - 1;
+      mouseX.set(x * 50); // Max 50px offset
+      mouseY.set(y * 50);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -23,157 +25,123 @@ const HeroSection: React.FC = () => {
   }, [mouseX, mouseY]);
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col justify-center items-start overflow-hidden px-5 sm:px-10 md:px-16 lg:px-28 py-24">
-      {/* Dynamic Multi-Layer Ambient Luminescence (Mouse-Responsive) */}
-      <motion.div 
-        className="absolute w-[350px] h-[350px] md:w-[750px] md:h-[750px] rounded-full bg-gradient-to-tr from-brand-amethyst/30 via-brand-neon/20 to-cyan-500/10 blur-[90px] md:blur-[160px] pointer-events-none transform-gpu -z-10"
-        style={{ 
-          x: springX, 
+    <div className="relative w-full min-h-screen flex flex-col justify-between overflow-hidden px-6 md:px-12 lg:px-24 py-12 md:py-24">
+      {/* Dynamic Ambient Background Glow */}
+      <motion.div
+        className="absolute top-1/2 left-1/2 w-[60vw] h-[60vw] md:w-[40vw] md:h-[40vw] rounded-full bg-brand-amethyst/20 blur-[120px] pointer-events-none -z-10"
+        style={{
+          x: springX,
           y: springY,
           translateX: '-50%',
-          translateY: '-50%'
+          translateY: '-50%',
         }}
       />
 
-      <MouseParallax intensity={10} className="relative z-10 w-full">
-        <div className="flex flex-col justify-center items-start w-full max-w-6xl">
-          
-          {/* Status Eyebrow Badge */}
-          <motion.div 
-            initial={{ opacity: 0, y: 15, filter: 'blur(8px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            transition={{ delay: 0.1, duration: 0.8, ease: luxuryEase }}
-            className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full cyber-glass border border-brand-amethyst/40 mb-6 md:mb-8 shadow-[0_0_20px_rgba(192,132,252,0.15)]"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-            </span>
-            <span className="font-tech text-[10px] md:text-xs tracking-[0.3em] uppercase text-brand-mercury">
-              Available for Commissions // Lahore • Global
-            </span>
-          </motion.div>
-
-          {/* Majestic Unified Name Title */}
-          <h1 className="flex flex-col w-full text-left select-none overflow-visible" style={{ transformStyle: "preserve-3d" }}>
-            <span className="sr-only">Muhammad Mahad Waqar Piracha — Premier Web Developer and Designer in Lahore, Pakistan. Specializing in high-performance React frontend architecture, custom web design, and digital showrooms.</span>
-            
-            {/* Line 1: Muhammad Mahad */}
-            <div className="overflow-visible py-1 w-full flex flex-wrap items-baseline gap-x-4 sm:gap-x-6 md:gap-x-8" aria-hidden="true" style={{ transform: "translateZ(40px)" }}>
-              {['Muhammad', 'Mahad'].map((word, wIdx) => (
-                <span key={`w1-${wIdx}`} className="inline-block overflow-visible">
-                  <motion.span
-                    className="inline-block font-cinematic italic text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[8.5rem] text-transparent bg-clip-text bg-gradient-to-r from-white via-[#E9D5FF] to-[#C084FC] drop-shadow-[0_0_30px_rgba(192,132,252,0.4)] leading-[1.15] md:leading-[1.1] tracking-tight cursor-default pb-2 pr-2"
-                    initial={{ y: 35, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    whileHover={{ 
-                      y: -6, 
-                      transition: { duration: 0.25 }
-                    }}
-                    transition={{ delay: 0.15 + wIdx * 0.12, duration: 0.8, ease: luxuryEase }}
-                    style={{ willChange: 'transform, opacity' }}
-                  >
-                    {word}
-                  </motion.span>
-                </span>
-              ))}
-            </div>
-
-            {/* Line 2: Waqar Piracha */}
-            <div className="overflow-visible py-1 w-full flex flex-wrap items-baseline gap-x-4 sm:gap-x-6 md:gap-x-8 -mt-1 sm:-mt-2 md:-mt-3" aria-hidden="true" style={{ transform: "translateZ(50px)" }}>
-              {['Waqar', 'Piracha'].map((word, wIdx) => (
-                <span key={`w2-${wIdx}`} className="inline-block overflow-visible">
-                  <motion.span
-                    className="inline-block font-cinematic italic text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[8.5rem] text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#D8B4FE] to-[#C084FC] drop-shadow-[0_0_30px_rgba(192,132,252,0.4)] leading-[1.15] md:leading-[1.1] tracking-tight cursor-default pb-2 pr-2"
-                    initial={{ y: 35, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    whileHover={{ 
-                      y: -6, 
-                      transition: { duration: 0.25 }
-                    }}
-                    transition={{ delay: 0.4 + wIdx * 0.12, duration: 0.8, ease: luxuryEase }}
-                    style={{ willChange: 'transform, opacity' }}
-                  >
-                    {word}
-                  </motion.span>
-                </span>
-              ))}
-            </div>
-          </h1>
-
-          {/* Refined Decoder Subtitle */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8, ease: luxuryEase }}
-            style={{ transform: "translateZ(40px)" }} 
-            className="mt-6 md:mt-10 w-full max-w-2xl"
-          >
-            <ScrambleText 
-              text="Architecting high-velocity digital flagships, fluid systems & unfair market advantages." 
-              className="text-base sm:text-xl md:text-2xl text-brand-mutedsilver leading-relaxed" 
-            />
-          </motion.div>
-
-          {/* High-End Atelier Metadata Triad */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.95, duration: 0.8, ease: luxuryEase }}
-            className="mt-10 pt-8 border-t border-white/10 w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 gap-4 text-left"
-            style={{ transform: "translateZ(30px)" }}
-          >
-            <div>
-              <p className="font-tech text-[10px] text-brand-neon uppercase tracking-widest">01 // Craft</p>
-              <p className="font-body text-xs sm:text-sm text-brand-mercury mt-1 font-medium">Frontend Architecture & UI Engineering</p>
-            </div>
-            <div>
-              <p className="font-tech text-[10px] text-brand-neon uppercase tracking-widest">02 // Stack</p>
-              <p className="font-body text-xs sm:text-sm text-brand-mercury mt-1 font-medium">React • TypeScript • Framer Motion • Vite</p>
-            </div>
-            <div>
-              <p className="font-tech text-[10px] text-brand-neon uppercase tracking-widest">03 // Location</p>
-              <p className="font-body text-xs sm:text-sm text-brand-mercury mt-1 font-medium">Lahore, PK (31.5204° N, 74.3587° E)</p>
-            </div>
-          </motion.div>
-
-          {/* Quick Interaction Buttons */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 0.8, ease: luxuryEase }}
-            className="flex flex-wrap items-center gap-4 mt-8"
-          >
-            <a
-              href="#showroom"
-              className="px-6 py-3 rounded-full bg-brand-neon text-brand-abyss font-tech text-xs tracking-wider uppercase font-bold hover:bg-white hover:scale-105 active:scale-95 transition-all shadow-[0_0_25px_rgba(192,132,252,0.3)] flex items-center gap-2"
-            >
-              <span>Explore Showroom</span>
-              <span>↓</span>
-            </a>
-            <a
-              href="#contact"
-              className="px-6 py-3 rounded-full cyber-glass border border-brand-amethyst/40 hover:border-brand-neon text-brand-mercury hover:text-white font-tech text-xs tracking-wider uppercase transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
-            >
-              <span>Initiate Contact</span>
-              <span>↗</span>
-            </a>
-          </motion.div>
+      {/* Top Header / Status Bar */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 2.2, duration: 1, ease: luxuryEase }}
+        className="w-full flex justify-between items-start pt-12 md:pt-0"
+      >
+        <div className="flex flex-col gap-1">
+          <span className="font-tech text-xs tracking-[0.3em] text-brand-mutedsilver uppercase">
+            Based in Lahore, PK
+          </span>
+          <span className="font-tech text-xs tracking-widest text-brand-neon uppercase">
+            Global Reach
+          </span>
         </div>
+        <div className="hidden md:flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+          </span>
+          <span className="font-tech text-[10px] tracking-widest text-brand-mercury uppercase">
+            Accepting New Clients
+          </span>
+        </div>
+      </motion.div>
+
+      {/* Massive Editorial Centerpiece */}
+      <MouseParallax intensity={15} className="flex-1 flex flex-col justify-center items-center text-center w-full relative z-10">
+        <h1 className="flex flex-col items-center justify-center w-full select-none cursor-default">
+          {/* Line 1 */}
+          <div className="overflow-hidden pb-2 md:pb-4">
+            <motion.span
+              initial={{ y: "110%" }}
+              animate={{ y: "0%" }}
+              transition={{ delay: 2.4, duration: 1.2, ease: luxuryEase }}
+              className="block font-tech text-3xl sm:text-5xl md:text-7xl lg:text-[6rem] text-white tracking-tighter uppercase font-bold leading-none"
+            >
+              MUHAMMAD MAHAD
+            </motion.span>
+          </div>
+          
+          {/* Line 2 - Cinematic Italic Intersect */}
+          <div className="overflow-hidden pb-4 md:pb-8 -mt-2 md:-mt-6">
+            <motion.span
+              initial={{ y: "110%" }}
+              animate={{ y: "0%" }}
+              transition={{ delay: 2.5, duration: 1.2, ease: luxuryEase }}
+              className="block font-cinematic italic text-6xl sm:text-8xl md:text-[10rem] lg:text-[12rem] text-transparent bg-clip-text bg-gradient-to-r from-brand-neon via-[#D8B4FE] to-white leading-none drop-shadow-[0_0_40px_rgba(192,132,252,0.3)] pr-4"
+            >
+              Waqar Piracha
+            </motion.span>
+          </div>
+        </h1>
+
+        <motion.p
+          initial={{ opacity: 0, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, filter: 'blur(0px)' }}
+          transition={{ delay: 2.8, duration: 1, ease: luxuryEase }}
+          className="mt-6 md:mt-10 font-body text-sm sm:text-base md:text-xl text-brand-mutedsilver max-w-2xl font-light tracking-wide"
+        >
+          I engineer unfair digital advantages for high-ticket brands. Cinematic web architecture, Awwwards-level interactions, and local SEO domination.
+        </motion.p>
+
+        {/* Call to action */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 3.0, duration: 0.8, ease: luxuryEase }}
+          className="mt-12"
+        >
+          <a
+            href="#showroom"
+            data-cursor="hover"
+            className="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden rounded-full bg-brand-neon text-brand-abyss font-tech text-xs md:text-sm tracking-widest uppercase font-bold transition-all hover:scale-105 active:scale-95"
+          >
+            <span className="absolute inset-0 w-full h-full bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -translate-x-full z-0" />
+            <span className="relative z-10 flex items-center gap-3">
+              Explore Showroom <span className="text-lg leading-none">↓</span>
+            </span>
+          </a>
+        </motion.div>
       </MouseParallax>
 
-      {/* Elegant Minimalist Scroll Affordance */}
-      <motion.div 
+      {/* Bottom Footer Area */}
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.3, duration: 0.8 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
+        transition={{ delay: 3.2, duration: 1 }}
+        className="w-full flex justify-between items-end pb-8 md:pb-0"
       >
-        <span className="font-tech text-[9px] uppercase tracking-[0.4em] text-brand-mutedsilver/60">Scroll</span>
-        <div className="w-[1px] h-10 bg-gradient-to-b from-brand-neon/80 to-transparent animate-pulse" />
+        <div className="font-tech text-[10px] tracking-widest text-brand-mutedsilver/60 uppercase">
+          <p>Portfolio Version</p>
+          <p className="text-brand-mercury">V2.0 — 2026</p>
+        </div>
+
+        <div className="flex flex-col items-center gap-3">
+          <span className="font-tech text-[9px] uppercase tracking-[0.4em] text-brand-mutedsilver/60">Scroll</span>
+          <div className="w-[1px] h-12 md:h-16 bg-gradient-to-b from-brand-neon to-transparent animate-pulse" />
+        </div>
+
+        <div className="font-tech text-[10px] tracking-widest text-brand-mutedsilver/60 uppercase text-right">
+          <p>Core Stack</p>
+          <p className="text-brand-mercury">React • Framer</p>
+        </div>
       </motion.div>
     </div>
   );
-};
-
-export default HeroSection;
+}
