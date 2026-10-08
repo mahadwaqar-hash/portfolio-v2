@@ -68,7 +68,7 @@ export default function Navbar() {
           {/* Direct Line / Contact Trigger */}
           <div className="flex items-center gap-3">
             <a
-              href="https://wa.me/92334379962"
+              href="https://wa.me/923334379962?text=Hi%20Mahad,%20I'm%20interested%20in%20working%20with%20you%20on%20a%20project."
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#00B67A]/40 bg-[#00B67A]/10 text-[#00B67A] hover:bg-[#00B67A] hover:text-black font-mono text-xs font-medium transition-all duration-200"

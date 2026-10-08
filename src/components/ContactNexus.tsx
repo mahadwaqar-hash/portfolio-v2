@@ -56,7 +56,7 @@ export default function ContactNexus() {
         {/* Premium Action Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
           <motion.a
-            href="https://wa.me/92334379962"
+            href="https://wa.me/923334379962?text=Hi%20Mahad,%20I'm%20interested%20in%20working%20with%20you%20on%20a%20project."
             target="_blank"
             rel="noopener noreferrer"
             initial={{ opacity: 0, scale: 0.95 }}
