@@ -8,8 +8,9 @@ export default function Navbar() {
 
   const links = [
     { label: 'Index', href: 'hero' },
-    { label: 'Arsenal', href: 'terminal' },
+    { label: 'Services', href: 'services' },
     { label: 'Showroom', href: 'showroom' },
+    { label: 'Process', href: 'process' },
     { label: 'Contact', href: 'contact' },
   ];
 

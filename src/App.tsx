@@ -7,6 +7,8 @@ import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import ScrollScrubManifesto from './components/ScrollScrubManifesto';
 import TerminalSection from './components/TerminalSection';
+import ServicesSection from './components/ServicesSection';
+import TrustMetricsSection from './components/TrustMetricsSection';
 import DynamicShowroom from './components/DynamicShowroom';
 import ContactNexus from './components/ContactNexus';
 import MaisonStoneApp from './pages/maison-stone/MaisonStoneApp';
@@ -57,6 +59,8 @@ export default function App() {
               <ScrollScrubManifesto text="I do not build standard websites. I construct high-performance, cinematic digital showrooms that dominate search engines, load instantly, and ruthlessly convert visitors into clients." />
             </section>
 
+            <ServicesSection />
+
             <section
               id="terminal"
               aria-label="Technical arsenal"
@@ -68,6 +72,8 @@ export default function App() {
             <div id="showroom">
               <DynamicShowroom />
             </div>
+
+            <TrustMetricsSection />
 
             <section
               id="contact"
