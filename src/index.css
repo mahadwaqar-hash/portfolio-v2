@@ -2,18 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Native smooth cursor everywhere */
 html, body {
-  background-color: #010103;
-  color: #E2E8F0;
+  background-color: #070709;
+  color: #F4F4F5;
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
+  cursor: auto;
 }
 
-/* Universally hide default OS cursor on desktop devices to maintain full custom cursor immersion */
-@media (hover: hover) and (pointer: fine) {
-  *, *::before, *::after, html, body {
-    cursor: none !important;
-  }
+/* Apple Liquid Glass Styling */
+.apple-glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+}
+
+.apple-glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
 }
 
 /* Liquid Noise Overlay */

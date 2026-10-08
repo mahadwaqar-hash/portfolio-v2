@@ -1,15 +1,8 @@
-import React, { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-
-const customEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function ContactNexus() {
-  const containerRef = useRef<HTMLElement>(null);
-  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
-  const [copied, setCopied] = React.useState(false);
-
-  const headingText = "Initiate Contact.";
-  const chars = headingText.split('');
+  const [copied, setCopied] = useState(false);
 
   const copyEmail = () => {
     navigator.clipboard.writeText('mahad.waqar@gmail.com');
@@ -18,100 +11,76 @@ export default function ContactNexus() {
   };
 
   return (
-    <section 
-      ref={containerRef} 
-      className="relative z-10 w-full min-h-screen flex flex-col items-center justify-between py-24 px-6 md:px-12 lg:px-24 overflow-hidden border-t border-brand-ms-alabaster/10"
-    >
-      <div className="w-full flex-1 flex flex-col items-center justify-center relative z-10 text-center max-w-5xl my-auto">
-        <div className="w-full">
+    <div className="relative w-full min-h-screen py-24 md:py-36 px-6 md:px-12 lg:px-24 flex flex-col justify-between items-center text-center bg-[#070709] border-t border-white/5 overflow-hidden">
+      
+      {/* Ambient Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[60vh] bg-gradient-to-tr from-[#DEC1FC]/15 via-[#00B67A]/10 to-[#6D28D9]/15 blur-[160px] rounded-full pointer-events-none -z-10" />
+
+      {/* Top Badge */}
+      <div className="apple-glass rounded-full px-5 py-2 inline-flex items-center gap-2.5 mb-10">
+        <span className="w-2 h-2 rounded-full bg-[#00B67A] animate-ping" />
+        <span className="font-tech text-xs tracking-[0.25em] uppercase text-zinc-300 font-medium">
+          05 // Engagement Terminal
+        </span>
+      </div>
+
+      {/* Main Centerpiece */}
+      <div className="max-w-4xl mx-auto my-auto flex flex-col items-center">
+        <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-tech font-black uppercase text-white tracking-tighter leading-none mb-6">
+          Initiate <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#DEC1FC] via-white to-[#00B67A]">
+            Contact.
+          </span>
+        </h2>
+
+        <p className="font-body text-base sm:text-lg text-zinc-400 font-light max-w-xl mb-12 leading-relaxed">
+          Ready to construct an unfair advantage for your business? Let's engineer a digital showroom that dominates your market.
+        </p>
+
+        {/* Apple Liquid Glass Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-center gap-5 w-full sm:w-auto">
           
-          <motion.div 
-            initial={{ opacity: 0, y: 15 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, ease: customEase }}
-            className="mb-12 font-ms-heading italic text-brand-ms-bronze text-xl"
+          {/* WhatsApp Direct Line */}
+          <a
+            href="https://wa.me/92334379962"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-black font-tech text-xs sm:text-sm font-bold uppercase tracking-widest flex items-center justify-center gap-3 shadow-[0_0_35px_rgba(255,255,255,0.3)] hover:bg-[#DEC1FC] hover:shadow-[0_0_40px_rgba(222,193,252,0.6)] hover:scale-105 transition-all duration-300 active:scale-95"
           >
-            V. Connect
-          </motion.div>
+            <span className="w-2 h-2 rounded-full bg-[#00B67A] animate-pulse" />
+            <span>Ping on WhatsApp</span>
+            <span>↗</span>
+          </a>
 
-          {/* Hero Title */}
-          <h2 className="font-ms-heading text-5xl sm:text-7xl md:text-[9rem] text-brand-ms-alabaster leading-[0.9] mb-16 flex flex-wrap justify-center overflow-visible">
-            {chars.map((char, index) => (
-              <motion.span
-                key={index}
-                initial={{ y: 110, opacity: 0 }}
-                animate={isInView ? { y: 0, opacity: 1 } : { y: 110, opacity: 0 }}
-                transition={{
-                  duration: 0.85,
-                  delay: index * 0.03,
-                  ease: customEase,
-                }}
-                className="inline-block"
-              >
-                {char === ' ' ? '\u00A0' : char}
-              </motion.span>
-            ))}
-          </h2>
-
-          {/* Contact Actions */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.5, duration: 0.8, ease: customEase }}
-            className="flex flex-col md:flex-row items-center justify-center gap-12 mt-8"
+          {/* Copy Email Button */}
+          <button
+            onClick={copyEmail}
+            className="w-full sm:w-auto px-8 py-4 rounded-full apple-glass text-white font-tech text-xs sm:text-sm font-bold uppercase tracking-widest hover:border-white/30 hover:bg-white/10 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 active:scale-95"
           >
-            <a
-              href="https://wa.me/92334379962"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-cursor="hover"
-              className="group flex flex-col items-center gap-4"
-            >
-              <span className="font-ms-body text-[10px] tracking-[0.3em] uppercase text-brand-ms-alabaster/50 group-hover:text-brand-ms-bronze transition-colors">
-                Direct Line
-              </span>
-              <span className="font-ms-heading italic text-3xl text-brand-ms-alabaster group-hover:text-brand-ms-bronze transition-colors">
-                WhatsApp ↗
-              </span>
-            </a>
+            <span>{copied ? 'Copied to Clipboard! ✓' : 'Copy Email Address'}</span>
+          </button>
 
-            <div className="w-[1px] h-12 bg-brand-ms-alabaster/20 hidden md:block" />
-
-            <button
-              onClick={copyEmail}
-              data-cursor="hover"
-              className="group flex flex-col items-center gap-4"
-            >
-              <span className="font-ms-body text-[10px] tracking-[0.3em] uppercase text-brand-ms-alabaster/50 group-hover:text-brand-ms-bronze transition-colors">
-                Electronic Mail
-              </span>
-              <span className="font-ms-heading italic text-3xl text-brand-ms-alabaster group-hover:text-brand-ms-bronze transition-colors">
-                {copied ? 'Copied.' : 'Copy Address ↗'}
-              </span>
-            </button>
-          </motion.div>
         </div>
       </div>
 
-      <motion.footer 
-        initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : {}}
-        transition={{ delay: 1, duration: 1 }}
-        className="w-full mt-32 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left"
-      >
-        <div className="font-ms-body text-[10px] uppercase tracking-[0.2em] text-brand-ms-alabaster/30">
-          Engineered in Lahore. © 2026.
-        </div>
-        
-        <div className="font-ms-heading italic text-xl text-brand-ms-alabaster/50">
-          Muhammad Mahad Waqar Piracha
+      {/* Footer */}
+      <footer className="w-full max-w-6xl mt-24 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-zinc-500 font-mono">
+        <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6">
+          <span className="text-zinc-300 font-tech font-semibold uppercase tracking-wider">
+            Muhammad Mahad Waqar Piracha
+          </span>
+          <span className="hidden sm:inline">•</span>
+          <span>Engineered in Lahore, PK</span>
         </div>
 
-        <div className="flex gap-8">
-          <a href="#" className="font-ms-body text-[10px] tracking-[0.2em] text-brand-ms-alabaster/30 hover:text-brand-ms-bronze uppercase transition-colors">LinkedIn</a>
-          <a href="#" className="font-ms-body text-[10px] tracking-[0.2em] text-brand-ms-alabaster/30 hover:text-brand-ms-bronze uppercase transition-colors">GitHub</a>
+        <div className="flex items-center gap-6">
+          <span className="text-[#00B67A]">Deployed Globally © 2026</span>
+          <a href="#hero" className="hover:text-white transition-colors">
+            Back to Top ↑
+          </a>
         </div>
-      </motion.footer>
-    </section>
+      </footer>
+
+    </div>
   );
 }
