@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 
 export default function ContactNexus() {
   const [copied, setCopied] = useState(false);
+  const [hoveredAction, setHoveredAction] = useState<string | null>(null);
 
   const copyEmail = () => {
     navigator.clipboard.writeText('mahad.waqar@gmail.com');
@@ -11,76 +12,85 @@ export default function ContactNexus() {
   };
 
   return (
-    <div className="relative w-full min-h-screen py-24 md:py-36 px-6 md:px-12 lg:px-24 flex flex-col justify-between items-center text-center bg-[#070709] border-t border-white/5 overflow-hidden">
+    <div className="relative w-full min-h-screen py-24 md:py-36 px-6 md:px-12 lg:px-24 flex flex-col justify-between items-start bg-[#070709] border-t border-white/5 overflow-hidden">
       
-      {/* Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[60vh] bg-gradient-to-tr from-[#DEC1FC]/15 via-[#00B67A]/10 to-[#6D28D9]/15 blur-[160px] rounded-full pointer-events-none -z-10" />
+      {/* Asymmetric glow — tucked into the corner, not centered */}
+      <div className="absolute bottom-0 right-0 w-[50vw] h-[50vh] bg-[#DEC1FC]/8 blur-[160px] rounded-full pointer-events-none" />
 
-      {/* Top Badge */}
-      <div className="apple-glass rounded-full px-5 py-2 inline-flex items-center gap-2.5 mb-10">
-        <span className="w-2 h-2 rounded-full bg-[#00B67A] animate-ping" />
-        <span className="font-tech text-xs tracking-[0.25em] uppercase text-zinc-300 font-medium">
-          05 // Engagement Terminal
+      {/* Top marker */}
+      <div className="flex items-center gap-4 mb-16 md:mb-24 w-full">
+        <div className="w-3 h-3 rounded-full border border-zinc-700" />
+        <span className="font-mono text-[10px] tracking-widest uppercase text-zinc-600">
+          Let's talk
         </span>
+        <div className="flex-1 h-[1px] bg-zinc-800" />
       </div>
 
-      {/* Main Centerpiece */}
-      <div className="max-w-4xl mx-auto my-auto flex flex-col items-center">
-        <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-tech font-black uppercase text-white tracking-tighter leading-none mb-6">
-          Initiate <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#DEC1FC] via-white to-[#00B67A]">
-            Contact.
+      {/* Main content — left-aligned, not center-stage hero */}
+      <div className="max-w-4xl my-auto">
+        <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-tech font-black text-white tracking-tighter leading-[0.95] mb-8">
+          Got a project<br />
+          that deserves<br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#DEC1FC] to-[#00B67A]">
+            better?
           </span>
         </h2>
 
-        <p className="font-body text-base sm:text-lg text-zinc-400 font-light max-w-xl mb-12 leading-relaxed">
-          Ready to construct an unfair advantage for your business? Let's engineer a digital showroom that dominates your market.
+        <p className="font-body text-base md:text-lg text-zinc-400 font-light max-w-lg mb-14 leading-relaxed">
+          I take on 2–3 projects at a time so I can actually give a damn about each one.
+          If the timing works, I'd love to hear what you're building.
         </p>
 
-        {/* Apple Liquid Glass Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center gap-5 w-full sm:w-auto">
-          
-          {/* WhatsApp Direct Line */}
+        {/* Action links — not buttons, just bold interactive text */}
+        <div className="flex flex-col gap-6">
           <a
             href="https://wa.me/92334379962"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-black font-tech text-xs sm:text-sm font-bold uppercase tracking-widest flex items-center justify-center gap-3 shadow-[0_0_35px_rgba(255,255,255,0.3)] hover:bg-[#DEC1FC] hover:shadow-[0_0_40px_rgba(222,193,252,0.6)] hover:scale-105 transition-all duration-300 active:scale-95"
+            onMouseEnter={() => setHoveredAction('wa')}
+            onMouseLeave={() => setHoveredAction(null)}
+            className="group flex items-center gap-6 py-4 border-b border-white/5 hover:border-[#00B67A]/30 transition-colors"
           >
-            <span className="w-2 h-2 rounded-full bg-[#00B67A] animate-pulse" />
-            <span>Ping on WhatsApp</span>
-            <span>↗</span>
+            <span className="w-2 h-2 rounded-full bg-[#00B67A] animate-pulse group-hover:scale-150 transition-transform" />
+            <span className="font-tech text-2xl md:text-3xl text-white group-hover:text-[#00B67A] transition-colors tracking-tight font-bold">
+              WhatsApp me directly
+            </span>
+            <span className={`font-mono text-xs text-zinc-600 ml-auto transition-opacity ${hoveredAction === 'wa' ? 'opacity-100' : 'opacity-0'}`}>
+              Usually reply within an hour
+            </span>
           </a>
 
-          {/* Copy Email Button */}
           <button
             onClick={copyEmail}
-            className="w-full sm:w-auto px-8 py-4 rounded-full apple-glass text-white font-tech text-xs sm:text-sm font-bold uppercase tracking-widest hover:border-white/30 hover:bg-white/10 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 active:scale-95"
+            onMouseEnter={() => setHoveredAction('email')}
+            onMouseLeave={() => setHoveredAction(null)}
+            className="group flex items-center gap-6 py-4 border-b border-white/5 hover:border-[#DEC1FC]/30 transition-colors text-left"
           >
-            <span>{copied ? 'Copied to Clipboard! ✓' : 'Copy Email Address'}</span>
+            <span className="w-2 h-2 rounded-full bg-[#DEC1FC]" />
+            <span className="font-tech text-2xl md:text-3xl text-white group-hover:text-[#DEC1FC] transition-colors tracking-tight font-bold">
+              {copied ? 'Copied ✓' : 'Copy my email'}
+            </span>
+            <span className={`font-mono text-xs text-zinc-600 ml-auto transition-opacity ${hoveredAction === 'email' ? 'opacity-100' : 'opacity-0'}`}>
+              mahad.waqar@gmail.com
+            </span>
           </button>
-
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="w-full max-w-6xl mt-24 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-zinc-500 font-mono">
-        <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6">
-          <span className="text-zinc-300 font-tech font-semibold uppercase tracking-wider">
+      {/* Footer — minimal, human */}
+      <footer className="w-full mt-24 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="flex flex-col gap-1">
+          <span className="font-tech text-sm text-white font-semibold tracking-tight">
             Muhammad Mahad Waqar Piracha
           </span>
-          <span className="hidden sm:inline">•</span>
-          <span>Engineered in Lahore, PK</span>
+          <span className="font-mono text-[10px] text-zinc-600 uppercase tracking-widest">
+            Lahore, Pakistan — Deployed globally
+          </span>
         </div>
-
-        <div className="flex items-center gap-6">
-          <span className="text-[#00B67A]">Deployed Globally © 2026</span>
-          <a href="#hero" className="hover:text-white transition-colors">
-            Back to Top ↑
-          </a>
-        </div>
+        <span className="font-mono text-[10px] text-zinc-700">
+          © 2026
+        </span>
       </footer>
-
     </div>
   );
 }

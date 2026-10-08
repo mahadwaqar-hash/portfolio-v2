@@ -2,27 +2,30 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const metrics = [
-  { value: 'Sub-0.4s', label: 'First Contentful Paint', sub: 'Instant Global Edge Delivery' },
-  { value: '100 / 100', label: 'Core Web Vitals', sub: 'Zero Layout Shift or Stutter' },
-  { value: '10km+', label: 'Geo-Radius Dominance', sub: 'Multi-Entity JSON-LD Schema' },
-  { value: '14+', label: 'Flagship Deployments', sub: 'Awwwards-Level Interaction' },
+  { value: '0.4s', prefix: '<', label: 'First paint', color: '#DEC1FC' },
+  { value: '100', prefix: '', label: 'Lighthouse score', color: '#00B67A' },
+  { value: '10km', prefix: '', label: 'Geo-radius reach', color: '#DEC1FC' },
+  { value: '14', prefix: '', label: 'Ships deployed', color: '#00B67A' },
 ];
 
 const steps = [
   {
     num: '01',
-    title: 'Market Recon & Technical Blueprint',
-    desc: 'We analyze your top 5 competitors’ backlink profiles, entity graphs, and conversion loopholes. We architect the exact site structure and geo-radius plan required to capture high-ticket demand.',
+    title: 'Tear apart the competition',
+    desc: 'I look at your top 5 competitors\' sites, their backlink profiles, their schema markup (or lack of it), and their conversion paths. Then I build the blueprint to beat all of them.',
+    duration: 'Week 1',
   },
   {
     num: '02',
-    title: 'Bespoke UI & Interaction Engineering',
-    desc: 'Crafting the frontend in React 18, Tailwind, and Framer Motion. Zero templates. Custom fluid typography, micro-interactions, and 60fps scroll physics designed to make your visitors stay.',
+    title: 'Build something unreasonable',
+    desc: 'Zero templates. I write every component from scratch in React, wire up Framer Motion physics, obsess over the typography scale, and test on 12+ device viewports before you see a single preview.',
+    duration: 'Weeks 2–3',
   },
   {
     num: '03',
-    title: 'Edge Deployment & Post-Launch SEO',
-    desc: 'Deployed on Vercel Edge with zero latency. We audit all JSON-LD schemas, verify Google Search Console indexing, and deliver a comprehensive 6-month organic growth roadmap.',
+    title: 'Launch and hand you the keys',
+    desc: 'Deployed to Vercel edge nodes worldwide. I audit every JSON-LD schema, verify GSC indexing, run a final Lighthouse sweep, and hand over a 6-month SEO growth roadmap you can actually follow.',
+    duration: 'Week 4',
   },
 ];
 
@@ -32,67 +35,85 @@ export default function TrustMetricsSection() {
       
       <div className="max-w-7xl mx-auto">
         
-        {/* Apple Liquid Glass Metric Tiles */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-28">
+        {/* Metrics — horizontal ticker strip, not cards */}
+        <div className="flex flex-wrap justify-between items-end gap-y-10 gap-x-4 mb-28 pb-16 border-b border-white/5">
           {metrics.map((m, idx) => (
-            <div
+            <motion.div
               key={idx}
-              className="apple-glass-card rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 hover:border-white/25 hover:-translate-y-1"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.08, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col"
             >
-              <div className="font-tech text-3xl sm:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-100 to-[#DEC1FC] tracking-tight mb-2">
-                {m.value}
+              <div className="flex items-baseline gap-1">
+                {m.prefix && <span className="font-mono text-lg text-zinc-500">{m.prefix}</span>}
+                <span 
+                  className="font-tech text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter"
+                  style={{ color: m.color }}
+                >
+                  {m.value}
+                </span>
               </div>
-              <div>
-                <p className="font-tech text-xs tracking-wider uppercase text-zinc-200 font-semibold mb-1">
-                  {m.label}
-                </p>
-                <p className="font-mono text-[10px] text-zinc-500">
-                  {m.sub}
-                </p>
-              </div>
-            </div>
+              <span className="font-mono text-[10px] text-zinc-600 uppercase tracking-widest mt-2">
+                {m.label}
+              </span>
+            </motion.div>
           ))}
         </div>
 
-        {/* Methodology & Delivery Cadence */}
-        <div className="flex flex-col lg:flex-row justify-between gap-16 pt-16 border-t border-white/10">
+        {/* Methodology — timeline format, not identical glass cards */}
+        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
           
-          <div className="lg:w-1/3">
-            <div className="apple-glass rounded-full px-4 py-1.5 inline-flex items-center gap-2 mb-4">
-              <span className="w-2 h-2 rounded-full bg-[#00B67A] animate-pulse" />
-              <span className="font-tech text-xs tracking-[0.25em] uppercase text-zinc-300 font-medium">
-                04 // Proven Methodology
+          {/* Left: Header */}
+          <div className="lg:w-[35%] lg:sticky lg:top-32 lg:self-start">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-3 h-3 rounded-full border border-zinc-700" />
+              <span className="font-mono text-[10px] tracking-widest uppercase text-zinc-600">
+                How it works
               </span>
+              <div className="flex-1 h-[1px] bg-zinc-800" />
             </div>
-            <h3 className="text-3xl sm:text-4xl md:text-5xl font-tech font-bold text-white tracking-tight mb-6">
-              The High-Velocity Delivery Cadence.
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-tech font-bold text-white tracking-tight leading-[1.05] mb-6">
+              Four weeks.<br />
+              <span className="text-zinc-500">Zero hand-waving.</span>
             </h3>
-            <p className="font-body text-sm text-zinc-400 font-light leading-relaxed">
-              No endless delays or agency bloat. A battle-tested pipeline that takes you from initial discovery to live production deployment in 2 to 3 weeks.
+            <p className="font-body text-sm text-zinc-500 font-light leading-relaxed">
+              Not "4–6 months" like an agency quotes you. 
+              I run a tight, battle-tested pipeline because I've done this enough times 
+              to know exactly what's needed and in what order.
             </p>
           </div>
 
-          <div className="lg:w-2/3 flex flex-col gap-6">
-            {steps.map((step) => (
+          {/* Right: Timeline Steps */}
+          <div className="lg:w-[65%] flex flex-col">
+            {steps.map((step, idx) => (
               <div
                 key={step.num}
-                className="apple-glass rounded-2xl p-8 flex flex-col sm:flex-row gap-6 transition-all duration-300 hover:border-white/20 group"
+                className={`flex gap-6 md:gap-8 py-10 ${idx < steps.length - 1 ? 'border-b border-white/5' : ''}`}
               >
-                <span className="font-mono text-xl text-[#DEC1FC] font-bold">
-                  {step.num}
-                </span>
-                <div>
-                  <h4 className="font-tech text-xl text-white font-bold tracking-tight mb-2 group-hover:text-[#DEC1FC] transition-colors">
-                    {step.title}
-                  </h4>
-                  <p className="font-body text-sm text-zinc-400 font-light leading-relaxed">
+                {/* Timeline line + number */}
+                <div className="flex flex-col items-center gap-2 pt-1">
+                  <span className="font-mono text-xs text-[#DEC1FC] font-bold w-8 text-center">{step.num}</span>
+                  {idx < steps.length - 1 && <div className="w-[1px] flex-1 bg-zinc-800" />}
+                </div>
+
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-3">
+                    <h4 className="font-tech text-xl md:text-2xl text-white font-bold tracking-tight">
+                      {step.title}
+                    </h4>
+                    <span className="font-mono text-[10px] text-zinc-600 border border-zinc-800 rounded-full px-2.5 py-0.5 uppercase tracking-wider">
+                      {step.duration}
+                    </span>
+                  </div>
+                  <p className="font-body text-sm text-zinc-400 font-light leading-relaxed max-w-lg">
                     {step.desc}
                   </p>
                 </div>
               </div>
             ))}
           </div>
-
         </div>
 
       </div>

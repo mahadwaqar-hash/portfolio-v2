@@ -1,125 +1,125 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const services = [
   {
     id: '01',
-    badge: 'Aesthetic Authority',
-    title: 'Cinematic Web Architecture',
-    description: 'Transforming commodity businesses into category-defining luxury authorities. Custom React 18 & Framer Motion physics, 60fps Lenis inertial scrolling, and responsive fluid typography that keeps visitors mesmerized.',
-    deliverables: [
-      'Bespoke Interactive Art Direction',
-      'Framer Motion & WebGL Physics',
-      'Sub-0.4s First Contentful Paint',
-      'Flawless Retina Fluidity'
-    ],
-    highlight: '60fps Inertial Scroll',
+    title: 'Web Architecture',
+    oneLiner: 'The sites your competitors wish they had.',
+    description: 'React 18, Framer Motion physics, Lenis inertial scrolling. Not a Wix site with extra steps — actual engineering that makes people stop scrolling and start paying attention.',
+    tools: ['React 18', 'Framer Motion', 'Lenis', 'TypeScript'],
+    stat: '60fps on everything',
   },
   {
     id: '02',
-    badge: 'Search Supremacy',
-    title: 'Technical Local SEO Domination',
-    description: 'A breathtaking site is worthless if your ideal clients cannot find you. Engineered with deep JSON-LD LocalBusiness schemas, radius-concentric geo targeting, and 95+ Core Web Vitals to systematically outrank established competitors.',
-    deliverables: [
-      'JSON-LD Multi-Entity Schemas',
-      'Geo-Targeted "Areas We Serve" Architecture',
-      'Google Maps 3-Pack Authority Engine',
-      'Semantic Heading & Entity Graph'
-    ],
-    highlight: '10km+ Geo-Dominance',
+    title: 'Local SEO',
+    oneLiner: 'Showing up before businesses that are literally closer.',
+    description: 'Deep JSON-LD schemas, radius-concentric geo targeting, and obsessive Core Web Vitals tuning. I\'ve ranked clients above competitors who are physically 3x closer to the searcher.',
+    tools: ['JSON-LD', 'Schema.org', 'GSC', 'Geo-Targeting'],
+    stat: '10km+ radius dominance',
   },
   {
     id: '03',
-    badge: 'Revenue Velocity',
-    title: 'High-Ticket Conversion Engineering',
-    description: 'Eliminating every friction point between curiosity and contract signing. Combining the PAS (Problem-Agitate-Solve) copywriting framework with instant 1-click WhatsApp checkout pipelines and magnetic interactive pricing tiers.',
-    deliverables: [
-      'PAS Psychological Copywriting',
-      'Frictionless 1-Click WhatsApp Nexuses',
-      'Interactive ROI & Pricing Tiers',
-      'Direct Lead Routing & CRM Sync'
-    ],
-    highlight: 'Zero Friction Funnels',
+    title: 'Conversion Design',
+    oneLiner: 'Making the phone actually ring.',
+    description: 'Pretty websites that don\'t convert are expensive art. I wire every scroll depth, every CTA placement, and every friction point to one goal: getting your ideal client to reach out.',
+    tools: ['PAS Copy', 'WhatsApp API', 'CRM Routing', 'A/B Logic'],
+    stat: 'Zero-friction funnels',
   }
 ];
 
 export default function ServicesSection() {
+  const [active, setActive] = useState(0);
+
   return (
     <section id="services" className="relative w-full py-24 md:py-36 px-6 md:px-12 lg:px-24 bg-[#070709] border-t border-white/5">
       
-      {/* Background Ambient Glow */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[50vw] h-[40vh] bg-gradient-to-r from-[#DEC1FC]/10 to-[#00B67A]/10 blur-[130px] pointer-events-none -z-10" />
-
       <div className="max-w-7xl mx-auto">
         
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 md:mb-20">
-          <div>
-            <div className="apple-glass rounded-full px-4 py-1.5 inline-flex items-center gap-2 mb-4">
-              <span className="w-2 h-2 rounded-full bg-[#DEC1FC] animate-pulse" />
-              <span className="font-tech text-xs tracking-[0.25em] uppercase text-zinc-300 font-medium">
-                03 // Core Capabilities
-              </span>
-            </div>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-tech font-bold text-white tracking-tight">
-              Engineered for Category Dominance.
-            </h2>
+        {/* Header — conversational, not corporate */}
+        <div className="mb-16 md:mb-24">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="w-3 h-3 rounded-full border border-zinc-700" />
+            <span className="font-mono text-[10px] tracking-widest uppercase text-zinc-600">
+              What I actually do
+            </span>
+            <div className="flex-1 h-[1px] bg-zinc-800" />
           </div>
-          <p className="font-body text-sm sm:text-base text-zinc-400 max-w-md font-light leading-relaxed">
-            Fusing luxury editorial design with hard technical SEO and behavioral conversion science.
-          </p>
+
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-tech font-bold text-white tracking-tight leading-[1.05]">
+              Three things,<br />
+              <span className="text-zinc-500">done unreasonably well.</span>
+            </h2>
+            <p className="font-body text-sm text-zinc-500 max-w-xs font-light md:text-right">
+              I don't do "full-service digital marketing." 
+              I do three things and I do them better than anyone you'll find on Fiverr.
+            </p>
+          </div>
         </div>
 
-        {/* Bento Grid of Apple Liquid Glass Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {services.map((service) => (
-            <div
-              key={service.id}
-              className="apple-glass-card rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 hover:border-white/30 hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)] group hover:-translate-y-1.5"
+        {/* Interactive Split — Left tabs, Right detail */}
+        <div className="flex flex-col lg:flex-row gap-0 lg:gap-0">
+          
+          {/* Left: Clickable List */}
+          <div className="w-full lg:w-[40%] flex flex-col lg:border-r border-white/5">
+            {services.map((s, idx) => (
+              <button
+                key={s.id}
+                onClick={() => setActive(idx)}
+                className={`text-left py-8 pr-8 border-b border-white/5 transition-all duration-500 group ${
+                  active === idx ? '' : 'opacity-40 hover:opacity-70'
+                }`}
+              >
+                <div className="flex items-baseline gap-4">
+                  <span className={`font-mono text-xs transition-colors duration-500 ${active === idx ? 'text-[#DEC1FC]' : 'text-zinc-600'}`}>
+                    {s.id}
+                  </span>
+                  <div>
+                    <h3 className="font-tech text-2xl md:text-3xl font-bold text-white tracking-tight mb-1">
+                      {s.title}
+                    </h3>
+                    <p className="font-body text-sm text-zinc-500 italic">
+                      {s.oneLiner}
+                    </p>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* Right: Expanded Detail */}
+          <div className="w-full lg:w-[60%] lg:pl-16 py-8 lg:py-12 min-h-[320px] flex flex-col justify-center">
+            <motion.div
+              key={active}
+              initial={{ opacity: 0, x: 15 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
-              <div>
-                {/* Card Top Pill */}
-                <div className="flex items-center justify-between mb-8">
-                  <span className="font-mono text-xs text-zinc-500 font-medium">
-                    {service.id} // 03
-                  </span>
-                  <span className="apple-glass px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider text-[#DEC1FC] border border-white/10">
-                    {service.badge}
-                  </span>
-                </div>
+              <p className="font-body text-base md:text-lg text-zinc-300 font-light leading-relaxed mb-10">
+                {services[active].description}
+              </p>
 
-                <h3 className="font-tech text-2xl sm:text-3xl font-bold text-white tracking-tight mb-4 group-hover:text-[#DEC1FC] transition-colors">
-                  {service.title}
-                </h3>
-
-                <p className="font-body text-sm text-zinc-400 font-light leading-relaxed mb-8">
-                  {service.description}
-                </p>
+              {/* Tools as minimal inline tags */}
+              <div className="flex flex-wrap gap-2 mb-8">
+                {services[active].tools.map((t) => (
+                  <span key={t} className="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-[11px] font-mono text-zinc-400">
+                    {t}
+                  </span>
+                ))}
               </div>
 
-              {/* Deliverables List */}
-              <div className="pt-6 border-t border-white/10">
-                <span className="font-tech text-[10px] tracking-[0.2em] uppercase text-zinc-400 block mb-4">
-                  Signature Deliverables
+              {/* Key stat — no glass card, just a bold callout */}
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 rounded-full bg-[#00B67A]" />
+                <span className="font-mono text-xs text-[#00B67A] uppercase tracking-wider">
+                  {services[active].stat}
                 </span>
-                <ul className="space-y-2.5">
-                  {service.deliverables.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5 text-xs text-zinc-300 font-light">
-                      <span className="text-[#00B67A] text-sm leading-none mt-0.5">✦</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-8 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-zinc-400">
-                  <span>Standard</span>
-                  <span className="text-[#00B67A]">{service.highlight}</span>
-                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            </motion.div>
+          </div>
 
+        </div>
       </div>
     </section>
   );
