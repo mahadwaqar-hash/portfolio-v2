@@ -101,13 +101,13 @@ export default function HeroSection() {
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           style={{ transition: 'transform 0.15s ease-out' }}
-          className="apple-glass-card rounded-3xl px-8 py-8 sm:px-14 sm:py-12 md:px-20 md:py-14 mb-8 relative select-none transform-gpu cursor-default will-change-transform"
+          className="apple-glass-card rounded-3xl px-6 py-6 sm:px-10 sm:py-8 md:px-16 md:py-10 mb-8 relative select-none transform-gpu cursor-default will-change-transform"
         >
           {/* Subtle sheen highlight */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent pointer-events-none rounded-3xl" />
           
-          <div className="flex flex-col items-center leading-tight tracking-tighter font-tech font-black">
-            <div className="overflow-hidden pb-[2vw]">
+          <div className="flex flex-col items-center leading-[0.85] tracking-tighter font-tech font-black">
+            <div className="overflow-hidden pb-4 -mb-4">
               <motion.div
                 initial={{ y: "110%" }}
                 animate={{ y: "0%" }}
@@ -117,7 +117,7 @@ export default function HeroSection() {
                 {nameTop || '\u00A0'}
               </motion.div>
             </div>
-            <div className="overflow-hidden pb-[3vw]">
+            <div className="overflow-hidden pb-8 -mb-8">
               <motion.div
                 initial={{ y: "110%" }}
                 animate={{ y: "0%" }}

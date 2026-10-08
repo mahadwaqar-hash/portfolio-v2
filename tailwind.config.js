@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        tech: ["'Space Grotesk'", 'sans-serif'],
+        tech: ["'Inter'", 'sans-serif'],
         cinematic: ["'Instrument Serif'", 'serif'],
         body: ["'Inter'", 'sans-serif'],
         "ms-heading": ["'Cormorant Garamond'", 'serif'],
