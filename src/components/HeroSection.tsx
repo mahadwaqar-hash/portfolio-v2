@@ -106,23 +106,23 @@ export default function HeroSection() {
           {/* Subtle sheen highlight */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent pointer-events-none rounded-3xl" />
           
-          <div className="flex flex-col items-center leading-[0.82] tracking-tighter font-tech font-black">
-            <div className="overflow-hidden">
+          <div className="flex flex-col items-center leading-tight tracking-tighter font-tech font-black">
+            <div className="overflow-hidden pb-[2vw]">
               <motion.div
                 initial={{ y: "110%" }}
                 animate={{ y: "0%" }}
                 transition={{ duration: 0.9, ease: EXPO, delay: 0.25 }}
-                className="text-[18vw] sm:text-[14vw] md:text-[11vw] uppercase text-white text-center drop-shadow-[0_4px_24px_rgba(255,255,255,0.15)]"
+                className="text-[16vw] sm:text-[13vw] md:text-[10vw] uppercase text-white text-center drop-shadow-[0_4px_24px_rgba(255,255,255,0.15)]"
               >
                 {nameTop || '\u00A0'}
               </motion.div>
             </div>
-            <div className="overflow-hidden -mt-[2vw]">
+            <div className="overflow-hidden pb-[3vw]">
               <motion.div
                 initial={{ y: "110%" }}
                 animate={{ y: "0%" }}
                 transition={{ duration: 0.9, ease: EXPO, delay: 0.4 }}
-                className="text-[18vw] sm:text-[14vw] md:text-[11vw] uppercase text-transparent bg-clip-text bg-gradient-to-r from-[#DEC1FC] via-white to-[#00B67A] text-center drop-shadow-[0_4px_30px_rgba(222,193,252,0.25)]"
+                className="text-[16vw] sm:text-[13vw] md:text-[10vw] uppercase text-transparent bg-clip-text bg-gradient-to-r from-[#DEC1FC] via-white to-[#00B67A] text-center drop-shadow-[0_4px_30px_rgba(222,193,252,0.25)]"
               >
                 {nameBot || '\u00A0'}
               </motion.div>
