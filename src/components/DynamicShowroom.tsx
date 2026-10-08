@@ -170,7 +170,7 @@ export default function DynamicShowroom() {
               key={project.id}
               data-project-id={project.id}
               onMouseEnter={() => handleMouseEnterCard(project.id)}
-              className="showroom-card-wrapper w-[88vw] sm:w-[540px] md:w-[580px] flex-shrink-0 snap-center"
+              className="showroom-card-wrapper w-[78vw] sm:w-[540px] md:w-[580px] flex-shrink-0 snap-center"
             >
               <div
                 onClick={() => handleProjectClick(project.liveUrl)}
@@ -194,17 +194,17 @@ export default function DynamicShowroom() {
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                         <path d="M7 11V7a5 5 0 0110 0v4" />
                       </svg>
-                      <span className="truncate max-w-[200px]">{domain}</span>
+                      <span className="truncate max-w-[140px] sm:max-w-[200px]">{domain}</span>
                     </div>
 
                     <div className="flex items-center gap-1.5 text-[10px] font-tech uppercase tracking-wider text-[#DEC1FC] font-semibold group-hover:translate-x-0.5 transition-transform">
-                      <span>Visit</span>
+                      <span className="hidden sm:inline">Visit</span>
                       <span>↗</span>
                     </div>
                   </div>
 
                   {/* 2. Real Interactive Live Homepage Viewport (GPU Optimized) */}
-                  <div className="relative w-full h-[260px] sm:h-[300px] overflow-hidden bg-black select-none pointer-events-none transform-gpu">
+                  <div className="relative w-full h-[190px] sm:h-[300px] overflow-hidden bg-black select-none pointer-events-none transform-gpu">
                     {isLoaded ? (
                       <iframe
                         src={project.liveUrl}
@@ -212,7 +212,7 @@ export default function DynamicShowroom() {
                         loading="lazy"
                         scrolling="no"
                         tabIndex={-1}
-                        className="w-[1280px] h-[780px] border-0 transform origin-top-left scale-[0.38] sm:scale-[0.44] pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity duration-300 will-change-transform"
+                        className="w-[1280px] h-[780px] border-0 transform origin-top-left scale-[0.24] sm:scale-[0.44] pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity duration-300 will-change-transform"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-[#09090D] text-zinc-600 font-mono text-xs">

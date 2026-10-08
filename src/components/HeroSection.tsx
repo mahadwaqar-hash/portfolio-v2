@@ -96,39 +96,46 @@ export default function HeroSection() {
         </motion.div>
 
         {/* SCRAMBLE TEXT WORDMARK — Ultra-smooth Hardware Accelerated Card */}
-        <div
-          ref={cardRef}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          style={{ transition: 'transform 0.15s ease-out' }}
-          className="apple-glass-card rounded-3xl px-6 py-6 sm:px-10 sm:py-8 md:px-16 md:py-10 mb-8 relative select-none transform-gpu cursor-default will-change-transform"
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.15 }}
+          className="relative select-none z-10 mb-8"
         >
-          {/* Subtle sheen highlight */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent pointer-events-none rounded-3xl" />
-          
-          <div className="flex flex-col items-center leading-[0.85] tracking-tighter font-tech font-black">
-            <div className="overflow-hidden pb-4 -mb-4">
-              <motion.div
-                initial={{ y: "110%" }}
-                animate={{ y: "0%" }}
-                transition={{ duration: 0.9, ease: EXPO, delay: 0.25 }}
-                className="text-[16vw] sm:text-[13vw] md:text-[10vw] uppercase text-white text-center drop-shadow-[0_4px_24px_rgba(255,255,255,0.15)]"
-              >
-                {nameTop || '\u00A0'}
-              </motion.div>
-            </div>
-            <div className="overflow-hidden pb-8 -mb-8">
-              <motion.div
-                initial={{ y: "110%" }}
-                animate={{ y: "0%" }}
-                transition={{ duration: 0.9, ease: EXPO, delay: 0.4 }}
-                className="text-[16vw] sm:text-[13vw] md:text-[10vw] uppercase text-transparent bg-clip-text bg-gradient-to-r from-[#DEC1FC] via-white to-[#00B67A] text-center drop-shadow-[0_4px_30px_rgba(222,193,252,0.25)]"
-              >
-                {nameBot || '\u00A0'}
-              </motion.div>
+          <div
+            ref={cardRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            style={{ transition: 'transform 0.15s ease-out' }}
+            className="apple-glass-card rounded-3xl px-6 py-6 sm:px-10 sm:py-8 md:px-16 md:py-10 relative transform-gpu cursor-default will-change-transform shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+          >
+            {/* Subtle sheen highlight */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent pointer-events-none rounded-3xl" />
+            
+            <div className="flex flex-col items-center leading-[0.85] tracking-tighter font-tech font-black">
+              <div className="overflow-hidden pb-4 -mb-4">
+                <motion.div
+                  initial={{ y: "110%" }}
+                  animate={{ y: "0%" }}
+                  transition={{ duration: 0.9, ease: EXPO, delay: 0.35 }}
+                  className="text-[16vw] sm:text-[13vw] md:text-[10vw] uppercase text-white text-center drop-shadow-[0_4px_24px_rgba(255,255,255,0.15)]"
+                >
+                  {nameTop || '\u00A0'}
+                </motion.div>
+              </div>
+              <div className="overflow-hidden pb-8 -mb-8">
+                <motion.div
+                  initial={{ y: "110%" }}
+                  animate={{ y: "0%" }}
+                  transition={{ duration: 0.9, ease: EXPO, delay: 0.5 }}
+                  className="text-[16vw] sm:text-[13vw] md:text-[10vw] uppercase text-transparent bg-clip-text bg-gradient-to-r from-[#DEC1FC] via-white to-[#00B67A] text-center drop-shadow-[0_4px_30px_rgba(222,193,252,0.25)]"
+                >
+                  {nameBot || '\u00A0'}
+                </motion.div>
+              </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Tagline with enhanced readability & contrast */}
         <motion.p
