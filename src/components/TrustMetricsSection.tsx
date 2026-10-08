@@ -55,7 +55,7 @@ export default function TrustMetricsSection() {
                   {m.value}
                 </span>
               </div>
-              <span className="font-mono text-[10px] text-zinc-600 uppercase tracking-widest mt-2">
+              <span className="font-mono text-xs text-zinc-400 uppercase tracking-widest mt-2 font-medium">
                 {m.label}
               </span>
             </motion.div>
@@ -68,17 +68,17 @@ export default function TrustMetricsSection() {
           {/* Left: Header */}
           <div className="lg:w-[35%] lg:sticky lg:top-32 lg:self-start">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-3 h-3 rounded-full border border-zinc-700" />
-              <span className="font-mono text-[10px] tracking-widest uppercase text-zinc-600">
+              <div className="w-3 h-3 rounded-full border border-zinc-500" />
+              <span className="font-mono text-xs tracking-widest uppercase text-zinc-400 font-semibold">
                 How it works
               </span>
-              <div className="flex-1 h-[1px] bg-zinc-800" />
+              <div className="flex-1 h-[1px] bg-zinc-700" />
             </div>
             <h3 className="text-3xl sm:text-4xl md:text-5xl font-tech font-bold text-white tracking-tight leading-[1.05] mb-6">
               Four weeks.<br />
-              <span className="text-zinc-500">Zero hand-waving.</span>
+              <span className="text-zinc-400">Zero hand-waving.</span>
             </h3>
-            <p className="font-body text-sm text-zinc-500 font-light leading-relaxed">
+            <p className="font-body text-sm text-zinc-300 font-normal leading-relaxed">
               Not "4–6 months" like an agency quotes you. 
               I run a tight, battle-tested pipeline because I've done this enough times 
               to know exactly what's needed and in what order.
@@ -90,12 +90,12 @@ export default function TrustMetricsSection() {
             {steps.map((step, idx) => (
               <div
                 key={step.num}
-                className={`flex gap-6 md:gap-8 py-10 ${idx < steps.length - 1 ? 'border-b border-white/5' : ''}`}
+                className={`flex gap-6 md:gap-8 py-10 ${idx < steps.length - 1 ? 'border-b border-white/10' : ''}`}
               >
                 {/* Timeline line + number */}
                 <div className="flex flex-col items-center gap-2 pt-1">
-                  <span className="font-mono text-xs text-[#DEC1FC] font-bold w-8 text-center">{step.num}</span>
-                  {idx < steps.length - 1 && <div className="w-[1px] flex-1 bg-zinc-800" />}
+                  <span className="font-mono text-sm text-[#DEC1FC] font-bold w-8 text-center">{step.num}</span>
+                  {idx < steps.length - 1 && <div className="w-[1px] flex-1 bg-zinc-700" />}
                 </div>
 
                 <div className="flex-1">
@@ -103,11 +103,11 @@ export default function TrustMetricsSection() {
                     <h4 className="font-tech text-xl md:text-2xl text-white font-bold tracking-tight">
                       {step.title}
                     </h4>
-                    <span className="font-mono text-[10px] text-zinc-600 border border-zinc-800 rounded-full px-2.5 py-0.5 uppercase tracking-wider">
+                    <span className="font-mono text-[10px] text-zinc-300 border border-zinc-700 bg-white/5 rounded-full px-2.5 py-0.5 uppercase tracking-wider font-medium">
                       {step.duration}
                     </span>
                   </div>
-                  <p className="font-body text-sm text-zinc-400 font-light leading-relaxed max-w-lg">
+                  <p className="font-body text-sm text-zinc-200 font-normal leading-relaxed max-w-lg">
                     {step.desc}
                   </p>
                 </div>

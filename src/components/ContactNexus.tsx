@@ -36,7 +36,7 @@ export default function ContactNexus() {
           </span>
         </h2>
 
-        <p className="font-body text-base md:text-lg text-zinc-400 font-light max-w-lg mb-14 leading-relaxed">
+        <p className="font-body text-base md:text-lg text-zinc-200 font-normal max-w-lg mb-14 leading-relaxed">
           I take on 2–3 projects at a time so I can actually give a damn about each one.
           If the timing works, I'd love to hear what you're building.
         </p>
@@ -49,13 +49,13 @@ export default function ContactNexus() {
             rel="noopener noreferrer"
             onMouseEnter={() => setHoveredAction('wa')}
             onMouseLeave={() => setHoveredAction(null)}
-            className="group flex items-center gap-6 py-4 border-b border-white/5 hover:border-[#00B67A]/30 transition-colors"
+            className="group flex items-center gap-6 py-4 border-b border-white/10 hover:border-[#00B67A]/50 transition-colors"
           >
             <span className="w-2 h-2 rounded-full bg-[#00B67A] animate-pulse group-hover:scale-150 transition-transform" />
             <span className="font-tech text-2xl md:text-3xl text-white group-hover:text-[#00B67A] transition-colors tracking-tight font-bold">
               WhatsApp me directly
             </span>
-            <span className={`font-mono text-xs text-zinc-600 ml-auto transition-opacity ${hoveredAction === 'wa' ? 'opacity-100' : 'opacity-0'}`}>
+            <span className={`font-mono text-xs text-zinc-400 ml-auto transition-opacity ${hoveredAction === 'wa' ? 'opacity-100' : 'opacity-0'}`}>
               Usually reply within an hour
             </span>
           </a>
@@ -64,13 +64,13 @@ export default function ContactNexus() {
             onClick={copyEmail}
             onMouseEnter={() => setHoveredAction('email')}
             onMouseLeave={() => setHoveredAction(null)}
-            className="group flex items-center gap-6 py-4 border-b border-white/5 hover:border-[#DEC1FC]/30 transition-colors text-left"
+            className="group flex items-center gap-6 py-4 border-b border-white/10 hover:border-[#DEC1FC]/50 transition-colors text-left"
           >
             <span className="w-2 h-2 rounded-full bg-[#DEC1FC]" />
             <span className="font-tech text-2xl md:text-3xl text-white group-hover:text-[#DEC1FC] transition-colors tracking-tight font-bold">
               {copied ? 'Copied ✓' : 'Copy my email'}
             </span>
-            <span className={`font-mono text-xs text-zinc-600 ml-auto transition-opacity ${hoveredAction === 'email' ? 'opacity-100' : 'opacity-0'}`}>
+            <span className={`font-mono text-xs text-zinc-400 ml-auto transition-opacity ${hoveredAction === 'email' ? 'opacity-100' : 'opacity-0'}`}>
               mahad.waqar@gmail.com
             </span>
           </button>
@@ -78,16 +78,16 @@ export default function ContactNexus() {
       </div>
 
       {/* Footer — minimal, human */}
-      <footer className="w-full mt-24 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <footer className="w-full mt-24 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="flex flex-col gap-1">
           <span className="font-tech text-sm text-white font-semibold tracking-tight">
             Muhammad Mahad Waqar Piracha
           </span>
-          <span className="font-mono text-[10px] text-zinc-600 uppercase tracking-widest">
+          <span className="font-mono text-xs text-zinc-400 uppercase tracking-widest">
             Lahore, Pakistan — Deployed globally
           </span>
         </div>
-        <span className="font-mono text-[10px] text-zinc-700">
+        <span className="font-mono text-xs text-zinc-500 font-medium">
           © 2026
         </span>
       </footer>

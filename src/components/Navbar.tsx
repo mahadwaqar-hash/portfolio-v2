@@ -5,10 +5,10 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const links = [
-    { label: 'Showroom', href: 'showroom' },
-    { label: 'Manifesto', href: 'manifesto' },
+    { label: 'Work', href: 'showroom' },
+    { label: 'Beliefs', href: 'manifesto' },
     { label: 'Capabilities', href: 'services' },
-    { label: 'Methodology', href: 'process' },
+    { label: 'Process', href: 'process' },
     { label: 'Contact', href: 'contact' },
   ];
 
@@ -23,100 +23,101 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Apple Liquid Glass Floating Desktop Navbar */}
+      {/* Sleek, human-crafted architectural top bar (no generic AI glass pill) */}
       <motion.header
-        initial={{ y: -24, opacity: 0 }}
+        initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-5 inset-x-0 z-50 flex justify-center px-4 pointer-events-none"
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed top-0 inset-x-0 z-50 flex justify-center px-6 py-4 pointer-events-none"
       >
-        <div className="w-full max-w-5xl apple-glass rounded-full px-5 py-3 flex items-center justify-between pointer-events-auto transition-all duration-300 hover:border-white/20">
+        <div className="w-full max-w-6xl flex items-center justify-between pointer-events-auto">
           
-          {/* Brand & Status Indicator */}
+          {/* Brand Wordmark & Location — clean and intentional */}
           <a
             href="#hero"
             onClick={(e) => handleScroll(e, 'hero')}
             className="flex items-center gap-3 group"
           >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#DEC1FC]/30 to-[#00B67A]/30 border border-white/20 flex items-center justify-center text-xs font-bold font-tech text-white group-hover:scale-105 transition-transform">
-              MW
+            <div className="w-7 h-7 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center text-xs font-mono font-bold text-white group-hover:bg-[#DEC1FC] group-hover:text-black transition-colors duration-200">
+              M
             </div>
-            <div className="flex flex-col">
-              <span className="font-tech text-xs tracking-wider uppercase text-white font-medium group-hover:text-[#DEC1FC] transition-colors">
+            <div className="flex items-baseline gap-2">
+              <span className="font-tech text-sm tracking-tight text-white font-bold group-hover:text-[#DEC1FC] transition-colors">
                 Mahad Waqar
               </span>
-              <span className="hidden sm:flex items-center gap-1.5 text-[9px] text-zinc-400 font-mono">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00B67A] animate-pulse" />
-                <span>Available for Engagements</span>
+              <span className="hidden sm:inline font-mono text-[10px] text-zinc-400">
+                / Lahore (UTC+5)
               </span>
             </div>
           </a>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8">
+          {/* Desktop Minimal Navigation Links */}
+          <nav className="hidden md:flex items-center gap-1 border border-white/10 bg-black/60 backdrop-blur-xl rounded-full px-4 py-1.5 shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
             {links.map((link) => (
               <a
                 key={link.label}
                 href={`#${link.href}`}
                 onClick={(e) => handleScroll(e, link.href)}
-                className="font-tech text-xs tracking-widest uppercase text-zinc-400 hover:text-white transition-colors duration-200 relative group py-1"
+                className="font-mono text-xs text-zinc-300 hover:text-white hover:bg-white/10 px-3 py-1 rounded-full transition-all duration-150"
               >
                 {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#DEC1FC] transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
           </nav>
 
-          {/* Direct CTA */}
+          {/* Direct Line / Contact Trigger */}
           <div className="flex items-center gap-3">
+            <a
+              href="https://wa.me/92334379962"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#00B67A]/40 bg-[#00B67A]/10 text-[#00B67A] hover:bg-[#00B67A] hover:text-black font-mono text-xs font-medium transition-all duration-200"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#00B67A] animate-pulse" />
+              <span>Available for hire</span>
+            </a>
+
             <a
               href="#contact"
               onClick={(e) => handleScroll(e, 'contact')}
-              className="px-4 py-2 rounded-full bg-white text-black font-tech text-xs font-semibold tracking-wider uppercase hover:bg-[#DEC1FC] hover:shadow-[0_0_20px_rgba(222,193,252,0.5)] transition-all duration-300 active:scale-95"
+              className="px-4 py-1.5 rounded-full bg-white text-black font-mono text-xs font-semibold hover:bg-[#DEC1FC] transition-colors duration-200 active:scale-95"
             >
-              Consultation ↗
+              Chat ↗
             </a>
 
-            {/* Mobile Hamburger Trigger */}
+            {/* Mobile Menu Trigger */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden w-9 h-9 rounded-full bg-white/10 border border-white/10 flex items-center justify-center text-white"
+              className="md:hidden w-8 h-8 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center text-white text-xs font-mono"
               aria-label="Toggle navigation"
             >
-              <div className="flex flex-col gap-1 w-4">
-                <span className={`w-full h-0.5 bg-white transition-transform ${isOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
-                <span className={`w-full h-0.5 bg-white transition-opacity ${isOpen ? 'opacity-0' : ''}`} />
-                <span className={`w-full h-0.5 bg-white transition-transform ${isOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
-              </div>
+              {isOpen ? '✕' : '☰'}
             </button>
           </div>
 
         </div>
       </motion.header>
 
-      {/* Mobile Liquid Glass Dropdown Menu */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.25 }}
-            className="md:hidden fixed top-24 inset-x-4 z-40 apple-glass-card rounded-2xl p-6 flex flex-col gap-4 border border-white/15"
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden fixed top-16 inset-x-4 z-40 bg-[#101015]/95 border border-white/15 rounded-2xl p-6 backdrop-blur-2xl flex flex-col gap-3 shadow-2xl"
           >
-            <div className="flex justify-between items-center pb-3 border-b border-white/10">
-              <span className="text-[10px] uppercase tracking-widest font-mono text-zinc-400">Navigation Index</span>
-              <span className="flex items-center gap-1.5 text-[9px] text-[#00B67A] font-mono">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00B67A] animate-pulse" />
-                Live Status: Online
-              </span>
+            <div className="flex justify-between items-center pb-3 border-b border-white/10 text-xs font-mono text-zinc-400">
+              <span>INDEX</span>
+              <span className="text-[#00B67A]">STATUS: ONLINE</span>
             </div>
             {links.map((link) => (
               <a
                 key={link.label}
                 href={`#${link.href}`}
                 onClick={(e) => handleScroll(e, link.href)}
-                className="font-tech text-base uppercase tracking-wider text-white hover:text-[#DEC1FC] py-2 flex items-center justify-between border-b border-white/5 last:border-0"
+                className="font-tech text-lg text-white hover:text-[#DEC1FC] py-1.5 flex items-center justify-between"
               >
                 <span>{link.label}</span>
                 <span className="text-zinc-500 font-mono text-xs">↗</span>

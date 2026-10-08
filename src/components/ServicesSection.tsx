@@ -46,12 +46,12 @@ export default function ServicesSection() {
             <div className="flex-1 h-[1px] bg-zinc-800" />
           </div>
 
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-tech font-bold text-white tracking-tight leading-[1.05]">
               Three things,<br />
-              <span className="text-zinc-500">done unreasonably well.</span>
+              <span className="text-zinc-400">done unreasonably well.</span>
             </h2>
-            <p className="font-body text-sm text-zinc-500 max-w-xs font-light md:text-right">
+            <p className="font-body text-sm text-zinc-300 max-w-xs font-normal md:text-right">
               I don't do "full-service digital marketing." 
               I do three things and I do them better than anyone you'll find on Fiverr.
             </p>
@@ -62,24 +62,24 @@ export default function ServicesSection() {
         <div className="flex flex-col lg:flex-row gap-0 lg:gap-0">
           
           {/* Left: Clickable List */}
-          <div className="w-full lg:w-[40%] flex flex-col lg:border-r border-white/5">
+          <div className="w-full lg:w-[40%] flex flex-col lg:border-r border-white/10">
             {services.map((s, idx) => (
               <button
                 key={s.id}
                 onClick={() => setActive(idx)}
-                className={`text-left py-8 pr-8 border-b border-white/5 transition-all duration-500 group ${
-                  active === idx ? '' : 'opacity-40 hover:opacity-70'
+                className={`text-left py-8 pr-8 border-b border-white/10 transition-all duration-300 group ${
+                  active === idx ? 'opacity-100' : 'opacity-60 hover:opacity-90'
                 }`}
               >
                 <div className="flex items-baseline gap-4">
-                  <span className={`font-mono text-xs transition-colors duration-500 ${active === idx ? 'text-[#DEC1FC]' : 'text-zinc-600'}`}>
+                  <span className={`font-mono text-xs transition-colors duration-300 ${active === idx ? 'text-[#DEC1FC] font-bold' : 'text-zinc-500'}`}>
                     {s.id}
                   </span>
                   <div>
                     <h3 className="font-tech text-2xl md:text-3xl font-bold text-white tracking-tight mb-1">
                       {s.title}
                     </h3>
-                    <p className="font-body text-sm text-zinc-500 italic">
+                    <p className="font-body text-sm text-zinc-300 font-medium">
                       {s.oneLiner}
                     </p>
                   </div>
@@ -94,9 +94,9 @@ export default function ServicesSection() {
               key={active}
               initial={{ opacity: 0, x: 15 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             >
-              <p className="font-body text-base md:text-lg text-zinc-300 font-light leading-relaxed mb-10">
+              <p className="font-body text-base md:text-lg text-zinc-100 font-normal leading-relaxed mb-10">
                 {services[active].description}
               </p>
 
