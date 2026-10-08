@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import LenisScroller from './components/LenisScroller';
 import CustomCursor from './components/CustomCursor';
 import NoiseOverlay from './components/NoiseOverlay';
-import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import ScrollScrubManifesto from './components/ScrollScrubManifesto';
@@ -14,7 +13,6 @@ import ContactNexus from './components/ContactNexus';
 import MaisonStoneApp from './pages/maison-stone/MaisonStoneApp';
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
   useEffect(() => {
@@ -78,9 +76,6 @@ export default function App() {
           </main>
         </div>
 
-      {isLoading && (
-        <Preloader onComplete={() => setIsLoading(false)} />
-      )}
     </LenisScroller>
   );
 }

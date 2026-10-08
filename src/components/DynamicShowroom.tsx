@@ -51,13 +51,13 @@ export default function DynamicShowroom() {
       {/* Horizontal Scroll Track */}
       <div 
         ref={scrollContainerRef}
-        className="flex w-full overflow-x-auto no-scrollbar snap-x snap-mandatory px-6 md:px-12 lg:px-24 pb-12 relative z-10 gap-12 md:gap-24"
+        className="flex w-full overflow-x-auto no-scrollbar snap-x snap-mandatory px-6 md:px-12 lg:px-24 pb-12 relative z-10 gap-8 md:gap-16"
       >
         {PORTFOLIO_PROJECTS.map((project, index) => {
           return (
             <div 
               key={project.id} 
-              className="w-[85vw] sm:w-[60vw] md:min-w-[45vw] lg:min-w-[38vw] max-w-[500px] flex-shrink-0 snap-center"
+              className="w-[75vw] sm:w-[50vw] md:min-w-[35vw] lg:min-w-[28vw] max-w-[400px] flex-shrink-0 snap-center"
             >
               <MouseParallax intensity={4} className="w-full h-full">
                 <button 
@@ -66,37 +66,37 @@ export default function DynamicShowroom() {
                   className="text-left block w-full group relative flex flex-col cursor-pointer"
                 >
                   
-                  {/* Image Container */}
-                  <div className="w-full aspect-[4/5] relative overflow-hidden mb-8 border border-white/5">
+                  {/* Image Container - Lighter, more visible */}
+                  <div className="w-full aspect-[4/3] md:aspect-square relative overflow-hidden mb-6 rounded-2xl shadow-lg bg-[#2A2A2A]">
                     <div 
-                      className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 group-hover:scale-105 pointer-events-none grayscale group-hover:grayscale-0 ${project.imagePlaceholder}`}
+                      className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 group-hover:scale-105 pointer-events-none ${project.imagePlaceholder}`}
                     />
                     
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-brand-ms-obsidian/40 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center backdrop-blur-sm">
-                      <span className="font-ms-body text-[10px] tracking-[0.3em] text-brand-ms-alabaster uppercase border border-brand-ms-alabaster/30 px-6 py-3 rounded-full">
-                        Launch Live App
+                    {/* Subtle Hover Overlay instead of fully black */}
+                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
+                      <span className="font-ms-body text-[10px] tracking-[0.2em] text-white uppercase border border-white/40 bg-black/40 px-6 py-2.5 rounded-full shadow-xl">
+                        Launch Project
                       </span>
                     </div>
                   </div>
 
                   {/* Text Content */}
                   <div className="flex flex-col">
-                    <div className="flex items-center gap-4 mb-4">
-                      <span className="font-ms-heading italic text-xl text-brand-ms-bronze">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="font-ms-heading italic text-lg text-brand-ms-bronze">
                         0{index + 1}.
                       </span>
                       <div className="h-[1px] flex-1 bg-white/10" />
-                      <span className="font-ms-body text-[10px] tracking-[0.2em] uppercase text-brand-ms-alabaster/40">
+                      <span className="font-ms-body text-[9px] tracking-[0.2em] uppercase text-brand-ms-alabaster/60">
                         {project.category}
                       </span>
                     </div>
                     
-                    <h4 className="font-ms-heading text-4xl md:text-5xl text-brand-ms-alabaster leading-tight mb-4 group-hover:text-brand-ms-bronze transition-colors duration-500">
+                    <h4 className="font-ms-heading text-3xl md:text-4xl text-brand-ms-alabaster leading-tight mb-3 group-hover:text-brand-ms-bronze transition-colors duration-500">
                       {project.title}
                     </h4>
                     
-                    <p className="font-ms-body text-xs text-brand-ms-alabaster/50 leading-relaxed line-clamp-2">
+                    <p className="font-ms-body text-[11px] text-brand-ms-alabaster/70 leading-relaxed line-clamp-2 max-w-sm">
                       {project.description}
                     </p>
                   </div>
