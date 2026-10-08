@@ -34,16 +34,15 @@ export default function App() {
   return (
     <LenisScroller>
       <CustomCursor />
-      <NoiseOverlay />
-
-      <div className="font-body text-brand-ms-graphite bg-brand-ms-alabaster min-h-screen selection:bg-brand-ms-graphite selection:text-white">
+      
+      <div className="font-ms-body text-brand-ms-alabaster bg-brand-ms-obsidian min-h-screen selection:bg-brand-ms-bronze selection:text-white">
         <Navbar />
 
           <main>
             <section
               id="hero"
               aria-label="Hero introduction"
-              className="relative min-h-screen flex flex-col justify-center items-start"
+              className="relative min-h-screen flex flex-col justify-center items-start pt-20"
             >
               <HeroSection />
             </section>
@@ -51,12 +50,14 @@ export default function App() {
             <section
               id="manifesto"
               aria-label="Personal manifesto"
-              className="py-20 md:py-40 px-4 md:px-8 lg:px-32 relative border-t border-brand-ms-graphite/5"
+              className="py-24 md:py-48 px-6 md:px-12 lg:px-24 relative"
             >
-              <h2 className="font-tech text-brand-ms-graphite/40 tracking-widest uppercase text-xs md:text-sm mb-10 md:mb-20 text-center md:text-left">
-                01 // Manifesto
-              </h2>
-              <ScrollScrubManifesto text="I build cinematic digital showrooms. High-performance, meticulously engineered web experiences that instantly position your brand as the premium choice." />
+              <div className="max-w-7xl mx-auto">
+                <h2 className="font-ms-heading italic text-brand-ms-bronze text-xl md:text-2xl mb-8 md:mb-16 text-left">
+                  I. The Manifesto
+                </h2>
+                <ScrollScrubManifesto text="I build cinematic digital showrooms. High-performance, meticulously engineered web experiences that instantly position your brand as the premium choice." />
+              </div>
             </section>
 
             <ServicesSection />
@@ -70,7 +71,7 @@ export default function App() {
             <section
               id="contact"
               aria-label="Contact information"
-              className="min-h-screen flex flex-col justify-center items-center text-center px-4 md:px-8 relative z-10 border-t border-brand-ms-graphite/5"
+              className="min-h-screen flex flex-col justify-center items-center text-center px-4 md:px-8 relative z-10"
             >
               <ContactNexus />
             </section>

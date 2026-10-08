@@ -28,20 +28,21 @@ export default function Navbar() {
     <>
       {/* Desktop Navbar (Hidden on mobile) */}
       <motion.header
-        className="hidden md:block fixed top-6 left-1/2 -translate-x-1/2 z-50 rounded-full px-8 py-4 max-w-[95vw] border border-black/5 bg-white/40 backdrop-blur-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)]"
+        className="hidden md:flex fixed top-0 left-0 w-full z-50 px-12 py-8 justify-between items-center bg-gradient-to-b from-brand-ms-obsidian to-transparent"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.8, ease: customEase }}
       >
+        <div className="font-ms-heading italic text-2xl text-brand-ms-bronze">M.</div>
         <nav role="navigation" aria-label="Main navigation">
-          <ul className="flex items-center space-x-8">
+          <ul className="flex items-center space-x-12">
             {links.map((link) => (
               <li key={link.label}>
                 <a
                   href={`#${link.href}`}
                   onClick={(e) => handleScroll(e, link.href)}
                   data-cursor="text"
-                  className="font-tech text-xs tracking-widest uppercase text-brand-ms-graphite/60 hover:text-brand-ms-graphite font-medium transition-colors duration-300"
+                  className="font-ms-body text-[11px] tracking-[0.2em] uppercase text-brand-ms-alabaster/60 hover:text-brand-ms-bronze transition-colors duration-500"
                 >
                   {link.label}
                 </a>
