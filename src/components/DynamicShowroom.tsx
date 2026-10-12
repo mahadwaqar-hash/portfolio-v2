@@ -140,15 +140,15 @@ export default function DynamicShowroom() {
           <div className="hidden sm:flex items-center gap-3">
             <button
               onClick={() => scrollByAmount(-560)}
-              className="w-12 h-12 rounded-full apple-glass flex items-center justify-center text-white hover:border-white/30 hover:bg-white hover:text-black transition-all hover:scale-105 active:scale-95"
-              aria-label="Scroll left"
+              className="w-12 h-12 rounded-full apple-glass flex items-center justify-center text-white hover:border-white/30 hover:bg-white hover:text-black transition-all hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC]"
+              aria-label="Scroll showroom showcase backward"
             >
               ←
             </button>
             <button
               onClick={() => scrollByAmount(560)}
-              className="w-12 h-12 rounded-full apple-glass flex items-center justify-center text-white hover:border-white/30 hover:bg-white hover:text-black transition-all hover:scale-105 active:scale-95"
-              aria-label="Scroll right"
+              className="w-12 h-12 rounded-full apple-glass flex items-center justify-center text-white hover:border-white/30 hover:bg-white hover:text-black transition-all hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC]"
+              aria-label="Scroll showroom showcase forward"
             >
               →
             </button>

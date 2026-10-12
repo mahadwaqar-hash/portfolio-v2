@@ -49,7 +49,7 @@ export default function TrustMetricsSection() {
               <div className="flex items-baseline gap-1">
                 {m.prefix && <span className="font-mono text-lg text-zinc-500">{m.prefix}</span>}
                 <span 
-                  className="font-tech text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter"
+                  className="font-tech text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter tabular-nums"
                   style={{ color: m.color }}
                 >
                   {m.value}

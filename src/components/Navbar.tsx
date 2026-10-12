@@ -52,13 +52,16 @@ export default function Navbar() {
           </a>
 
           {/* Desktop Minimal Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1 border border-white/10 bg-black/60 backdrop-blur-xl rounded-full px-4 py-1.5 shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
+          <nav 
+            aria-label="Main Navigation"
+            className="hidden md:flex items-center gap-1 border border-white/10 bg-black/60 backdrop-blur-xl rounded-full px-4 py-1.5 shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
+          >
             {links.map((link) => (
               <a
                 key={link.label}
                 href={`#${link.href}`}
                 onClick={(e) => handleScroll(e, link.href)}
-                className="font-mono text-xs text-zinc-300 hover:text-white hover:bg-white/10 px-3 py-1 rounded-full transition-all duration-150"
+                className="font-mono text-xs text-zinc-300 hover:text-white hover:bg-white/10 px-3 py-1 rounded-full transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC]"
               >
                 {link.label}
               </a>
@@ -71,16 +74,17 @@ export default function Navbar() {
               href="https://wa.me/923334379962?text=Hi%20Mahad,%20I'm%20interested%20in%20working%20with%20you%20on%20a%20project."
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#00B67A]/40 bg-[#00B67A]/10 text-[#00B67A] hover:bg-[#00B67A] hover:text-black font-mono text-xs font-medium transition-all duration-200"
+              aria-label="Chat directly on WhatsApp (opens in a new tab)"
+              className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#00B67A]/40 bg-[#00B67A]/10 text-[#00B67A] hover:bg-[#00B67A] hover:text-black font-mono text-xs font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B67A]"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00B67A] animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#00B67A] animate-pulse" aria-hidden="true" />
               <span>Available for hire</span>
             </a>
 
             <a
               href="#contact"
               onClick={(e) => handleScroll(e, 'contact')}
-              className="px-4 py-1.5 rounded-full bg-white text-black font-mono text-xs font-semibold hover:bg-[#DEC1FC] transition-colors duration-200 active:scale-95"
+              className="px-4 py-1.5 rounded-full bg-white text-black font-mono text-xs font-semibold hover:bg-[#DEC1FC] transition-colors duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
             >
               Chat ↗
             </a>
@@ -88,8 +92,9 @@ export default function Navbar() {
             {/* Mobile Menu Trigger */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden w-8 h-8 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center text-white text-xs font-mono"
+              className="md:hidden w-8 h-8 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center text-white text-xs font-mono focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC]"
               aria-label="Toggle navigation"
+              aria-expanded={isOpen}
             >
               {isOpen ? '✕' : '☰'}
             </button>

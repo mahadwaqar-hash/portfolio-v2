@@ -62,17 +62,21 @@ export default function ServicesSection() {
         <div className="flex flex-col lg:flex-row gap-0 lg:gap-0">
           
           {/* Left: Clickable List */}
-          <div className="w-full lg:w-[40%] flex flex-col lg:border-r border-white/10">
+          <div className="w-full lg:w-[40%] flex flex-col lg:border-r border-white/10" role="tablist" aria-label="Capabilities tabs">
             {services.map((s, idx) => (
               <button
                 key={s.id}
+                role="tab"
+                id={`tab-${s.id}`}
+                aria-selected={active === idx}
+                aria-controls={`panel-${s.id}`}
                 onClick={() => setActive(idx)}
-                className={`text-left py-8 pr-8 border-b border-white/10 transition-all duration-300 group ${
+                className={`text-left py-8 pr-8 border-b border-white/10 transition-all duration-300 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC] focus-visible:ring-inset ${
                   active === idx ? 'opacity-100' : 'opacity-60 hover:opacity-90'
                 }`}
               >
                 <div className="flex items-baseline gap-4">
-                  <span className={`font-mono text-xs transition-colors duration-300 ${active === idx ? 'text-[#DEC1FC] font-bold' : 'text-zinc-500'}`}>
+                  <span className={`font-mono text-xs transition-colors duration-300 tabular-nums ${active === idx ? 'text-[#DEC1FC] font-bold' : 'text-zinc-500'}`}>
                     {s.id}
                   </span>
                   <div>
@@ -92,6 +96,9 @@ export default function ServicesSection() {
           <div className="w-full lg:w-[60%] lg:pl-16 py-8 lg:py-12 min-h-[320px] flex flex-col justify-center">
             <motion.div
               key={active}
+              id={`panel-${services[active].id}`}
+              role="tabpanel"
+              aria-labelledby={`tab-${services[active].id}`}
               initial={{ opacity: 0, x: 15 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}

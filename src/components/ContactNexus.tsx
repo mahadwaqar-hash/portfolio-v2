@@ -59,17 +59,18 @@ export default function ContactNexus() {
             href="https://wa.me/923334379962?text=Hi%20Mahad,%20I'm%20interested%20in%20working%20with%20you%20on%20a%20project."
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Chat directly on WhatsApp (opens in a new tab)"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="group relative p-6 sm:p-8 apple-glass-card rounded-3xl overflow-hidden hover:border-[#00B67A]/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(0,182,122,0.15)] flex flex-col justify-between h-40 sm:h-48"
+            className="group relative p-6 sm:p-8 apple-glass-card rounded-3xl overflow-hidden hover:border-[#00B67A]/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(0,182,122,0.15)] flex flex-col justify-between h-40 sm:h-48 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B67A]"
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#00B67A]/10 rounded-full blur-[40px] group-hover:bg-[#00B67A]/20 transition-colors" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#00B67A]/10 rounded-full blur-[40px] group-hover:bg-[#00B67A]/20 transition-colors" aria-hidden="true" />
             
             <div className="flex items-center justify-between z-10">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#00B67A] animate-pulse" />
-              <svg viewBox="0 0 24 24" className="w-5 h-5 text-zinc-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" strokeWidth="2">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#00B67A] animate-pulse" aria-hidden="true" />
+              <svg viewBox="0 0 24 24" className="w-5 h-5 text-zinc-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <path d="M7 17l9.2-9.2M17 17V7H7" />
               </svg>
             </div>
@@ -86,23 +87,24 @@ export default function ContactNexus() {
 
           <motion.button
             onClick={copyEmail}
+            aria-label="Copy email address mahad.waqar@gmail.com to clipboard"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="group relative p-6 sm:p-8 apple-glass-card rounded-3xl overflow-hidden hover:border-[#DEC1FC]/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(222,193,252,0.15)] flex flex-col justify-between text-left h-40 sm:h-48"
+            className="group relative p-6 sm:p-8 apple-glass-card rounded-3xl overflow-hidden hover:border-[#DEC1FC]/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(222,193,252,0.15)] flex flex-col justify-between text-left h-40 sm:h-48 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC]"
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#DEC1FC]/10 rounded-full blur-[40px] group-hover:bg-[#DEC1FC]/20 transition-colors" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#DEC1FC]/10 rounded-full blur-[40px] group-hover:bg-[#DEC1FC]/20 transition-colors" aria-hidden="true" />
             
             <div className="flex items-center justify-between z-10">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#DEC1FC]" />
-              <svg viewBox="0 0 24 24" className="w-5 h-5 text-zinc-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" strokeWidth="2">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#DEC1FC]" aria-hidden="true" />
+              <svg viewBox="0 0 24 24" className="w-5 h-5 text-zinc-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                 <path d="M7 11V7a5 5 0 0110 0v4" />
               </svg>
             </div>
             
-            <div className="z-10 mt-auto">
+            <div className="z-10 mt-auto" aria-live="polite">
               <h3 className="font-tech text-xl sm:text-2xl text-white font-bold tracking-tight group-hover:text-[#DEC1FC] transition-colors mb-2">
                 {copied ? 'Copied ✓' : 'Copy Email'}
               </h3>

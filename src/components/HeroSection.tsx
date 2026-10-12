@@ -60,10 +60,17 @@ export default function HeroSection() {
   };
 
   return (
-    <div className="relative w-full min-h-screen overflow-hidden bg-[#070709] flex flex-col justify-between pt-24 pb-12 px-6 md:px-12 lg:px-24">
+    <div className="relative w-full min-h-[100dvh] overflow-hidden bg-[#070709] flex flex-col justify-between pt-24 pb-12 px-6 md:px-12 lg:px-24">
+      {/* Skip to Main Content Link for Screen Readers & Keyboard Navigation */}
+      <a
+        href="#showroom"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-6 focus:left-6 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#DEC1FC] focus:text-black focus:font-mono focus:text-xs focus:rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+      >
+        Skip to main content
+      </a>
       
       {/* Optimized static ambient gradients (no layout recalculations) */}
-      <div className="absolute inset-0 z-0 pointer-events-none transform-gpu">
+      <div className="absolute inset-0 z-0 pointer-events-none transform-gpu" aria-hidden="true">
         <div className="absolute top-[18%] left-[20%] w-[40vw] h-[35vh] bg-[#DEC1FC]/15 blur-[120px] rounded-full" />
         <div className="absolute bottom-[12%] right-[15%] w-[30vw] h-[25vh] bg-[#00B67A]/10 blur-[100px] rounded-full" />
       </div>
@@ -83,8 +90,9 @@ export default function HeroSection() {
             animate={{ scaleX: 1 }} 
             transition={{ duration: 1, ease: EXPO, delay: 0.2 }}
             className="w-10 h-[1px] bg-[#DEC1FC] origin-left" 
+            aria-hidden="true"
           />
-          <span className="font-mono text-[11px] sm:text-xs tracking-[0.25em] uppercase text-zinc-300 font-semibold">
+          <span className="font-mono text-[11px] sm:text-xs tracking-[0.25em] uppercase text-zinc-300 font-semibold select-none">
             Muhammad Mahad Waqar Piracha
           </span>
           <motion.div 
@@ -92,16 +100,21 @@ export default function HeroSection() {
             animate={{ scaleX: 1 }} 
             transition={{ duration: 1, ease: EXPO, delay: 0.3 }}
             className="w-10 h-[1px] bg-[#00B67A] origin-right" 
+            aria-hidden="true"
           />
         </motion.div>
 
-        {/* SCRAMBLE TEXT WORDMARK — Ultra-smooth Hardware Accelerated Card */}
+        {/* SCRAMBLE TEXT WORDMARK — Semantic H1 for SEO and Screen Readers */}
         <motion.div
           initial={{ opacity: 0, scale: 0.85, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.15 }}
           className="relative select-none z-10 mb-8"
         >
+          <h1 className="sr-only">
+            Muhammad Mahad Waqar Piracha — Web Architecture, Bespoke React Development & Local SEO Lahore
+          </h1>
+
           <div
             ref={cardRef}
             onMouseMove={handleMouseMove}
@@ -110,9 +123,9 @@ export default function HeroSection() {
             className="apple-glass-card rounded-3xl px-6 py-6 sm:px-10 sm:py-8 md:px-16 md:py-10 relative transform-gpu cursor-default will-change-transform shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
           >
             {/* Subtle sheen highlight */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent pointer-events-none rounded-3xl" />
+            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent pointer-events-none rounded-3xl" aria-hidden="true" />
             
-            <div className="flex flex-col items-center leading-[0.85] tracking-tighter font-tech font-black">
+            <div className="flex flex-col items-center leading-[0.85] tracking-tighter font-tech font-black" aria-hidden="true">
               <div className="overflow-hidden pb-4 -mb-4">
                 <motion.div
                   initial={{ y: "110%" }}
@@ -137,12 +150,12 @@ export default function HeroSection() {
           </div>
         </motion.div>
 
-        {/* Tagline with enhanced readability & contrast */}
+        {/* Tagline with balanced typography & optimal line reading */}
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: EXPO, delay: 0.55 }}
-          className="font-body text-sm sm:text-base md:text-lg text-zinc-200 max-w-xl text-center font-normal leading-relaxed px-4"
+          className="font-body text-sm sm:text-base md:text-lg text-zinc-200 max-w-xl text-center font-normal leading-relaxed px-4 [text-wrap:balance]"
         >
           I build the kind of websites that make your competitors 
           quietly wonder who built yours.
@@ -155,6 +168,7 @@ export default function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.9, duration: 0.7 }}
         className="relative z-10 flex flex-col items-center gap-2 mt-4"
+        aria-hidden="true"
       >
         <span className="font-mono text-[10px] text-zinc-400 uppercase tracking-widest font-medium">Scroll to explore</span>
         <div className="w-[1px] h-8 bg-gradient-to-b from-zinc-400 to-transparent" />
