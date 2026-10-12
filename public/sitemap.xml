@@ -1,32 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Core Root -->
   <url>
     <loc>https://mahad-works.vercel.app/</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- Review Reputation Portal -->
   <url>
-    <loc>https://mahad-works.vercel.app/maison-stone</loc>
-    <lastmod>2026-09-06</lastmod>
+    <loc>https://mahad-works.vercel.app/feedback</loc>
+    <lastmod>2026-10-12</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Programmatic Local SEO Routes (Web Development) -->
+  <url>
+    <loc>https://mahad-works.vercel.app/web-development-in-dha-phase-5</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://mahad-works.vercel.app/web-development-in-gulberg</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mahad-works.vercel.app/web-development-in-bahria-town</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mahad-works.vercel.app/web-development-in-model-town</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Programmatic Local SEO Routes (Technical Local SEO) -->
+  <url>
+    <loc>https://mahad-works.vercel.app/local-seo-in-dha-phase-5</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mahad-works.vercel.app/local-seo-in-gulberg</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mahad-works.vercel.app/local-seo-in-bahria-town</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mahad-works.vercel.app/local-seo-in-model-town</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Programmatic Local SEO Routes (WhatsApp E-Commerce) -->
+  <url>
+    <loc>https://mahad-works.vercel.app/ecommerce-development-in-dha-phase-5</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mahad-works.vercel.app/ecommerce-development-in-gulberg</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mahad-works.vercel.app/ecommerce-development-in-bahria-town</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mahad-works.vercel.app/ecommerce-development-in-model-town</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Client Showroom Deployments -->
+  <url>
+    <loc>https://mahad-works.vercel.app/maison-stone</loc>
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://mahad-works.vercel.app/vanguard/index.html</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://mahad-works.vercel.app/aura/index.html</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://mahad-works.vercel.app/zingwrap/index.html</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -9,6 +9,8 @@ import ServicesSection from './components/ServicesSection';
 import TrustMetricsSection from './components/TrustMetricsSection';
 import ContactNexus from './components/ContactNexus';
 import MaisonStoneApp from './pages/maison-stone/MaisonStoneApp';
+import FeedbackPage from './pages/FeedbackPage';
+import LocalServicePage from './pages/LocalServicePage';
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -18,6 +20,21 @@ export default function App() {
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
+
+  if (currentPath === '/feedback' || currentPath.startsWith('/feedback')) {
+    return <FeedbackPage />;
+  }
+
+  // Programmatic Local SEO Routing: /[service]-in-[neighborhood]
+  const localRouteMatch = currentPath.match(/^\/([a-z-]+)-in-([a-z0-9-]+)\/?$/);
+  if (localRouteMatch) {
+    const [, serviceSlug, neighborhoodSlug] = localRouteMatch;
+    return (
+      <LenisScroller>
+        <LocalServicePage serviceSlug={serviceSlug} neighborhoodSlug={neighborhoodSlug} />
+      </LenisScroller>
+    );
+  }
 
   if (currentPath.includes('/maison-stone')) {
     return (

@@ -134,6 +134,12 @@ export default function ContactNexus() {
             >
               +92 333 4379962
             </a>
+            <a 
+              href="/feedback"
+              className="font-mono text-xs text-zinc-400 hover:text-[#DEC1FC] transition-colors"
+            >
+              Client Review Portal
+            </a>
             <span className="font-mono text-xs text-zinc-500 font-medium">
               © 2026
             </span>
