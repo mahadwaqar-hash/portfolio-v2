@@ -40,7 +40,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Montserrat:wght@200;300;400&family=Instrument+Serif:ital,wght@0,400;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
-    <!-- JSON-LD: Institutional-Grade LocalBusiness & ProfessionalService Schema -->
+    <!-- JSON-LD: Institutional-Grade LocalBusiness & ProfessionalService Schema with Geo-Radius & FAQPage -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -49,15 +49,16 @@
           "@type": ["ProfessionalService", "LocalBusiness"],
           "@id": "https://mahad-works.vercel.app/#service",
           "name": "Muhammad Mahad Waqar Piracha — Web Architecture & Design",
-          "alternateName": "Mahad Waqar Web Developer",
+          "alternateName": "Mahad Waqar - Web Developer Lahore",
           "url": "https://mahad-works.vercel.app",
           "image": "https://mahad-works.vercel.app/og-image.jpg",
           "telephone": "+923334379962",
           "email": "mahad.waqar@gmail.com",
           "priceRange": "$$$$",
-          "description": "Premier frontend architect and web designer based in Lahore, Pakistan. Engineering bespoke React web applications, cinematic digital showrooms, and conversion-optimized digital experiences for ambitious brands.",
+          "description": "Premier website development and custom web architecture in Lahore, Pakistan. Engineering bespoke React web applications, cinematic 60fps digital showrooms, and high-conversion platforms for ambitious brands.",
           "address": {
             "@type": "PostalAddress",
+            "streetAddress": "DHA Phase 5",
             "addressLocality": "Lahore",
             "addressRegion": "Punjab",
             "postalCode": "54000",
@@ -68,7 +69,30 @@
             "latitude": 31.5204,
             "longitude": 74.3587
           },
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+              "opens": "09:00",
+              "closes": "21:00"
+            }
+          ],
           "areaServed": [
+            {
+              "@type": "GeoCircle",
+              "geoMidpoint": {
+                "@type": "GeoCoordinates",
+                "latitude": 31.5204,
+                "longitude": 74.3587
+              },
+              "geoRadius": "25000"
+            },
+            { "@type": "AdministrativeArea", "name": "DHA Lahore" },
+            { "@type": "AdministrativeArea", "name": "Gulberg Lahore" },
+            { "@type": "AdministrativeArea", "name": "Model Town Lahore" },
+            { "@type": "AdministrativeArea", "name": "Bahria Town Lahore" },
+            { "@type": "AdministrativeArea", "name": "Johar Town Lahore" },
+            { "@type": "AdministrativeArea", "name": "Cantt Lahore" },
             { "@type": "City", "name": "Lahore" },
             { "@type": "City", "name": "Islamabad" },
             { "@type": "City", "name": "Karachi" },
@@ -85,7 +109,7 @@
                 "@type": "Offer",
                 "itemOffered": {
                   "@type": "Service",
-                  "name": "Premium Website Development",
+                  "name": "Custom Website Development Lahore",
                   "description": "High-performance, conversion-optimized website development and scalable frontend architecture built with React, TypeScript, and Framer Motion."
                 }
               },
@@ -94,7 +118,15 @@
                 "itemOffered": {
                   "@type": "Service",
                   "name": "Luxury Brand Digital Showrooms",
-                  "description": "Cinematic, narrative-driven 60fps web portfolios for high-end architecture, law, and medical firms."
+                  "description": "Cinematic, narrative-driven 60fps web portfolios for high-end architecture, law, and medical aesthetics firms."
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Technical Local SEO & Schema Architecture",
+                  "description": "Deep JSON-LD schema integration, geo-radius dominance, and Google Core Web Vitals optimization engineered to outrank regional competitors."
                 }
               },
               {
@@ -131,7 +163,38 @@
             "Tailwind CSS",
             "Framer Motion",
             "Technical SEO",
-            "Local SEO"
+            "Local SEO Lahore",
+            "Core Web Vitals"
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://mahad-works.vercel.app/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How long does it take to develop a custom website in Lahore?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Every custom build is deployed within a 4-week delivery pipeline. Week 1 is competitor teardown and architecture, Weeks 2–3 cover bespoke React engineering with zero templates, and Week 4 is production launch with SEO audit and schema verification."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What tech stack is used for high-performance websites?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "All platforms are engineered with React 18, TypeScript, Tailwind CSS, Framer Motion, and Lenis inertial scrolling, deployed on high-speed Vercel Edge networks."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do you provide Local SEO for businesses in Lahore, Karachi, and Islamabad?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Every client deployment includes deep schema markup (JSON-LD), localized geo-targeting across prime commercial districts, sub-0.5s loading speeds, and Google Search Console index configuration."
+              }
+            }
           ]
         }
       ]

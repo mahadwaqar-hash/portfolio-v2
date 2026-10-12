@@ -116,19 +116,39 @@ export default function ContactNexus() {
         </div>
       </div>
 
-      {/* Footer — minimal, human */}
-      <footer className="w-full mt-24 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div className="flex flex-col gap-1">
-          <span className="font-tech text-sm text-white font-semibold tracking-tight">
-            Muhammad Mahad Waqar Piracha
+      {/* Footer — minimal, human & geo-targeted */}
+      <footer className="w-full mt-24 pt-8 border-t border-white/10 flex flex-col gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div className="flex flex-col gap-1">
+            <span className="font-tech text-sm text-white font-semibold tracking-tight">
+              Muhammad Mahad Waqar Piracha
+            </span>
+            <span className="font-mono text-xs text-zinc-400">
+              Web Developer & Architecture • DHA Phase 5, Lahore, Pakistan
+            </span>
+          </div>
+          <div className="flex items-center gap-6">
+            <a 
+              href="tel:03334379962"
+              className="font-mono text-xs text-zinc-400 hover:text-white transition-colors"
+            >
+              +92 333 4379962
+            </a>
+            <span className="font-mono text-xs text-zinc-500 font-medium">
+              © 2026
+            </span>
+          </div>
+        </div>
+
+        {/* Localized Search Coverage Badge (Pillar 4 Geo-Radius) */}
+        <div className="pt-4 border-t border-white/5 flex flex-wrap items-center justify-between gap-3 text-[11px] font-mono text-zinc-500">
+          <span>
+            Serving ambitious clients in DHA, Gulberg, Model Town, Bahria Town, Cantt, Johar Town & globally across UAE, UK, US.
           </span>
-          <span className="font-mono text-xs text-zinc-400 uppercase tracking-widest">
-            Lahore, Pakistan — Deployed globally
+          <span className="text-[#00B67A]/80 font-medium">
+            Geo-Radius: 25km Dominance
           </span>
         </div>
-        <span className="font-mono text-xs text-zinc-500 font-medium">
-          © 2026
-        </span>
       </footer>
     </div>
   );
