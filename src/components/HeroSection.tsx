@@ -3,60 +3,86 @@ import { motion } from 'framer-motion';
 
 const EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-// Lightweight scramble text effect without heavy interval re-renders
+// Optimized lightweight scramble text effect using single requestAnimationFrame ticker
 function useTextScramble(finalText: string, delay: number = 0) {
   const chars = '!<>-_/[]{}—=+*^?#_MHWAQR';
-  const [display, setDisplay] = useState('');
-  const [started, setStarted] = useState(false);
+  const [display, setDisplay] = useState(finalText);
 
   useEffect(() => {
-    const startTimer = setTimeout(() => setStarted(true), delay);
-    return () => clearTimeout(startTimer);
-  }, [delay]);
-
-  useEffect(() => {
-    if (!started) { setDisplay(''); return; }
+    let timeoutId: number;
+    let frameId: number;
     let iteration = 0;
-    const interval = setInterval(() => {
-      setDisplay(
-        finalText
-          .split('')
-          .map((char, idx) => {
-            if (idx < iteration) return char;
-            return chars[Math.floor(Math.random() * chars.length)];
-          })
-          .join('')
-      );
-      iteration += 1 / 2;
-      if (iteration >= finalText.length) {
-        setDisplay(finalText);
-        clearInterval(interval);
+    let lastTime = 0;
+
+    timeoutId = window.setTimeout(() => {
+      function tick(time: number) {
+        if (!lastTime || time - lastTime > 45) {
+          lastTime = time;
+          setDisplay(
+            finalText
+              .split('')
+              .map((char, idx) => {
+                if (idx < iteration) return char;
+                return chars[Math.floor(Math.random() * chars.length)];
+              })
+              .join('')
+          );
+          iteration += 0.6;
+        }
+
+        if (iteration < finalText.length) {
+          frameId = requestAnimationFrame(tick);
+        } else {
+          setDisplay(finalText);
+        }
       }
-    }, 40);
-    return () => clearInterval(interval);
-  }, [started, finalText]);
+      frameId = requestAnimationFrame(tick);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      cancelAnimationFrame(frameId);
+    };
+  }, [finalText, delay]);
 
   return display;
 }
 
 export default function HeroSection() {
-  const nameTop = useTextScramble('MAHAD', 300);
-  const nameBot = useTextScramble('WAQAR', 600);
+  const nameTop = useTextScramble('MAHAD', 250);
+  const nameBot = useTextScramble('WAQAR', 500);
 
-  // High performance CSS-variable based tilt (no React state re-renders)
+  // Throttled 60fps CSS transform using requestAnimationFrame
   const cardRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 12;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -12;
-    cardRef.current.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${x}deg)`;
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+
+    if (rafRef.current) return;
+
+    rafRef.current = requestAnimationFrame(() => {
+      if (!cardRef.current) {
+        rafRef.current = null;
+        return;
+      }
+      const rect = cardRef.current.getBoundingClientRect();
+      const x = ((clientX - rect.left) / rect.width - 0.5) * 8;
+      const y = ((clientY - rect.top) / rect.height - 0.5) * -8;
+      cardRef.current.style.transform = `perspective(800px) rotateX(${y}deg) rotateY(${x}deg)`;
+      rafRef.current = null;
+    });
   };
 
   const handleMouseLeave = () => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
     if (!cardRef.current) return;
-    cardRef.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+    cardRef.current.style.transform = `perspective(800px) rotateX(0deg) rotateY(0deg)`;
   };
 
   return (

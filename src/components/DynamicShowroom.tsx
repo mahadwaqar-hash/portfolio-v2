@@ -204,24 +204,51 @@ export default function DynamicShowroom() {
                   </div>
 
                   {/* 2. Real Interactive Live Homepage Viewport (GPU Optimized) */}
-                  <div className="relative w-full h-[190px] sm:h-[300px] overflow-hidden bg-black select-none pointer-events-none transform-gpu">
-                    {isLoaded ? (
-                      <iframe
-                        src={project.liveUrl}
-                        title={`${project.client} live preview`}
-                        loading="lazy"
-                        scrolling="no"
-                        tabIndex={-1}
-                        className="w-[1280px] h-[780px] border-0 transform origin-top-left scale-[0.24] sm:scale-[0.44] pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity duration-300 will-change-transform"
+                  <div className="relative w-full h-[190px] sm:h-[300px] overflow-hidden bg-[#0A0A0E] select-none pointer-events-none transform-gpu">
+                    {/* High-Fidelity GPU-Accelerated Preview Canvas */}
+                    <div className="absolute inset-0 p-6 flex flex-col justify-between overflow-hidden">
+                      {/* Architectural Ambient Gradient Backdrop per project */}
+                      <div 
+                        className="absolute inset-0 opacity-40 transition-opacity duration-500 group-hover:opacity-75"
+                        style={{
+                          background: `radial-gradient(circle at 70% 30%, ${project.accentColor || '#DEC1FC'}, transparent 70%)`
+                        }}
                       />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-[#09090D] text-zinc-600 font-mono text-xs">
-                        Loading preview...
-                      </div>
-                    )}
 
-                    {/* Translucent sheen overlay (doesn't trigger repaint) */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none group-hover:opacity-20 transition-opacity" />
+                      {/* Header Mockup Line */}
+                      <div className="relative z-10 flex items-center justify-between pb-3 border-b border-white/10">
+                        <span className="font-tech text-xs tracking-widest uppercase text-white font-bold">
+                          {project.client}
+                        </span>
+                        <span className="font-mono text-[10px] text-zinc-400">
+                          {project.category}
+                        </span>
+                      </div>
+
+                      {/* Headline / Graphic Mockup */}
+                      <div className="relative z-10 my-auto">
+                        <div className="font-tech text-xl sm:text-2xl font-black text-white tracking-tight line-clamp-1 mb-2">
+                          {project.title}
+                        </div>
+                        <div className="font-body text-xs text-zinc-300 max-w-sm line-clamp-2">
+                          {project.description}
+                        </div>
+                      </div>
+
+                      {/* Live Badge Strip */}
+                      <div className="relative z-10 flex items-center justify-between pt-3 border-t border-white/5">
+                        <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-[#00B67A]">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#00B67A] animate-pulse" />
+                          <span>Production Live</span>
+                        </span>
+                        <span className="text-[10px] font-mono text-zinc-500 uppercase">
+                          Press to Launch
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Translucent sheen overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none group-hover:opacity-40 transition-opacity" />
 
                     {/* Floating Launch Pill Button */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
