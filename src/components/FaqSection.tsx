@@ -66,19 +66,21 @@ export default function FaqSection() {
                   onClick={() => toggle(index)}
                   aria-expanded={isOpen}
                   aria-controls={`faq-answer-${index}`}
-                  className="w-full p-6 sm:p-8 flex items-center justify-between gap-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC]"
+                  className="w-full p-6 sm:p-8 flex items-center justify-between gap-6 text-left group hover:bg-white/[0.02] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC]"
                 >
-                  <span className="font-tech text-lg sm:text-xl font-bold text-white tracking-tight group-hover:text-[#DEC1FC]">
+                  <span className="font-tech text-lg sm:text-xl font-bold text-white tracking-tight group-hover:text-[#DEC1FC] transition-colors">
                     {item.question}
                   </span>
-                  <span
-                    className={`w-8 h-8 rounded-full apple-glass flex items-center justify-center flex-shrink-0 text-white font-mono text-base transition-transform duration-300 ${
-                      isOpen ? 'rotate-45 text-[#DEC1FC]' : ''
+                  <motion.span
+                    animate={{ rotate: isOpen ? 45 : 0 }}
+                    transition={{ type: 'spring', stiffness: 350, damping: 20 }}
+                    className={`w-8 h-8 rounded-full apple-glass flex items-center justify-center flex-shrink-0 font-mono text-base transition-colors ${
+                      isOpen ? 'text-[#DEC1FC] border-[#DEC1FC]/30 bg-[#DEC1FC]/10' : 'text-white'
                     }`}
                     aria-hidden="true"
                   >
                     +
-                  </span>
+                  </motion.span>
                 </button>
 
                 <AnimatePresence initial={false}>

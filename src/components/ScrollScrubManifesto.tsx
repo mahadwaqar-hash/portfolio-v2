@@ -1,31 +1,42 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform, MotionValue } from 'framer-motion';
 
 interface ScrollScrubManifestoProps {
   text: string;
 }
 
+const getWordAccentColor = (cleanWord: string): string => {
+  const lower = cleanWord.toLowerCase().replace(/[^a-z0-9-]/g, '');
+  if (lower === 'schema' || lower === 'flagships') return '#DEC1FC'; // Soft purple accent
+  if (lower === 'outrank' || lower === 'calculated') return '#00B67A'; // Soft emerald accent
+  if (lower === 'high-ticket' || lower === 'cinematic') return '#DEC1FC'; // Soft purple accent
+  return '#FFFFFF';
+};
+
 const AnimatedWord = ({ 
   word, 
   index, 
   total, 
-  scrollYProgress 
+  smoothProgress 
 }: { 
   word: string; 
   index: number; 
   total: number; 
-  scrollYProgress: MotionValue<number> 
+  smoothProgress: MotionValue<number>;
 }) => {
   const start = index / total;
-  const end = (index + 1) / total;
-  const opacity = useTransform(scrollYProgress, [start, end], [0.65, 1]);
-  const color = useTransform(scrollYProgress, [start, end], ['#8a8a93', '#FFFFFF']);
-  const y = useTransform(scrollYProgress, [start, end], [6, 0]);
+  const end = Math.min((index + 1) / total, 1);
+  const targetColor = getWordAccentColor(word);
+
+  // Strict contrast floor: never lower than 0.45 opacity
+  const opacity = useTransform(smoothProgress, [start, end], [0.45, 1]);
+  const color = useTransform(smoothProgress, [start, end], ['#8a8a93', targetColor]);
+  const y = useTransform(smoothProgress, [start, end], [5, 0]);
   
   return (
     <motion.span 
       style={{ opacity, color, y }} 
-      className="inline-block mr-[0.3em]"
+      className="inline-block mr-[0.3em] will-change-transform"
     >
       {word}
     </motion.span>
@@ -38,6 +49,12 @@ const ScrollScrubManifesto: React.FC<ScrollScrubManifestoProps> = ({ text }) => 
   const { scrollYProgress } = useScroll({ 
     target: containerRef, 
     offset: ['start 0.85', 'center center'] 
+  });
+
+  // Liquid spring smoothing for scroll progress
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 25,
   });
 
   const words = text.split(' ');
@@ -65,7 +82,7 @@ const ScrollScrubManifesto: React.FC<ScrollScrubManifestoProps> = ({ text }) => 
             word={word}
             index={index}
             total={words.length}
-            scrollYProgress={scrollYProgress}
+            smoothProgress={smoothProgress}
           />
         ))}
       </p>

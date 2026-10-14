@@ -111,3 +111,17 @@ html, body {
 .mask-up.in-view {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
+
+/* Traveling Border Beam Keyframe */
+@keyframes border-beam {
+  0% {
+    stroke-dashoffset: 700;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-border-beam {
+  animation: border-beam 7s linear infinite;
+}
