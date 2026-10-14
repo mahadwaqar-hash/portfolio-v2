@@ -2,10 +2,34 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const metrics = [
-  { value: '0.4s', prefix: '<', label: 'First paint', color: '#DEC1FC' },
-  { value: '100', prefix: '', label: 'Lighthouse score', color: '#00B67A' },
-  { value: '10km', prefix: '', label: 'Geo-radius reach', color: '#DEC1FC' },
-  { value: '14', prefix: '', label: 'Ships deployed', color: '#00B67A' },
+  { 
+    value: '0.4s', 
+    prefix: '<', 
+    label: 'First Contentful Paint', 
+    fullDescription: 'Sub-0.4s page load speed & First Contentful Paint across all viewports',
+    color: '#DEC1FC' 
+  },
+  { 
+    value: '100', 
+    prefix: '', 
+    label: 'Lighthouse Score', 
+    fullDescription: '100/100 Google Lighthouse performance score on all production deployments',
+    color: '#00B67A' 
+  },
+  { 
+    value: '10km', 
+    prefix: '', 
+    label: 'Geo-Radius Dominance', 
+    fullDescription: '10km+ local search radius dominance outranking regional competitors',
+    color: '#DEC1FC' 
+  },
+  { 
+    value: '14', 
+    prefix: '', 
+    label: 'Production Flagships', 
+    fullDescription: '14+ production digital flagships deployed worldwide with sub-second FCP',
+    color: '#00B67A' 
+  },
 ];
 
 const steps = [
@@ -55,8 +79,9 @@ export default function TrustMetricsSection() {
                   {m.value}
                 </span>
               </div>
-              <span className="font-mono text-xs text-zinc-400 uppercase tracking-widest mt-2 font-medium">
+              <span className="font-mono text-xs text-zinc-300 uppercase tracking-widest mt-2 font-medium">
                 {m.label}
+                <span className="sr-only">: {m.fullDescription}</span>
               </span>
             </motion.div>
           ))}
@@ -74,11 +99,12 @@ export default function TrustMetricsSection() {
               </span>
               <div className="flex-1 h-[1px] bg-zinc-700" />
             </div>
-            <h3 className="text-3xl sm:text-4xl md:text-5xl font-tech font-bold text-white tracking-tight leading-[1.05] mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-tech font-bold text-white tracking-tight leading-[1.05] mb-6">
+              <span className="sr-only">Process: 4-Week Web Development & SEO Delivery Process — </span>
               Four weeks.<br />
               <span className="text-zinc-400">Zero hand-waving.</span>
-            </h3>
-            <p className="font-body text-sm text-zinc-300 font-normal leading-relaxed">
+            </h2>
+            <p className="font-body text-sm sm:text-base text-zinc-300 font-normal leading-relaxed">
               Not "4–6 months" like an agency quotes you. 
               I run a tight, battle-tested pipeline because I've done this enough times 
               to know exactly what's needed and in what order.

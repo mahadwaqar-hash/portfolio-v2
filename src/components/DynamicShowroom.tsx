@@ -6,11 +6,27 @@ export default function DynamicShowroom() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const [hoverSide, setHoverSide] = useState<'left' | 'right' | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   // Lazy load iframe only when card is in view or hovered to guarantee 60fps smooth scrolling
   const [visibleIframes, setVisibleIframes] = useState<Record<string, boolean>>({
     '01': true, // First card loaded by default
   });
+
+  // Track active card on scroll for mobile pagination
+  useEffect(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    const handleScroll = () => {
+      const card = el.querySelector('.showroom-card-wrapper') as HTMLElement | null;
+      if (!card) return;
+      const cardWidth = card.offsetWidth + 32; // width + gap
+      const index = Math.round(el.scrollLeft / cardWidth);
+      setActiveIndex(Math.min(Math.max(index, 0), PORTFOLIO_PROJECTS.length - 1));
+    };
+    el.addEventListener('scroll', handleScroll, { passive: true });
+    return () => el.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleProjectClick = (url: string) => {
     if (!url || url === '#') return;
@@ -129,7 +145,7 @@ export default function DynamicShowroom() {
               </span>
             </div>
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-tech font-bold text-white tracking-tight">
-              Live Client Deployments.
+              <span className="sr-only">Portfolio & Case Studies: </span>Live Client Deployments.
             </h2>
             <p className="font-body text-sm sm:text-base text-zinc-300 mt-3 max-w-xl font-light">
               Every card below is an active, production-grade website. Tap or click any card to test the live deployment directly in your browser.
@@ -251,7 +267,7 @@ export default function DynamicShowroom() {
                     {project.client}
                   </h3>
 
-                  <p className="font-body text-xs sm:text-sm text-zinc-300 font-light leading-relaxed mb-5 line-clamp-2">
+                  <p className="font-body text-sm sm:text-[15px] text-zinc-300 font-normal leading-relaxed mb-5 line-clamp-2">
                     {project.description}
                   </p>
 
@@ -282,8 +298,35 @@ export default function DynamicShowroom() {
         })}
       </div>
 
+      {/* Mobile Swipe Indicators & Pagination Dots */}
+      <div className="flex sm:hidden items-center justify-between px-8 mt-2 mb-4">
+        <div className="flex items-center gap-2">
+          {PORTFOLIO_PROJECTS.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                const el = scrollContainerRef.current;
+                if (!el) return;
+                const card = el.querySelector('.showroom-card-wrapper') as HTMLElement | null;
+                const cardWidth = card ? card.offsetWidth + 32 : 320;
+                el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
+              }}
+              aria-label={`Go to slide ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                activeIndex === i ? 'w-6 bg-[#DEC1FC]' : 'w-2 bg-white/20'
+              }`}
+            />
+          ))}
+        </div>
+        <div className="apple-glass rounded-full px-3 py-1 flex items-center gap-2 text-xs font-mono text-zinc-300">
+          <span>0{activeIndex + 1} / 0{PORTFOLIO_PROJECTS.length}</span>
+          <span className="text-zinc-500">•</span>
+          <span className="text-[#DEC1FC]">Swipe →</span>
+        </div>
+      </div>
+
       {/* Bottom Hint */}
-      <div className="text-center mt-10">
+      <div className="text-center mt-6">
         <p className="font-mono text-xs text-zinc-400 font-medium">
           Tip: Move cursor to screen edges for quick navigation, or tap any card to open the live site
         </p>

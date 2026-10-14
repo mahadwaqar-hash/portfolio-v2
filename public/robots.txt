@@ -1,6 +1,30 @@
-# Robots.txt for Muhammad Mahad Waqar Piracha Portfolio
+# Robots.txt for Mahad Waqar Portfolio & Digital Architecture
+# Explicitly allowing standard search crawlers and AI answer engines for GEO citation indexing
+
 User-agent: *
 Allow: /
 
-# Sitemaps
+# OpenAI Crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Perplexity AI Search Crawler
+User-agent: PerplexityBot
+Allow: /
+
+# Anthropic Claude Crawler
+User-agent: ClaudeBot
+Allow: /
+
+# Google Extended (Gemini, Vertex AI, Search Generative Experience)
+User-agent: Google-Extended
+Allow: /
+
+# Sitemaps & LLMs summary
 Sitemap: https://mahad-works.vercel.app/sitemap.xml

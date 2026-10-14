@@ -130,19 +130,18 @@ export default function HeroSection() {
           />
         </motion.div>
 
-        {/* SCRAMBLE TEXT WORDMARK — Semantic H1 for SEO and Screen Readers */}
+        {/* SCRAMBLE TEXT WORDMARK — Oversized Visual Brand Identity */}
         <motion.div
           initial={{ opacity: 0, scale: 0.85, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.15 }}
           className="relative select-none z-10 mb-8"
         >
-          <h1 className="sr-only">
-            Muhammad Mahad Waqar Piracha — Web Architecture, Bespoke React Development & Local SEO Lahore
-          </h1>
-
           <div
             ref={cardRef}
+            role="heading"
+            aria-level={2}
+            aria-label="Mahad Waqar"
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             style={{ transition: 'transform 0.15s ease-out' }}
@@ -176,16 +175,20 @@ export default function HeroSection() {
           </div>
         </motion.div>
 
-        {/* Tagline with balanced typography & optimal line reading */}
-        <motion.p
+        {/* Primary Page H1 — Sole H1 Tag with Core SEO Keywords & Clean Typography */}
+        <motion.h1
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: EXPO, delay: 0.55 }}
-          className="font-body text-sm sm:text-base md:text-lg text-zinc-200 max-w-xl text-center font-normal leading-relaxed px-4 [text-wrap:balance]"
+          className="font-body text-[15px] sm:text-base md:text-[17px] text-[#b8b8b8] max-w-2xl text-center font-normal leading-relaxed px-4 [text-wrap:balance]"
         >
-          I build the kind of websites that make your competitors 
-          quietly wonder who built yours.
-        </motion.p>
+          <span className="text-white font-medium">
+            Custom Web Architecture, Local SEO & Conversion Design for High-Ticket Brands.
+          </span>{' '}
+          <span className="block mt-1 text-zinc-300 text-sm sm:text-[15px] font-normal">
+            I build the kind of websites that make your competitors quietly wonder who built yours.
+          </span>
+        </motion.h1>
       </div>
 
       {/* Bottom Indicator */}

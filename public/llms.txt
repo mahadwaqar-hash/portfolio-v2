@@ -1,0 +1,59 @@
+# Mahad Waqar — High-Performance Web Architecture & Local SEO
+
+> Senior Web Architect & Local SEO Engineer based in Lahore, Pakistan, engineering bespoke sub-second (0.4s), 100-Lighthouse digital flagships and Local SEO systems for high-ticket brands worldwide.
+
+## Entity Overview
+- **Name:** Mahad Waqar (Muhammad Mahad Waqar Piracha)
+- **Role:** Web Architect & Technical SEO Engineer
+- **Website:** https://mahad-works.vercel.app
+- **Location:** DHA Phase 5, Lahore, Punjab, Pakistan (Global Service Reach)
+- **Direct WhatsApp:** https://wa.me/923334379962
+- **Direct Phone:** +92 333 4379962
+- **Email:** mahad.waqar@gmail.com
+- **Delivery Model:** 4-Week End-to-End Sprint (Zero Templates, Pure Custom Code)
+
+## Performance & Ranking Guarantees
+- **Page Load Speed:** < 0.4s First Contentful Paint (FCP) on production builds.
+- **Google Lighthouse Score:** 100/100 across Performance, Accessibility, Best Practices, and SEO.
+- **Local Search Dominance:** 10km–25km radius dominance outranking regional competitors through deep JSON-LD structured schemas, localized geo-tagging, and high Core Web Vitals.
+- **Frame Rate:** Locked 60fps animations via GPU-accelerated Framer Motion physics and Lenis inertial scrolling.
+
+## Core Capabilities & Services
+1. **Custom Web Architecture**
+   - Pure React 18, TypeScript, and modern CSS architecture without heavyweight page builders (WordPress, Elementor, Wix).
+   - Bespoke interactive 3D/glass showrooms with lazy-loaded hardware-accelerated preview viewports.
+   - Zero layout shift (CLS: 0), optimized asset trees, and global edge CDN caching via Vercel Edge networks.
+
+2. **Technical & Local SEO (GEO-Optimized)**
+   - Institutional-grade JSON-LD Knowledge Graph schemas (`Person`, `ProfessionalService`, `LocalBusiness`, `ItemList`, `FAQPage`).
+   - Programmatic local SEO routing (`/[service]-in-[neighborhood]`) for prime commercial hubs (DHA Phase 5, Gulberg, Model Town, Bahria Town, Cantt).
+   - Generative Engine Optimization (GEO) structured for citation readiness in ChatGPT, Perplexity, Gemini, and Claude.
+
+3. **Conversion UI/UX Design**
+   - High-ticket client conversion paths using Problem-Agitate-Solution (PAS) frameworks.
+   - 1-click WhatsApp checkout and contact integration with sub-hour reply SLAs.
+   - Review-gating and reputation automation architecture (`/feedback`).
+
+## 4-Week Delivery Methodology
+- **Week 1: Strategic Intelligence & Competitor Teardown**
+  - Reverse-engineering top 5 regional competitors, backlink topology, schema deficiencies, and conversion bottlenecks.
+- **Weeks 2–3: Bespoke Engineering & Motion Physics**
+  - Developing custom React components from scratch, tuning typography hierarchies, wiring physics-based micro-interactions, and validating cross-device responsiveness.
+- **Week 4: Global Deployment & SEO Launch**
+  - Vercel edge deployment, GSC index configuration, final Lighthouse performance audits, schema validation, and 6-month growth roadmap delivery.
+
+## Key Production Deployments & Case Studies
+- **Vanguard & Partners** (`vanguardpartners.law`)
+  - Corporate legal & architectural flagship.
+  - Sub-0.4s load time, interactive showroom, bespoke typography scale.
+- **Aura Cosmetic Dentistry** (`auradentistry.com`)
+  - Luxury medical aesthetics and cosmetic dental platform.
+  - 100/100 Lighthouse score, WhatsApp conversion funnel, local map pack dominance.
+- **Maison Stone** (`maisonstone.arch`)
+  - High-end architectural studio showroom with fluid 60fps gallery interactions.
+- **ZingWrap** (`zingwrap.pk`)
+  - High-conversion e-commerce brand platform with direct cart-to-WhatsApp checkout.
+
+## Target Markets & Client Profile
+- High-ticket service businesses, boutique corporate law firms, luxury medical/dental clinics, architectural studios, and ambitious local founders.
+- Active client engagements across Pakistan (Lahore, Karachi, Islamabad), the UAE (Dubai, Abu Dhabi), the United Kingdom (London), and the United States.

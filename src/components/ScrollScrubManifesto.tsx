@@ -18,8 +18,8 @@ const AnimatedWord = ({
 }) => {
   const start = index / total;
   const end = (index + 1) / total;
-  const opacity = useTransform(scrollYProgress, [start, end], [0.35, 1]);
-  const color = useTransform(scrollYProgress, [start, end], ['#71717A', '#FFFFFF']);
+  const opacity = useTransform(scrollYProgress, [start, end], [0.65, 1]);
+  const color = useTransform(scrollYProgress, [start, end], ['#8a8a93', '#FFFFFF']);
   const y = useTransform(scrollYProgress, [start, end], [6, 0]);
   
   return (

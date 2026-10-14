@@ -35,6 +35,7 @@ export default function ContactNexus() {
           transition={{ duration: 0.8 }}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-tech font-black text-white tracking-tighter leading-[0.95] mb-8"
         >
+          <span className="sr-only">Contact: Start a High-Performance Web Project — </span>
           Got a project<br />
           that deserves<br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#DEC1FC] to-[#00B67A]">

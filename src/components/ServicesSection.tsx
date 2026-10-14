@@ -48,10 +48,11 @@ export default function ServicesSection() {
 
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-tech font-bold text-white tracking-tight leading-[1.05]">
+              <span className="sr-only">Services: Web Architecture, Local SEO & Conversion Design — </span>
               Three things,<br />
               <span className="text-zinc-400">done unreasonably well.</span>
             </h2>
-            <p className="font-body text-sm text-zinc-300 max-w-xs font-normal md:text-right">
+            <p className="font-body text-sm sm:text-base text-zinc-300 max-w-xs font-normal md:text-right">
               I don't do "full-service digital marketing." 
               I do three things and I do them better than anyone you'll find on Fiverr.
             </p>
@@ -83,7 +84,7 @@ export default function ServicesSection() {
                     <h3 className="font-tech text-2xl md:text-3xl font-bold text-white tracking-tight mb-1">
                       {s.title}
                     </h3>
-                    <p className="font-body text-sm text-zinc-300 font-medium">
+                    <p className="font-body text-sm sm:text-base text-zinc-300 font-medium">
                       {s.oneLiner}
                     </p>
                   </div>
@@ -92,38 +93,46 @@ export default function ServicesSection() {
             ))}
           </div>
 
-          {/* Right: Expanded Detail */}
-          <div className="w-full lg:w-[60%] lg:pl-16 py-8 lg:py-12 min-h-[320px] flex flex-col justify-center">
-            <motion.div
-              key={active}
-              id={`panel-${services[active].id}`}
-              role="tabpanel"
-              aria-labelledby={`tab-${services[active].id}`}
-              initial={{ opacity: 0, x: 15 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <p className="font-body text-base md:text-lg text-zinc-100 font-normal leading-relaxed mb-10">
-                {services[active].description}
-              </p>
+          {/* Right: Expanded Detail — ALL 3 service panels stay permanently mounted in HTML DOM for crawlers & LLMs */}
+          <div className="w-full lg:w-[60%] lg:pl-16 py-8 lg:py-12 min-h-[340px] relative grid grid-cols-1 items-center">
+            {services.map((s, idx) => {
+              const isActive = active === idx;
+              return (
+                <div
+                  key={s.id}
+                  id={`panel-${s.id}`}
+                  role="tabpanel"
+                  aria-labelledby={`tab-${s.id}`}
+                  aria-hidden={!isActive}
+                  className={`col-start-1 row-start-1 transition-all duration-400 ease-out flex flex-col justify-center ${
+                    isActive
+                      ? 'opacity-100 pointer-events-auto translate-x-0 z-10'
+                      : 'opacity-0 pointer-events-none -translate-x-3 z-0 select-none'
+                  }`}
+                >
+                  <p className="font-body text-base md:text-lg text-zinc-100 font-normal leading-relaxed mb-10">
+                    {s.description}
+                  </p>
 
-              {/* Tools as minimal inline tags */}
-              <div className="flex flex-wrap gap-2 mb-8">
-                {services[active].tools.map((t) => (
-                  <span key={t} className="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-[11px] font-mono text-zinc-400">
-                    {t}
-                  </span>
-                ))}
-              </div>
+                  {/* Tools as minimal inline tags */}
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {s.tools.map((t) => (
+                      <span key={t} className="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs font-mono text-zinc-300">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
 
-              {/* Key stat — no glass card, just a bold callout */}
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-[#00B67A]" />
-                <span className="font-mono text-xs text-[#00B67A] uppercase tracking-wider">
-                  {services[active].stat}
-                </span>
-              </div>
-            </motion.div>
+                  {/* Key stat — bold callout */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-[#00B67A]" />
+                    <span className="font-mono text-xs sm:text-sm text-[#00B67A] uppercase tracking-wider font-semibold">
+                      {s.stat}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
         </div>
