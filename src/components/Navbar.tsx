@@ -71,7 +71,7 @@ export default function Navbar() {
                   {isHovered && (
                     <motion.div
                       layoutId="navPill"
-                      className="absolute inset-0 rounded-full bg-white/10 border border-white/15 shadow-[0_2px_12px_rgba(255,255,255,0.06)]"
+                      className="absolute inset-0 rounded-full bg-white/10 border border-white/15 shadow-[0_2px_12px_rgba(255,255,255,0.06)] transform-gpu will-change-transform"
                       transition={{ type: "spring", stiffness: 350, damping: 25 }}
                     />
                   )}

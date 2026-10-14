@@ -121,7 +121,7 @@ export default function ServicesSection() {
                     pointerEvents: isActive ? 'auto' : 'none',
                   }}
                   transition={{ type: 'spring', stiffness: 300, damping: 26 }}
-                  className="col-start-1 row-start-1 flex flex-col justify-center will-change-transform"
+                  className="col-start-1 row-start-1 flex flex-col justify-center will-change-transform transform-gpu"
                 >
                   <p className="font-body text-base md:text-lg text-zinc-100 font-normal leading-relaxed mb-10">
                     {s.description}

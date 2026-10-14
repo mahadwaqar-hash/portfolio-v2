@@ -67,12 +67,13 @@ export default function HeroSection() {
     }
   }, []);
 
-  // Framer Motion spring physics for 3D Monolith Tilt
+  // Framer Motion spring physics for 3D Monolith Tilt (zero re-render)
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const springX = useSpring(mouseX, { stiffness: 200, damping: 20 });
-  const springY = useSpring(mouseY, { stiffness: 200, damping: 20 });
+  const springConfig = { stiffness: 180, damping: 25, mass: 0.5 };
+  const springX = useSpring(mouseX, springConfig);
+  const springY = useSpring(mouseY, springConfig);
 
   const rotateX = useTransform(springY, [-0.5, 0.5], [8, -8]);
   const rotateY = useTransform(springX, [-0.5, 0.5], [-8, 8]);
@@ -81,26 +82,38 @@ export default function HeroSection() {
   const { scrollY } = useScroll();
   const indicatorOpacity = useTransform(scrollY, [0, 80], [1, 0]);
 
+  const glareRafRef = useRef<number | null>(null);
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isFinePointer) return;
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
-      const xPct = (e.clientX - rect.left) / rect.width - 0.5;
-      const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+      const xPct = (clientX - rect.left) / rect.width - 0.5;
+      const yPct = (clientY - rect.top) / rect.height - 0.5;
       mouseX.set(xPct);
       mouseY.set(yPct);
     }
 
-    if (cardRef.current) {
-      const cardRect = cardRef.current.getBoundingClientRect();
-      const relativeX = e.clientX - cardRect.left;
-      const relativeY = e.clientY - cardRect.top;
-      cardRef.current.style.setProperty('--mouse-x', `${relativeX}px`);
-      cardRef.current.style.setProperty('--mouse-y', `${relativeY}px`);
+    if (cardRef.current && !glareRafRef.current) {
+      glareRafRef.current = requestAnimationFrame(() => {
+        if (cardRef.current) {
+          const cardRect = cardRef.current.getBoundingClientRect();
+          cardRef.current.style.setProperty('--mouse-x', `${clientX - cardRect.left}px`);
+          cardRef.current.style.setProperty('--mouse-y', `${clientY - cardRect.top}px`);
+        }
+        glareRafRef.current = null;
+      });
     }
   };
 
   const handleMouseLeave = () => {
+    if (glareRafRef.current) {
+      cancelAnimationFrame(glareRafRef.current);
+      glareRafRef.current = null;
+    }
     mouseX.set(0);
     mouseY.set(0);
   };
@@ -120,8 +133,12 @@ export default function HeroSection() {
         Skip to main content
       </a>
       
-      {/* Optimized static ambient gradients */}
-      <div className="absolute inset-0 z-0 pointer-events-none transform-gpu" aria-hidden="true">
+      {/* Optimized static ambient gradients (GPU layer promoted) */}
+      <div 
+        className="absolute inset-0 z-0 pointer-events-none transform-gpu" 
+        style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}
+        aria-hidden="true"
+      >
         <div className="absolute top-[18%] left-[20%] w-[40vw] h-[35vh] bg-[#DEC1FC]/15 blur-[120px] rounded-full" />
         <div className="absolute bottom-[12%] right-[15%] w-[30vw] h-[25vh] bg-[#00B67A]/10 blur-[100px] rounded-full" />
       </div>

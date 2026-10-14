@@ -5,14 +5,26 @@ export default function ContactNexus() {
   const [copied, setCopied] = useState(false);
   const waRef = useRef<HTMLAnchorElement>(null);
   const emailRef = useRef<HTMLButtonElement>(null);
+  const waRafRef = useRef<number | null>(null);
+  const emailRafRef = useRef<number | null>(null);
 
-  const handleCardMouseMove = (e: React.MouseEvent<HTMLElement>, ref: React.RefObject<HTMLElement>) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    ref.current.style.setProperty('--card-mouse-x', `${x}px`);
-    ref.current.style.setProperty('--card-mouse-y', `${y}px`);
+  const handleCardMouseMove = (
+    e: React.MouseEvent<HTMLElement>,
+    ref: React.RefObject<HTMLElement>,
+    rafRef: React.MutableRefObject<number | null>
+  ) => {
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+    if (!rafRef.current) {
+      rafRef.current = requestAnimationFrame(() => {
+        if (ref.current) {
+          const rect = ref.current.getBoundingClientRect();
+          ref.current.style.setProperty('--card-mouse-x', `${clientX - rect.left}px`);
+          ref.current.style.setProperty('--card-mouse-y', `${clientY - rect.top}px`);
+        }
+        rafRef.current = null;
+      });
+    }
   };
 
   const copyEmail = () => {
@@ -24,8 +36,12 @@ export default function ContactNexus() {
   return (
     <div className="relative w-full min-h-screen py-24 md:py-36 px-6 md:px-12 lg:px-24 flex flex-col justify-between items-start bg-[#070709] border-t border-white/5 overflow-hidden">
       
-      {/* Asymmetric glow */}
-      <div className="absolute bottom-0 right-0 w-[50vw] h-[50vh] bg-[#DEC1FC]/8 blur-[160px] rounded-full pointer-events-none" />
+      {/* Asymmetric glow — GPU layer promoted */}
+      <div 
+        className="absolute bottom-0 right-0 w-[50vw] h-[50vh] bg-[#DEC1FC]/8 blur-[160px] rounded-full pointer-events-none transform-gpu" 
+        style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}
+        aria-hidden="true"
+      />
 
       {/* Top marker */}
       <div className="flex items-center gap-4 mb-16 md:mb-24 w-full">
@@ -70,7 +86,7 @@ export default function ContactNexus() {
           {/* 1. WhatsApp Card */}
           <motion.a
             ref={waRef}
-            onMouseMove={(e) => handleCardMouseMove(e, waRef)}
+            onMouseMove={(e) => handleCardMouseMove(e, waRef, waRafRef)}
             href="https://wa.me/923334379962?text=Hi%20Mahad,%20I'm%20interested%20in%20working%20with%20you%20on%20a%20project."
             target="_blank"
             rel="noopener noreferrer"
@@ -115,7 +131,7 @@ export default function ContactNexus() {
           {/* 2. Copy Email Card with Spring Morphing Reward */}
           <motion.button
             ref={emailRef}
-            onMouseMove={(e) => handleCardMouseMove(e, emailRef)}
+            onMouseMove={(e) => handleCardMouseMove(e, emailRef, emailRafRef)}
             onClick={copyEmail}
             aria-label="Copy email address mahad.waqar@gmail.com to clipboard"
             initial={{ opacity: 0, scale: 0.95 }}

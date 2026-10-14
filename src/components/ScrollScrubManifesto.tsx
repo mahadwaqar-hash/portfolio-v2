@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useSpring, useTransform, MotionValue } from 'framer-motion';
+import React, { useRef, useMemo } from 'react';
+import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
 
 interface ScrollScrubManifestoProps {
   text: string;
@@ -7,63 +7,65 @@ interface ScrollScrubManifestoProps {
 
 const getWordAccentColor = (cleanWord: string): string => {
   const lower = cleanWord.toLowerCase().replace(/[^a-z0-9-]/g, '');
-  if (lower === 'schema' || lower === 'flagships') return '#DEC1FC'; // Soft purple accent
-  if (lower === 'outrank' || lower === 'calculated') return '#00B67A'; // Soft emerald accent
-  if (lower === 'high-ticket' || lower === 'cinematic') return '#DEC1FC'; // Soft purple accent
+  if (lower === 'schema' || lower === 'flagships') return '#DEC1FC';
+  if (lower === 'outrank' || lower === 'calculated') return '#00B67A';
+  if (lower === 'high-ticket' || lower === 'cinematic') return '#DEC1FC';
   return '#FFFFFF';
 };
 
-const AnimatedWord = ({ 
+interface WordProps {
+  word: string;
+  index: number;
+  total: number;
+  scrollYProgress: MotionValue<number>;
+}
+
+// Memoized Word Component — executes 100% on GPU outside React re-render cycles
+const Word = React.memo(function Word({ 
   word, 
   index, 
   total, 
-  smoothProgress 
-}: { 
-  word: string; 
-  index: number; 
-  total: number; 
-  smoothProgress: MotionValue<number>;
-}) => {
+  scrollYProgress 
+}: WordProps) {
   const start = index / total;
   const end = Math.min((index + 1) / total, 1);
-  const targetColor = getWordAccentColor(word);
+  const targetColor = useMemo(() => getWordAccentColor(word), [word]);
 
-  // Strict contrast floor: never lower than 0.45 opacity
-  const opacity = useTransform(smoothProgress, [start, end], [0.45, 1]);
-  const color = useTransform(smoothProgress, [start, end], ['#8a8a93', targetColor]);
-  const y = useTransform(smoothProgress, [start, end], [5, 0]);
+  // Strict contrast floor of 0.45 opacity with direct Lenis 1:1 scroll tracking
+  const opacity = useTransform(scrollYProgress, [start, end], [0.45, 1]);
+  const color = useTransform(scrollYProgress, [start, end], ['#8a8a93', targetColor]);
+  const y = useTransform(scrollYProgress, [start, end], [4, 0]);
   
   return (
     <motion.span 
       style={{ opacity, color, y }} 
-      className="inline-block mr-[0.3em] will-change-transform"
+      className="inline-block mr-[0.3em] transform-gpu will-change-transform"
     >
       {word}
     </motion.span>
   );
-};
+});
 
 const ScrollScrubManifesto: React.FC<ScrollScrubManifestoProps> = ({ text }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   
+  // Single useScroll instance with optimized trigger offset
   const { scrollYProgress } = useScroll({ 
     target: containerRef, 
-    offset: ['start 0.85', 'center center'] 
+    offset: ['start 0.85', 'end 0.35'] 
   });
 
-  // Liquid spring smoothing for scroll progress
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 25,
-  });
-
-  const words = text.split(' ');
+  const words = useMemo(() => text.split(' '), [text]);
 
   return (
     <div ref={containerRef} className="relative max-w-6xl mx-auto py-24 md:py-40 px-6 md:px-12">
       
-      {/* Asymmetric glow */}
-      <div className="absolute top-[30%] -left-[10%] w-[50vw] h-[40vh] bg-[#DEC1FC]/12 blur-[140px] rounded-full pointer-events-none -z-10" />
+      {/* Asymmetric glow — GPU layer promoted */}
+      <div 
+        className="absolute top-[30%] -left-[10%] w-[50vw] h-[40vh] bg-[#DEC1FC]/12 blur-[140px] rounded-full pointer-events-none -z-10 transform-gpu"
+        style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}
+        aria-hidden="true"
+      />
 
       {/* Section label */}
       <div className="flex items-center gap-4 mb-12 md:mb-20">
@@ -77,12 +79,12 @@ const ScrollScrubManifesto: React.FC<ScrollScrubManifestoProps> = ({ text }) => 
       {/* Scrubbing Text */}
       <p className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-tech font-bold leading-[1.25] tracking-tight">
         {words.map((word, index) => (
-          <AnimatedWord 
+          <Word 
             key={index}
             word={word}
             index={index}
             total={words.length}
-            smoothProgress={smoothProgress}
+            scrollYProgress={scrollYProgress}
           />
         ))}
       </p>
@@ -102,4 +104,4 @@ const ScrollScrubManifesto: React.FC<ScrollScrubManifestoProps> = ({ text }) => 
   );
 };
 
-export default ScrollScrubManifesto;
+export default React.memo(ScrollScrubManifesto);

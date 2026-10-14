@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useInView, useScroll, useSpring, useMotionValue } from 'framer-motion';
+import { motion, useInView, useScroll, useSpring, useMotionValue, useTransform } from 'framer-motion';
 
 const metrics = [
   { 
@@ -175,10 +175,8 @@ export default function TrustMetricsSection() {
     offset: ['start 80%', 'end 60%'],
   });
 
-  const laserScaleY = useSpring(scrollYProgress, {
-    stiffness: 160,
-    damping: 26,
-  });
+  // Direct 1:1 binding to Lenis smoothed scroll — zero rubber-banding conflict
+  const laserScaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
     <section id="process" className="relative w-full py-24 md:py-36 px-6 md:px-12 lg:px-24 bg-[#070709] border-t border-white/5">

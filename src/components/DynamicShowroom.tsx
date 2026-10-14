@@ -11,7 +11,7 @@ interface ShowroomCardProps {
   onClick: (url: string) => void;
 }
 
-function ShowroomCard({
+const ShowroomCard = React.memo(function ShowroomCard({
   project,
   index,
   domain,
@@ -20,14 +20,28 @@ function ShowroomCard({
   onClick,
 }: ShowroomCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    cardRef.current.style.setProperty('--card-mouse-x', `${x}px`);
-    cardRef.current.style.setProperty('--card-mouse-y', `${y}px`);
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+    if (!rafRef.current) {
+      rafRef.current = requestAnimationFrame(() => {
+        if (cardRef.current) {
+          const rect = cardRef.current.getBoundingClientRect();
+          cardRef.current.style.setProperty('--card-mouse-x', `${clientX - rect.left}px`);
+          cardRef.current.style.setProperty('--card-mouse-y', `${clientY - rect.top}px`);
+        }
+        rafRef.current = null;
+      });
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
   };
 
   return (
@@ -39,10 +53,11 @@ function ShowroomCard({
       <motion.div
         ref={cardRef}
         onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
         onClick={() => onClick(project.liveUrl)}
         whileHover={{ y: -6, scale: 1.01 }}
         transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-        className="group relative apple-glass-card rounded-3xl p-5 md:p-6 cursor-pointer border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.6)] flex flex-col justify-between overflow-hidden will-change-transform"
+        className="group relative apple-glass-card rounded-3xl p-5 md:p-6 cursor-pointer border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.6)] flex flex-col justify-between overflow-hidden transform-gpu will-change-transform"
       >
         {/* Cursor-Tracking Spotlight Glow & Border Lighting */}
         <div
@@ -170,11 +185,10 @@ function ShowroomCard({
       </motion.div>
     </div>
   );
-}
+});
 
 export default function DynamicShowroom() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const sectionRef = useRef<HTMLElement>(null);
   const [hoverSide, setHoverSide] = useState<'left' | 'right' | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -235,25 +249,6 @@ export default function DynamicShowroom() {
     return () => observer.disconnect();
   }, []);
 
-  const handleMouseMoveSection = (e: React.MouseEvent<HTMLElement>) => {
-    if (!sectionRef.current) return;
-    const rect = sectionRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const width = rect.width;
-
-    if (x < width * 0.18) {
-      setHoverSide('left');
-    } else if (x > width * 0.82) {
-      setHoverSide('right');
-    } else {
-      setHoverSide(null);
-    }
-  };
-
-  const handleMouseLeaveSection = () => {
-    setHoverSide(null);
-  };
-
   const domainMap: Record<string, string> = {
     '01': 'vanguardpartners.law',
     '02': 'auradentistry.com',
@@ -263,13 +258,28 @@ export default function DynamicShowroom() {
 
   return (
     <section 
-      ref={sectionRef}
-      onMouseMove={handleMouseMoveSection}
-      onMouseLeave={handleMouseLeaveSection}
       className="relative w-full py-24 md:py-36 overflow-hidden border-t border-white/5 bg-[#070709]"
     >
-      {/* Ambient Apple Glow in Background */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[70vw] h-[50vh] bg-gradient-to-b from-[#DEC1FC]/10 via-[#00B67A]/10 to-transparent blur-[140px] pointer-events-none -z-10" />
+      {/* Ambient Apple Glow in Background — GPU Layer Promoted */}
+      <div 
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[70vw] h-[50vh] bg-gradient-to-b from-[#DEC1FC]/10 via-[#00B67A]/10 to-transparent blur-[140px] pointer-events-none -z-10 transform-gpu" 
+        style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}
+        aria-hidden="true"
+      />
+
+      {/* Discrete Edge Hover Trigger Zones — Zero Re-Render on Mouse Movement */}
+      <div
+        onMouseEnter={() => setHoverSide('left')}
+        onMouseLeave={() => setHoverSide(null)}
+        className="hidden sm:block absolute left-0 top-0 bottom-0 w-24 z-30 pointer-events-auto"
+        aria-hidden="true"
+      />
+      <div
+        onMouseEnter={() => setHoverSide('right')}
+        onMouseLeave={() => setHoverSide(null)}
+        className="hidden sm:block absolute right-0 top-0 bottom-0 w-24 z-30 pointer-events-auto"
+        aria-hidden="true"
+      />
 
       {/* Floating Dynamic Edge Scroll Buttons */}
       <AnimatePresence>
@@ -281,6 +291,8 @@ export default function DynamicShowroom() {
             exit={{ opacity: 0, x: -25, scale: 0.85 }}
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.92 }}
+            onMouseEnter={() => setHoverSide('left')}
+            onMouseLeave={() => setHoverSide(null)}
             transition={{ type: 'spring', stiffness: 350, damping: 25 }}
             onClick={() => scrollByAmount(-560)}
             className="fixed left-6 top-1/2 -translate-y-1/2 z-50 w-16 h-16 rounded-full bg-white/10 hover:bg-white text-white hover:text-black border border-white/25 shadow-[0_10px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl flex items-center justify-center font-mono text-xl transition-colors duration-200"
@@ -297,6 +309,8 @@ export default function DynamicShowroom() {
             exit={{ opacity: 0, x: 25, scale: 0.85 }}
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.92 }}
+            onMouseEnter={() => setHoverSide('right')}
+            onMouseLeave={() => setHoverSide(null)}
             transition={{ type: 'spring', stiffness: 350, damping: 25 }}
             onClick={() => scrollByAmount(560)}
             className="fixed right-6 top-1/2 -translate-y-1/2 z-50 w-16 h-16 rounded-full bg-white/10 hover:bg-white text-white hover:text-black border border-white/25 shadow-[0_10px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl flex items-center justify-center font-mono text-xl transition-colors duration-200"
@@ -354,7 +368,7 @@ export default function DynamicShowroom() {
       {/* Horizontal Showroom Carousel — Hardware Accelerated */}
       <div
         ref={scrollContainerRef}
-        className="flex w-full overflow-x-auto no-scrollbar snap-x snap-mandatory px-6 md:px-12 lg:px-24 pb-8 gap-8 scroll-smooth will-change-scroll"
+        className="flex w-full overflow-x-auto no-scrollbar snap-x snap-mandatory px-6 md:px-12 lg:px-24 pb-8 gap-8 scroll-smooth will-change-scroll transform-gpu"
       >
         {PORTFOLIO_PROJECTS.map((project, index) => {
           const domain = domainMap[project.id] || `${project.client.toLowerCase().replace(/[^a-z0-9]/g, '')}.com`;
