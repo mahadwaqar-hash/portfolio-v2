@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Google Review link (falls back to Google search review query if place ID is pending verification)
-const GOOGLE_REVIEW_URL = 'https://search.google.com/local/writereview?placeid=ChIJ8_ZlhQoEGTkRMAk_oB9x0s4';
+// Google Business Profile direct review shortlink
+const GOOGLE_REVIEW_URL = 'https://g.page/r/CXV0xGV5EXc1EBM/review';
 
 export default function FeedbackPage() {
   const [rating, setRating] = useState<number | null>(null);

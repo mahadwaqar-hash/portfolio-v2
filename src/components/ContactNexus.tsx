@@ -5,8 +5,10 @@ export default function ContactNexus() {
   const [copied, setCopied] = useState(false);
   const waRef = useRef<HTMLAnchorElement>(null);
   const emailRef = useRef<HTMLButtonElement>(null);
+  const reviewRef = useRef<HTMLAnchorElement>(null);
   const waRafRef = useRef<number | null>(null);
   const emailRafRef = useRef<number | null>(null);
+  const reviewRafRef = useRef<number | null>(null);
 
   const handleCardMouseMove = (
     e: React.MouseEvent<HTMLElement>,
@@ -250,6 +252,67 @@ export default function ContactNexus() {
             </div>
           </motion.button>
         </div>
+
+        {/* 3. Slim Horizontal Google Review Card with Matching Aesthetic */}
+        <motion.a
+          ref={reviewRef}
+          onMouseMove={(e) => handleCardMouseMove(e, reviewRef, reviewRafRef)}
+          href="https://g.page/r/CXV0xGV5EXc1EBM/review"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Review Muhammad Mahad Waqar on Google Business Profile (opens in a new tab)"
+          initial={{ opacity: 0, scale: 0.98 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          whileHover={{ y: -3, scale: 1.008 }}
+          whileTap={{ scale: 0.98 }}
+          viewport={{ once: true }}
+          transition={{ type: 'spring', stiffness: 350, damping: 22 }}
+          className="group relative mt-4 w-full p-4 sm:p-5 apple-glass-card rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 hover:border-amber-400/40 transition-all duration-300 hover:shadow-[0_15px_40px_rgba(251,191,36,0.15)] flex items-center justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+        >
+          {/* Cursor-Following Radial Glow (Gold/Amber & Emerald) */}
+          <div
+            className="absolute inset-0 pointer-events-none rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{
+              background:
+                'radial-gradient(400px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%), rgba(251, 191, 36, 0.18), rgba(0, 182, 122, 0.12), transparent 75%)',
+            }}
+            aria-hidden="true"
+          />
+
+          <div className="flex items-center gap-3.5 sm:gap-4 z-10">
+            {/* Gold Google Star Badge */}
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:border-amber-400/40 group-hover:bg-amber-400/10 transition-colors shadow-sm">
+              <svg viewBox="0 0 24 24" className="w-5 h-5 text-amber-400" fill="currentColor" aria-hidden="true">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+            </div>
+
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2">
+                <h3 className="font-tech text-base sm:text-lg text-white font-bold tracking-tight group-hover:text-amber-300 transition-colors">
+                  Review on Google Business Profile
+                </h3>
+                <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-400/10 border border-amber-400/20 text-[10px] font-mono text-amber-300 font-semibold">
+                  ★ 5.0 Verified
+                </span>
+              </div>
+              <p className="font-mono text-[10px] sm:text-xs text-zinc-400 uppercase tracking-wider">
+                Direct Review Link • Rate Recent Client Engagements
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 z-10">
+            <span className="hidden md:inline font-mono text-[10px] sm:text-xs text-zinc-400 group-hover:text-amber-300 transition-colors font-medium">
+              Rate Experience
+            </span>
+            <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-amber-400/40 group-hover:bg-amber-400/10 transition-colors">
+              <svg viewBox="0 0 24 24" className="w-4 h-4 text-zinc-400 group-hover:text-amber-300 transition-colors" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <path d="M7 17l9.2-9.2M17 17V7H7" />
+              </svg>
+            </div>
+          </div>
+        </motion.a>
       </div>
 
       {/* Footer — minimal, human & geo-targeted */}
