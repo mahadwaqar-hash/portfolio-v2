@@ -326,18 +326,52 @@ export default function ContactNexus() {
               Web Developer & Architecture • DHA Phase 5, Lahore, Pakistan
             </span>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             <a 
-              href="tel:03334379962"
+              href="/about"
               className="font-mono text-xs text-zinc-400 hover:text-white transition-colors"
             >
-              +92 333 4379962
+              About
+            </a>
+            <a 
+              href="/contact"
+              className="font-mono text-xs text-zinc-400 hover:text-white transition-colors"
+            >
+              Contact
+            </a>
+            <a 
+              href="/docs"
+              className="font-mono text-xs text-[#DEC1FC] hover:text-white transition-colors font-medium"
+            >
+              API &amp; Docs
+            </a>
+            <a 
+              href="/openapi.json"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-xs text-zinc-400 hover:text-[#00B67A] transition-colors"
+            >
+              OpenAPI 3.1
+            </a>
+            <a 
+              href="/.well-known/mcp"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-xs text-zinc-400 hover:text-amber-300 transition-colors"
+            >
+              MCP
             </a>
             <a 
               href="/feedback"
               className="font-mono text-xs text-zinc-400 hover:text-[#DEC1FC] transition-colors"
             >
-              Client Review Portal
+              Review Portal
+            </a>
+            <a 
+              href="/privacy"
+              className="font-mono text-xs text-zinc-400 hover:text-white transition-colors"
+            >
+              Privacy Policy
             </a>
             <span className="font-mono text-xs text-zinc-500 font-medium">
               © 2026
@@ -345,14 +379,19 @@ export default function ContactNexus() {
           </div>
         </div>
 
-        {/* Localized Search Coverage Badge */}
+        {/* Localized Search Coverage Badge & Machine Discovery */}
         <div className="pt-4 border-t border-white/5 flex flex-wrap items-center justify-between gap-3 text-[11px] font-mono text-zinc-500">
           <span>
-            Serving ambitious clients in DHA, Gulberg, Model Town, Bahria Town, Cantt, Johar Town & globally across UAE, UK, US.
+            Serving ambitious clients in DHA, Gulberg, Model Town, Bahria Town, Cantt, Johar Town &amp; globally across UAE, UK, US.
           </span>
-          <span className="text-[#00B67A]/80 font-medium">
-            Geo-Radius: 25km Dominance
-          </span>
+          <div className="flex items-center gap-4">
+            <span className="text-zinc-400 font-medium">
+              Accept: <code className="text-[#DEC1FC]">text/markdown</code> enabled
+            </span>
+            <span className="text-[#00B67A]/80 font-medium">
+              Geo-Radius: 25km Dominance
+            </span>
+          </div>
         </div>
       </footer>
     </div>

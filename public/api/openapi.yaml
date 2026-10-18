@@ -1,0 +1,434 @@
+openapi: 3.1.0
+info:
+  title: Mahad Waqar Web Architecture & Local SEO API
+  version: 1.0.0
+  description: Production REST API for Mahad Waqar — Senior Web Architect & Technical SEO Engineer. Provides structured endpoints for developer profile, core capabilities, live case studies, client reviews, direct consultation booking, and agent tool execution.
+  contact:
+    name: Mahad Waqar
+    email: mahad.waqar@gmail.com
+    url: https://mahad-works.vercel.app
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: https://mahad-works.vercel.app
+    description: Production Edge API Server
+tags:
+  - name: Profile
+    description: Architect background, credentials, and technical stack
+  - name: Services
+    description: 4-week sprint packages, deliverables, and performance guarantees
+  - name: Projects
+    description: Live production deployments, case studies, and audit metrics
+  - name: Contact
+    description: Direct communication channels, intake forms, and consultation booking
+paths:
+  /api/v1/profile:
+    get:
+      tags:
+        - Profile
+      summary: Retrieve architect profile, bio, stack, and guarantees
+      description: Returns full professional profile for Mahad Waqar including primary specialization, Core Web Vitals guarantees, location coordinates, and active client capacity.
+      operationId: getProfile
+      responses:
+        '200':
+          description: Profile data retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v1/services:
+    get:
+      tags:
+        - Services
+      summary: List available engineering and SEO service packages
+      description: Returns the list of 3 flagship service packages (Custom Web Architecture, Local SEO & GEO, High-Ticket Conversion UI/UX) with deliverables, duration, and SLAs.
+      operationId: listServices
+      parameters:
+        - name: category
+          in: query
+          required: false
+          description: "Filter services by category: 'architecture', 'seo', or 'conversion'"
+          schema:
+            type: string
+            enum: [architecture, seo, conversion]
+      responses:
+        '200':
+          description: List of services retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  services:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Service'
+                  deliveryTimeline:
+                    type: string
+                    example: 4-Week End-to-End Sprint
+                  capacity:
+                    type: string
+                    example: 2-3 projects at a time
+                required:
+                  - services
+                  - deliveryTimeline
+                  - capacity
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v1/projects:
+    get:
+      tags:
+        - Projects
+      summary: List live production case studies and metrics
+      description: Returns verified client deployments (Vanguard & Partners, Aura Cosmetic Dentistry, Maison Stone, ZingWrap) including verified Lighthouse scores, load times, live URLs, and tech stacks.
+      operationId: listProjects
+      parameters:
+        - name: slug
+          in: query
+          required: false
+          description: Filter by project slug
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Projects retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  projects:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project'
+                  count:
+                    type: integer
+                    example: 4
+                required:
+                  - projects
+                  - count
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v1/contact:
+    get:
+      tags:
+        - Contact
+      summary: Get official direct communication channels
+      description: Returns verified WhatsApp, telephone, email, physical office address, and verified Google Review links with current response times.
+      operationId: getContactChannels
+      responses:
+        '200':
+          description: Contact channels retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactChannels'
+    post:
+      tags:
+        - Contact
+      summary: Submit project inquiry or consultation request
+      description: Direct intake schema for potential clients and AI agent referrals to request a high-performance web architecture sprint.
+      operationId: submitInquiry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactInquiry'
+      responses:
+        '201':
+          description: Inquiry submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Inquiry received. Mahad Waqar will respond within 4 hours.
+                  inquiryId:
+                    type: string
+                    example: inq_9f8e7d6c
+                  directWhatsAppUrl:
+                    type: string
+                    example: https://wa.me/923334379962
+                required:
+                  - success
+                  - message
+                  - directWhatsAppUrl
+        '400':
+          description: Validation error or missing fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    Profile:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Mahad Waqar
+        fullName:
+          type: string
+          example: Muhammad Mahad Waqar Piracha
+        title:
+          type: string
+          example: Senior Web Architect & Technical SEO Engineer
+        location:
+          type: object
+          properties:
+            city:
+              type: string
+              example: Lahore
+            neighborhood:
+              type: string
+              example: DHA Phase 5
+            region:
+              type: string
+              example: Punjab
+            country:
+              type: string
+              example: Pakistan
+            coordinates:
+              type: object
+              properties:
+                latitude:
+                  type: number
+                  example: 31.5204
+                longitude:
+                  type: number
+                  example: 74.3587
+        bio:
+          type: string
+          example: I engineer sub-second (0.4s FCP), 100-Lighthouse digital flagships and Local SEO systems in 4 weeks with zero templates or page builders.
+        experienceYears:
+          type: integer
+          example: 6
+        coreStack:
+          type: array
+          items:
+            type: string
+          example: [React 18, TypeScript, Tailwind CSS, Framer Motion, Lenis, Vercel Edge CDN]
+        performanceGuarantees:
+          type: object
+          properties:
+            firstContentfulPaint:
+              type: string
+              example: "< 0.4s"
+            googleLighthouse:
+              type: string
+              example: 100/100 across Performance, Accessibility, Best Practices, SEO
+            frameRate:
+              type: string
+              example: 60fps locked animations
+            localRadius:
+              type: string
+              example: 10km–25km Map Pack Dominance
+            sprintDuration:
+              type: string
+              example: 4 Weeks Fixed Turnaround
+      required:
+        - name
+        - title
+        - location
+        - bio
+        - coreStack
+        - performanceGuarantees
+    Service:
+      type: object
+      properties:
+        id:
+          type: string
+          example: web-architecture
+        title:
+          type: string
+          example: Custom Web Architecture
+        category:
+          type: string
+          enum: [architecture, seo, conversion]
+          example: architecture
+        tagline:
+          type: string
+          example: Sub-0.4s Digital Flagships with Zero Templates
+        description:
+          type: string
+          example: Bespoke React 18, TypeScript, and modern CSS architecture without heavyweight page builders. Delivering perfect 100/100 Lighthouse performance.
+        deliverables:
+          type: array
+          items:
+            type: string
+          example:
+            - Custom React 18/TypeScript codebase
+            - Sub-0.4s First Contentful Paint guarantee
+            - 60fps Framer Motion micro-interactions
+            - Vercel Edge caching and asset tree minification
+        turnaround:
+          type: string
+          example: 4 Weeks
+      required:
+        - id
+        - title
+        - category
+        - tagline
+        - description
+        - deliverables
+        - turnaround
+    Project:
+      type: object
+      properties:
+        id:
+          type: string
+          example: vanguard
+        name:
+          type: string
+          example: Vanguard & Partners
+        industry:
+          type: string
+          example: Corporate Law & Architecture
+        url:
+          type: string
+          example: https://vanguardpartners.law
+        fcp:
+          type: string
+          example: 0.38s
+        lighthouse:
+          type: integer
+          example: 100
+        stack:
+          type: array
+          items:
+            type: string
+          example: [React 18, TypeScript, Tailwind CSS, Framer Motion]
+        summary:
+          type: string
+          example: High-ticket corporate law flagship engineered with sub-0.4s FCP, interactive 60fps showroom, and authoritative typography.
+      required:
+        - id
+        - name
+        - industry
+        - url
+        - fcp
+        - lighthouse
+        - stack
+        - summary
+    ContactChannels:
+      type: object
+      properties:
+        whatsapp:
+          type: object
+          properties:
+            number:
+              type: string
+              example: "+92 333 4379962"
+            url:
+              type: string
+              example: https://wa.me/923334379962
+            responseTime:
+              type: string
+              example: "< 30 minutes"
+        email:
+          type: object
+          properties:
+            address:
+              type: string
+              example: mahad.waqar@gmail.com
+            responseTime:
+              type: string
+              example: "< 4 hours"
+        phone:
+          type: string
+          example: "+92 333 4379962"
+        googleReviewProfile:
+          type: string
+          example: https://g.page/r/CXV0xGV5EXc1EBM/review
+        office:
+          type: string
+          example: DHA Phase 5, Lahore, Punjab 54000, Pakistan
+      required:
+        - whatsapp
+        - email
+        - phone
+        - googleReviewProfile
+        - office
+    ContactInquiry:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Full name of the contact or prospective client
+          example: Sarah Jenkins
+        email:
+          type: string
+          format: email
+          description: Client email address
+          example: sarah@luminahealth.com
+        whatsapp:
+          type: string
+          description: Optional WhatsApp number with country code
+          example: "+447123456789"
+        brandName:
+          type: string
+          description: Company, firm, or practice name
+          example: Lumina Health Clinic
+        projectDetails:
+          type: string
+          description: Description of the website, design requirements, and current pain points
+          example: Need a sub-second high-ticket aesthetic medicine flagship to outrank regional Harley St clinics.
+        budgetTier:
+          type: string
+          enum: ["$3,000 - $5,000", "$5,000 - $10,000", "$10,000+"]
+          example: "$5,000 - $10,000"
+        targetLaunch:
+          type: string
+          example: Within 4-6 weeks
+      required:
+        - name
+        - email
+        - projectDetails
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: INVALID_INPUT
+            message:
+              type: string
+              example: "Missing required field: projectDetails"
+            hint:
+              type: string
+              example: Provide a projectDetails string explaining your project scope.
+          required:
+            - code
+            - message
+            - hint
+      required:
+        - error

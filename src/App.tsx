@@ -12,6 +12,10 @@ import ContactNexus from './components/ContactNexus';
 import MaisonStoneApp from './pages/maison-stone/MaisonStoneApp';
 import FeedbackPage from './pages/FeedbackPage';
 import LocalServicePage from './pages/LocalServicePage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
+import PrivacyPage from './pages/PrivacyPage';
+import DocsPage from './pages/DocsPage';
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -21,6 +25,22 @@ export default function App() {
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
+
+  if (currentPath === '/about' || currentPath.startsWith('/about')) {
+    return <AboutPage />;
+  }
+
+  if (currentPath === '/contact' || currentPath === '/contact/') {
+    return <ContactPage />;
+  }
+
+  if (currentPath === '/privacy' || currentPath.startsWith('/privacy')) {
+    return <PrivacyPage />;
+  }
+
+  if (currentPath === '/docs' || currentPath.startsWith('/docs')) {
+    return <DocsPage />;
+  }
 
   if (currentPath === '/feedback' || currentPath.startsWith('/feedback')) {
     return <FeedbackPage />;

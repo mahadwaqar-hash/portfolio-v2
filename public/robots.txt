@@ -1,8 +1,15 @@
-# Robots.txt for Mahad Waqar Portfolio & Digital Architecture
-# Explicitly allowing standard search crawlers and AI answer engines for GEO citation indexing
+# Robots.txt for Mahad Waqar — Web Architecture & Technical SEO
+# Explicitly allowing standard crawlers, AI search agents, and LLMs for GEO citation indexing
 
 User-agent: *
 Allow: /
+Allow: /api/
+Allow: /openapi.json
+Allow: /docs
+Allow: /.well-known/
+Allow: /about
+Allow: /contact
+Allow: /privacy
 
 # OpenAI Crawlers
 User-agent: GPTBot
@@ -26,5 +33,8 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-# Sitemaps & LLMs summary
+# Agent Resources & Discovery
+# Machine Context: https://mahad-works.vercel.app/llms.txt
+# OpenAPI 3.1: https://mahad-works.vercel.app/openapi.json
+# MCP Manifest: https://mahad-works.vercel.app/.well-known/mcp
 Sitemap: https://mahad-works.vercel.app/sitemap.xml

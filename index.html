@@ -35,12 +35,19 @@
     <meta name="twitter:description" content="I engineer sub-second (0.4s), 100-Lighthouse digital flagships and Local SEO systems in 4 weeks. No generic templates—built to outrank competitors and convert high-ticket clients." />
     <meta name="twitter:image" content="https://mahad-works.vercel.app/og-image.jpg" />
 
+    <!-- Machine-Readable Developer Discovery & Agent Links -->
+    <link rel="service-doc" href="/docs" />
+    <link rel="alternate" type="application/json" href="/openapi.json" title="OpenAPI 3.1 Specification" />
+    <link rel="alternate" type="application/yaml" href="/api/openapi.yaml" title="OpenAPI YAML Specification" />
+    <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM Agent Instructions" />
+    <link rel="manifest" href="/.well-known/mcp" title="Model Context Protocol Manifest" />
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Montserrat:wght@200;300;400&family=Instrument+Serif:ital,wght@0,400;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
-    <!-- JSON-LD: Institutional-Grade GEO & Local SEO Knowledge Graph -->
+    <!-- JSON-LD: Institutional-Grade GEO, Local SEO & Organization Knowledge Graph -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -49,12 +56,12 @@
           "@type": "Person",
           "@id": "https://mahad-works.vercel.app/#person",
           "name": "Mahad Waqar",
-          "alternateName": "Muhammad Mahad Waqar Piracha",
-          "jobTitle": "Web Architect & SEO Engineer",
+          "alternateName": ["Muhammad Mahad Waqar Piracha", "Mahad Waqar Web Architecture"],
+          "jobTitle": "Web Architect & Technical SEO Engineer",
           "url": "https://mahad-works.vercel.app",
           "image": "https://mahad-works.vercel.app/og-image.jpg",
           "worksFor": {
-            "@id": "https://mahad-works.vercel.app/#service"
+            "@id": "https://mahad-works.vercel.app/#organization"
           },
           "knowsAbout": [
             "Custom Web Architecture",
@@ -65,6 +72,44 @@
             "Framer Motion",
             "Core Web Vitals Optimization",
             "Generative Engine Optimization (GEO)"
+          ]
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://mahad-works.vercel.app/#organization",
+          "name": "Mahad Waqar Web Architecture",
+          "legalName": "Mahad Waqar Web Architecture & Local SEO",
+          "alternateName": "Mahad Waqar Digital Flagships",
+          "url": "https://mahad-works.vercel.app",
+          "logo": "https://mahad-works.vercel.app/favicon.jpg",
+          "image": "https://mahad-works.vercel.app/og-image.jpg",
+          "email": "mahad.waqar@gmail.com",
+          "telephone": "+923334379962",
+          "founder": {
+            "@id": "https://mahad-works.vercel.app/#person"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "DHA Phase 5",
+            "addressLocality": "Lahore",
+            "addressRegion": "Punjab",
+            "postalCode": "54000",
+            "addressCountry": "PK"
+          },
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "telephone": "+923334379962",
+              "email": "mahad.waqar@gmail.com",
+              "contactType": "customer service",
+              "areaServed": ["PK", "AE", "GB", "US"],
+              "availableLanguage": ["English", "Urdu"]
+            }
+          ],
+          "sameAs": [
+            "https://wa.me/923334379962",
+            "https://g.page/r/CXV0xGV5EXc1EBM/review",
+            "https://github.com/mahadwaqar"
           ]
         },
         {
@@ -200,22 +245,146 @@
       ]
     }
     </script>
-    <!-- Netlify Identity Widget for Authentication & Email Confirmation -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Fallback Semantic HTML for AI Crawlers, LLM Agents & Non-JS Clients (Replaced on React Hydration) -->
+    <div id="root">
+      <header>
+        <p><strong>Mahad Waqar</strong> — Web Architect &amp; Local SEO Engineer | Lahore (UTC+5)</p>
+        <nav aria-label="Primary Navigation">
+          <ul>
+            <li><a href="#hero">Overview</a></li>
+            <li><a href="#showroom">Live Deployments</a></li>
+            <li><a href="#services">Capabilities</a></li>
+            <li><a href="#process">4-Week Process</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/docs">Developer API &amp; Docs</a></li>
+            <li><a href="/openapi.json">OpenAPI Spec</a></li>
+            <li><a href="/llms.txt">LLM Instructions</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <main>
+        <section id="hero">
+          <p>MAHAD WAQAR — SENIOR WEB ARCHITECT &amp; TECHNICAL SEO ENGINEER</p>
+          <h1>Custom Web Architecture, Local SEO &amp; Conversion Design for High-Ticket Brands.</h1>
+          <p>
+            I engineer sub-second (&lt;0.4s FCP), 100-Lighthouse digital flagships and Local SEO systems in 4 weeks.
+            Zero commodity templates, bloated page builders, or generic themes. Built from scratch to outrank regional competitors and convert high-intent traffic into qualified clients.
+          </p>
+          <p>
+            <a href="https://wa.me/923334379962?text=Hi%20Mahad,%20I'm%20interested%20in%20working%20with%20you%20on%20a%20project.">Direct WhatsApp: +92 333 4379962</a> |
+            <a href="mailto:mahad.waqar@gmail.com">Email: mahad.waqar@gmail.com</a> |
+            <a href="https://g.page/r/CXV0xGV5EXc1EBM/review">Verified Google Review Profile</a>
+          </p>
+        </section>
+
+        <section id="showroom">
+          <h2>Featured Live Client Deployments (Sub-0.4s Digital Flagships)</h2>
+          <article>
+            <h3>Vanguard &amp; Partners — Architecture &amp; Corporate Law Flagship</h3>
+            <p>High-ticket corporate law flagship engineered with sub-0.4s FCP, interactive 60fps showroom, and authoritative typography. Delivered in 4 weeks with zero layout shift.</p>
+            <p><strong>Metrics:</strong> 0.38s First Contentful Paint | 100/100 Lighthouse | 60fps Smooth Scroll</p>
+            <p><a href="https://vanguardpartners.law">Visit Live Deployment: vanguardpartners.law</a></p>
+          </article>
+          <article>
+            <h3>Aura Cosmetic Dentistry — Luxury Healthcare &amp; Clinic Platform</h3>
+            <p>Luxury medical aesthetics and cosmetic dental clinic platform with seamless WhatsApp conversion routing, 100/100 Lighthouse score, and local map pack dominance across a 25km radius.</p>
+            <p><strong>Metrics:</strong> +340% Mobile WhatsApp Inquiries | #1 Map Pack Ranking | 0.4s FCP</p>
+            <p><a href="https://auradentistry.com">Visit Live Deployment: auradentistry.com</a></p>
+          </article>
+          <article>
+            <h3>Maison Stone — Bespoke Architectural Studio Showroom</h3>
+            <p>High-end architectural showroom designed with editorial typography, deep dark glass textures, and hardware-accelerated project viewports.</p>
+            <p><strong>Metrics:</strong> 100 Performance | 0ms Cumulative Layout Shift | Custom Three.js/Framer Stack</p>
+          </article>
+          <article>
+            <h3>ZingWrap — High-Conversion Automotive Styling Brand</h3>
+            <p>Automotive bespoke wrapping studio platform with direct cart-to-WhatsApp order dispatch and custom product configuration.</p>
+            <p><strong>Metrics:</strong> 2.8x Lead Conversion Rate | Sub-second Time to Interactive</p>
+          </article>
+        </section>
+
+        <section id="services">
+          <h2>Core Capabilities: Custom Web Architecture, Local SEO &amp; Conversion Systems</h2>
+          <article>
+            <h3>1. Custom Web Architecture</h3>
+            <p>Pure React 18, TypeScript, and modern CSS architecture without heavyweight page builders (WordPress, Elementor, Wix). Bespoke interactive 3D/glass showrooms with lazy-loaded hardware-accelerated preview viewports. Zero layout shift (CLS: 0), optimized asset trees, and global edge CDN caching via Vercel Edge networks.</p>
+          </article>
+          <article>
+            <h3>2. Technical &amp; Local SEO (GEO-Optimized)</h3>
+            <p>Institutional-grade JSON-LD Knowledge Graph schemas (Person, ProfessionalService, LocalBusiness, ItemList, FAQPage). Programmatic local SEO routing for prime commercial hubs (DHA Phase 5, Gulberg, Model Town, Bahria Town, Cantt). Generative Engine Optimization (GEO) structured for citation readiness in ChatGPT, Perplexity, Gemini, and Claude.</p>
+          </article>
+          <article>
+            <h3>3. High-Ticket Conversion UI/UX Design</h3>
+            <p>High-ticket client conversion paths using Problem-Agitate-Solution (PAS) frameworks. 1-click WhatsApp checkout and contact integration with sub-hour reply SLAs. Review-gating and reputation automation architecture.</p>
+          </article>
+        </section>
+
+        <section id="process">
+          <h2>Proven 4-Week Delivery Methodology &amp; Performance Guarantees</h2>
+          <ol>
+            <li><strong>Week 1: Strategic Intelligence &amp; Competitor Teardown</strong> — Reverse-engineering top 5 regional competitors, backlink topology, schema deficiencies, and conversion bottlenecks.</li>
+            <li><strong>Weeks 2–3: Bespoke Engineering &amp; Motion Physics</strong> — Developing custom React components from scratch, tuning typography hierarchies, wiring physics-based micro-interactions, and validating cross-device responsiveness.</li>
+            <li><strong>Week 4: Global Deployment &amp; SEO Launch</strong> — Vercel edge deployment, GSC index configuration, final Lighthouse performance audits, schema validation, and 6-month growth roadmap delivery.</li>
+          </ol>
+        </section>
+
+        <section id="faq">
+          <h2>Frequently Asked Questions</h2>
+          <article>
+            <h3>What is included in Mahad Waqar's 4-week web architecture sprint?</h3>
+            <p>The 4-week sprint covers competitor reverse-engineering, custom React 18 code with zero templates, 60fps animations, sub-0.4s performance, deep JSON-LD schemas, and global edge deployment.</p>
+          </article>
+          <article>
+            <h3>How do custom flagships outperform WordPress and Wix?</h3>
+            <p>WordPress and Wix carry megabytes of plugin bloat, render-blocking scripts, and high bounce rates. Custom flagships are engineered line-by-line for sub-0.4s FCP and perfect 100 Lighthouse scores.</p>
+          </article>
+          <article>
+            <h3>What performance guarantees are provided?</h3>
+            <p>Every deployment guarantees sub-0.4s First Contentful Paint, 100/100 Lighthouse scores, 60fps Framer Motion physics, and 10km–25km localized search dominance.</p>
+          </article>
+        </section>
+
+        <section id="contact">
+          <h2>Contact &amp; Project Inquiry</h2>
+          <p>Available for 2–3 client deployments at a time. Serving ambitious clients across Pakistan, UAE, UK, and US.</p>
+          <ul>
+            <li><strong>WhatsApp:</strong> <a href="https://wa.me/923334379962">+92 333 4379962</a></li>
+            <li><strong>Phone:</strong> <a href="tel:03334379962">+92 333 4379962</a></li>
+            <li><strong>Email:</strong> <a href="mailto:mahad.waqar@gmail.com">mahad.waqar@gmail.com</a></li>
+            <li><strong>Google Review Profile:</strong> <a href="https://g.page/r/CXV0xGV5EXc1EBM/review">Review Experience</a></li>
+            <li><strong>Headquarters:</strong> DHA Phase 5, Lahore, Punjab 54000, Pakistan</li>
+          </ul>
+        </section>
+
+        <section id="developer-resources">
+          <h2>Developer Resources, Machine-Readable APIs &amp; Agent Endpoints</h2>
+          <p>Machine-readable endpoints designed for AI agents, LLM tool callers, and developers:</p>
+          <ul>
+            <li><a href="/docs">Interactive Documentation: /docs</a></li>
+            <li><a href="/openapi.json">OpenAPI 3.1 Specification: /openapi.json</a></li>
+            <li><a href="/api/openapi.yaml">OpenAPI YAML: /api/openapi.yaml</a></li>
+            <li><a href="/.well-known/mcp">MCP Manifest: /.well-known/mcp</a></li>
+            <li><a href="/llms.txt">LLM Context File: /llms.txt</a></li>
+            <li><a href="/api/v1/profile">Profile REST API: /api/v1/profile</a></li>
+            <li><a href="/api/v1/services">Services REST API: /api/v1/services</a></li>
+            <li><a href="/api/v1/projects">Projects REST API: /api/v1/projects</a></li>
+            <li><a href="/api/v1/contact">Contact REST API: /api/v1/contact</a></li>
+            <li><a href="/about">About Mahad Waqar: /about</a></li>
+            <li><a href="/contact">Direct Contact Page: /contact</a></li>
+            <li><a href="/privacy">Privacy Policy: /privacy</a></li>
+          </ul>
+        </section>
+      </main>
+
+      <footer>
+        <p>&copy; 2026 Muhammad Mahad Waqar Piracha. High-Performance Web Architecture &amp; Local SEO. DHA Phase 5, Lahore, Pakistan.</p>
+      </footer>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", (user) => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
-            });
-          }
-        });
-      }
-    </script>
   </body>
 </html>

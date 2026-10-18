@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "mahad-waqar-mcp",
+  "version": "1.0.0",
+  "description": "Official Model Context Protocol (MCP) server for Mahad Waqar — Web Architect & Technical SEO Engineer. Enables autonomous AI agents to inspect developer credentials, query engineering capabilities, review live production flagships, and initiate client project consultations.",
+  "transport": {
+    "type": "http",
+    "url": "https://mahad-works.vercel.app/api/mcp"
+  },
+  "capabilities": {
+    "tools": true,
+    "resources": true,
+    "prompts": false
+  },
+  "tools": [
+    {
+      "name": "get_profile",
+      "description": "Fetch Mahad Waqar's verified technical profile, performance guarantees (sub-0.4s FCP, 100/100 Lighthouse), technology stack, and geographic service radius.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "get_services",
+      "description": "Retrieve available 4-week web architecture, Local SEO, and conversion design service packages with deliverables, methodology, and SLAs.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": ["architecture", "seo", "conversion"],
+            "description": "Optional category filter ('architecture', 'seo', or 'conversion')"
+          }
+        }
+      }
+    },
+    {
+      "name": "get_portfolio_projects",
+      "description": "Retrieve verified live production client deployments (Vanguard & Partners, Aura Cosmetic Dentistry, Maison Stone, ZingWrap) including live URLs, FCP metrics, and technology stacks.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string",
+            "description": "Optional project slug filter ('vanguard', 'aura', 'maison-stone', 'zingwrap')"
+          }
+        }
+      }
+    },
+    {
+      "name": "send_contact_inquiry",
+      "description": "Submit a direct high-priority project inquiry or consultation request to Mahad Waqar with instant WhatsApp routing.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "description": "Full name of the contact" },
+          "email": { "type": "string", "description": "Valid email address" },
+          "whatsapp": { "type": "string", "description": "Optional WhatsApp number" },
+          "projectDetails": { "type": "string", "description": "Scope of work, current bottlenecks, and target goals" },
+          "budgetTier": { "type": "string", "description": "Budget tier ($3,000-$5,000, $5,000-$10,000, or $10,000+)" }
+        },
+        "required": ["name", "email", "projectDetails"]
+      }
+    }
+  ]
+}

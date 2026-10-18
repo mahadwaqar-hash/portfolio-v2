@@ -6,20 +6,24 @@ export default function Navbar() {
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
   const links = [
-    { label: 'Work', href: 'showroom' },
-    { label: 'Beliefs', href: 'manifesto' },
-    { label: 'Capabilities', href: 'services' },
-    { label: 'Process', href: 'process' },
-    { label: 'FAQ', href: 'faq' },
-    { label: 'Contact', href: 'contact' },
+    { label: 'Work', href: '#showroom' },
+    { label: 'Beliefs', href: '#manifesto' },
+    { label: 'Capabilities', href: '#services' },
+    { label: 'Process', href: '#process' },
+    { label: 'FAQ', href: '#faq' },
+    { label: 'Contact', href: '#contact' },
+    { label: 'Docs', href: '/docs' },
   ];
 
-  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-    e.preventDefault();
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     setIsOpen(false);
-    const element = document.getElementById(targetId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const targetId = href.substring(1);
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -63,7 +67,7 @@ export default function Navbar() {
               return (
                 <a
                   key={link.label}
-                  href={`#${link.href}`}
+                  href={link.href}
                   onClick={(e) => handleScroll(e, link.href)}
                   onMouseEnter={() => setHoveredLink(link.label)}
                   className="relative font-mono text-xs text-zinc-300 hover:text-white px-3 py-1 rounded-full transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC]"
@@ -140,7 +144,7 @@ export default function Navbar() {
             {links.map((link) => (
               <a
                 key={link.label}
-                href={`#${link.href}`}
+                href={link.href}
                 onClick={(e) => handleScroll(e, link.href)}
                 className="font-tech text-lg text-white hover:text-[#DEC1FC] py-1.5 flex items-center justify-between"
               >
