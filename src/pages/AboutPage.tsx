@@ -22,8 +22,6 @@ export default function AboutPage() {
           <div className="flex items-center gap-4 text-xs font-mono text-zinc-400">
             <a href="/" className="hover:text-white transition-colors">Home</a>
             <span>/</span>
-            <a href="/docs" className="hover:text-white transition-colors">API &amp; Docs</a>
-            <span>/</span>
             <a href="/contact" className="hover:text-white transition-colors">Contact</a>
           </div>
         </header>
@@ -128,7 +126,6 @@ export default function AboutPage() {
           <span>&copy; 2026 Muhammad Mahad Waqar Piracha. DHA Phase 5, Lahore, Pakistan.</span>
           <div className="flex gap-4">
             <a href="/privacy" className="hover:text-zinc-300">Privacy Policy</a>
-            <a href="/docs" className="hover:text-zinc-300">API Documentation</a>
             <a href="/feedback" className="hover:text-zinc-300">Review Portal</a>
           </div>
         </footer>

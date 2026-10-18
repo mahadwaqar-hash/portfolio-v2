@@ -12,7 +12,6 @@ export default function Navbar() {
     { label: 'Process', href: '#process' },
     { label: 'FAQ', href: '#faq' },
     { label: 'Contact', href: '#contact' },
-    { label: 'Docs', href: '/docs' },
   ];
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {

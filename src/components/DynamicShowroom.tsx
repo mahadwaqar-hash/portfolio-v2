@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PORTFOLIO_PROJECTS, PortfolioProject } from '../data/portfolioData';
 
@@ -6,8 +6,10 @@ interface ShowroomCardProps {
   project: PortfolioProject;
   index: number;
   domain: string;
-  isLoaded: boolean;
+  isMobile: boolean;
+  isHovered: boolean;
   onMouseEnter: () => void;
+  onMouseLeave: () => void;
   onClick: (url: string) => void;
 }
 
@@ -15,20 +17,42 @@ const ShowroomCard = React.memo(function ShowroomCard({
   project,
   index,
   domain,
-  isLoaded,
+  isMobile,
+  isHovered,
   onMouseEnter,
+  onMouseLeave,
   onClick,
 }: ShowroomCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
+  const cardRectRef = useRef<DOMRect | null>(null);
   const rafRef = useRef<number | null>(null);
 
+  const handleMouseEnter = () => {
+    if (!isMobile && cardRef.current) {
+      cardRectRef.current = cardRef.current.getBoundingClientRect();
+    }
+    onMouseEnter();
+  };
+
+  const handleMouseLeave = () => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+    onMouseLeave();
+  };
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isMobile) return;
     const clientX = e.clientX;
     const clientY = e.clientY;
     if (!rafRef.current) {
       rafRef.current = requestAnimationFrame(() => {
         if (cardRef.current) {
-          const rect = cardRef.current.getBoundingClientRect();
+          if (!cardRectRef.current) {
+            cardRectRef.current = cardRef.current.getBoundingClientRect();
+          }
+          const rect = cardRectRef.current;
           cardRef.current.style.setProperty('--card-mouse-x', `${clientX - rect.left}px`);
           cardRef.current.style.setProperty('--card-mouse-y', `${clientY - rect.top}px`);
         }
@@ -37,47 +61,42 @@ const ShowroomCard = React.memo(function ShowroomCard({
     }
   };
 
-  const handleMouseLeave = () => {
-    if (rafRef.current) {
-      cancelAnimationFrame(rafRef.current);
-      rafRef.current = null;
-    }
-  };
-
   return (
     <div
       data-project-id={project.id}
-      onMouseEnter={onMouseEnter}
-      className="showroom-card-wrapper w-[78vw] sm:w-[540px] md:w-[580px] flex-shrink-0 snap-center"
+      className="showroom-card-wrapper w-[82vw] sm:w-[540px] md:w-[580px] flex-shrink-0 snap-center"
     >
       <motion.div
         ref={cardRef}
-        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
         onClick={() => onClick(project.liveUrl)}
         whileHover={{ y: -6, scale: 1.01 }}
         transition={{ type: 'spring', stiffness: 300, damping: 22 }}
         className="group relative apple-glass-card rounded-3xl p-5 md:p-6 cursor-pointer border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.6)] flex flex-col justify-between overflow-hidden transform-gpu will-change-transform"
       >
-        {/* Cursor-Tracking Spotlight Glow & Border Lighting */}
-        <div
-          className="absolute inset-0 pointer-events-none rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{
-            background:
-              'radial-gradient(400px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%), rgba(222, 193, 252, 0.12), rgba(0, 182, 122, 0.1), transparent 75%)',
-          }}
-          aria-hidden="true"
-        />
-
-        {/* 1px Specular Border Light */}
-        <div
-          className="absolute inset-0 pointer-events-none rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"
-          style={{
-            background:
-              'radial-gradient(300px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%), rgba(0, 182, 122, 0.45), rgba(222, 193, 252, 0.35), transparent 70%)',
-          }}
-          aria-hidden="true"
-        />
+        {/* Cursor-Tracking Spotlight Glow & Border Lighting (Desktop Only) */}
+        {!isMobile && (
+          <>
+            <div
+              className="absolute inset-0 pointer-events-none rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{
+                background:
+                  'radial-gradient(400px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%), rgba(222, 193, 252, 0.12), rgba(0, 182, 122, 0.1), transparent 75%)',
+              }}
+              aria-hidden="true"
+            />
+            <div
+              className="absolute inset-0 pointer-events-none rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"
+              style={{
+                background:
+                  'radial-gradient(300px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%), rgba(0, 182, 122, 0.45), rgba(222, 193, 252, 0.35), transparent 70%)',
+              }}
+              aria-hidden="true"
+            />
+          </>
+        )}
 
         {/* 1. Apple Safari macOS Browser Window Frame */}
         <div className="w-full rounded-2xl overflow-hidden border border-white/10 bg-[#0E0E12] shadow-inner mb-6 transition-all duration-300 group-hover:border-white/25">
@@ -92,7 +111,7 @@ const ShowroomCard = React.memo(function ShowroomCard({
 
             {/* URL Pill */}
             <div className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-black/50 border border-white/5 text-[11px] font-mono text-zinc-300">
-              <svg viewBox="0 0 24 24" className="w-3 h-3 text-[#00B67A]" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg viewBox="0 0 24 24" className="w-3 h-3 text-[#00B67A]" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                 <path d="M7 11V7a5 5 0 0110 0v4" />
               </svg>
@@ -110,9 +129,9 @@ const ShowroomCard = React.memo(function ShowroomCard({
             </motion.div>
           </div>
 
-          {/* 2. Real Interactive Live Homepage Viewport with Smooth Hover Zoom */}
-          <div className="relative w-full h-[190px] sm:h-[300px] overflow-hidden bg-black select-none pointer-events-none transform-gpu transition-transform duration-500 ease-out group-hover:scale-[1.04]">
-            {isLoaded ? (
+          {/* 2. Interactive Viewport: Native Hardware-Accelerated Preview on Mobile / Hover-Loaded Iframe on Desktop */}
+          <div className="relative w-full h-[200px] sm:h-[300px] overflow-hidden bg-black select-none pointer-events-none transform-gpu transition-transform duration-500 ease-out group-hover:scale-[1.03]">
+            {!isMobile && isHovered ? (
               <iframe
                 src={project.liveUrl}
                 title={`${project.client} live preview`}
@@ -122,16 +141,65 @@ const ShowroomCard = React.memo(function ShowroomCard({
                 className="w-[1280px] h-[780px] border-0 transform origin-top-left scale-[0.24] sm:scale-[0.44] pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity duration-300 will-change-transform transform-gpu"
               />
             ) : (
-              <div className="w-full h-full flex flex-col items-center justify-center bg-[#09090D] text-zinc-500 font-mono text-xs gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#DEC1FC] animate-ping" />
-                <span>Initializing live showroom...</span>
+              /* Native High-Performance Showcase Preview (Zero GPU Memory Overhead) */
+              <div className="w-full h-full bg-[#09090D] flex flex-col justify-between p-5 sm:p-6 relative overflow-hidden">
+                {/* Brand-Specific Gradient Glow */}
+                <div
+                  className="absolute inset-0 pointer-events-none opacity-40 group-hover:opacity-60 transition-opacity duration-300"
+                  style={{
+                    background: `radial-gradient(circle at 75% 25%, ${project.accentColor}, transparent 65%)`,
+                  }}
+                  aria-hidden="true"
+                />
+
+                {/* Stylized Outline Number Watermark */}
+                <div 
+                  className="absolute right-4 bottom-2 text-7xl sm:text-9xl font-tech font-black text-white/[0.04] select-none pointer-events-none tracking-tighter"
+                  aria-hidden="true"
+                >
+                  0{index + 1}
+                </div>
+
+                {/* Top Status Bar */}
+                <div className="relative z-10 flex items-center justify-between">
+                  <div className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/5 border border-white/10">
+                    <span className="w-2 h-2 rounded-full bg-[#00B67A] animate-pulse" aria-hidden="true" />
+                    <span className="font-mono text-[10px] sm:text-xs text-[#00B67A] uppercase tracking-wider font-semibold">
+                      Live Deployment
+                    </span>
+                  </div>
+                  <span className="font-mono text-[10px] text-zinc-400">
+                    Sub-0.4s FCP
+                  </span>
+                </div>
+
+                {/* Center Title & Metrics */}
+                <div className="relative z-10 my-auto py-1">
+                  <span className="font-tech text-lg sm:text-2xl font-bold text-white tracking-tight block">
+                    {project.title}
+                  </span>
+                  <span className="font-mono text-xs text-zinc-400 mt-1 block">
+                    {project.metrics}
+                  </span>
+                </div>
+
+                {/* Bottom Action Pill */}
+                <div className="relative z-10 flex items-center justify-between pt-2 border-t border-white/10">
+                  <span className="font-mono text-[10px] text-[#DEC1FC] uppercase tracking-wider font-medium">
+                    {isMobile ? 'Tap to launch live app' : 'Hover for interactive preview'}
+                  </span>
+                  <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-black font-tech text-xs uppercase tracking-wider font-bold shadow-lg">
+                    <span>Explore</span>
+                    <span>↗</span>
+                  </div>
+                </div>
               </div>
             )}
 
             {/* Translucent sheen overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none group-hover:opacity-20 transition-opacity" />
 
-            {/* Floating Launch Pill Button */}
+            {/* Floating Launch Pill Button on Hover */}
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <div className="px-5 py-2.5 rounded-full bg-white text-black font-tech text-xs uppercase tracking-widest font-bold shadow-2xl flex items-center gap-2 transform group-hover:scale-105 transition-transform">
                 <span>Launch Full Website</span>
@@ -175,7 +243,7 @@ const ShowroomCard = React.memo(function ShowroomCard({
             </div>
 
             <div className="flex items-center gap-1.5 text-xs font-mono text-[#00B67A] font-medium">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00B67A]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#00B67A]" aria-hidden="true" />
               <span className="truncate max-w-[200px]">{project.metrics.split('•')[0] || project.metrics}</span>
             </div>
           </div>
@@ -191,62 +259,50 @@ export default function DynamicShowroom() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [hoverSide, setHoverSide] = useState<'left' | 'right' | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [hoveredCardId, setHoveredCardId] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Lazy load iframe only when card is in view or hovered
-  const [visibleIframes, setVisibleIframes] = useState<Record<string, boolean>>({
-    '01': true,
-  });
+  // Check device type once and on resize (zero re-render during scroll/mouse)
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile, { passive: true });
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
-  // Track active card on scroll for mobile pagination
+  // Track active card on scroll for mobile pagination using RAF without DOM querying
   useEffect(() => {
     const el = scrollContainerRef.current;
     if (!el) return;
+    let ticking = false;
     const handleScroll = () => {
-      const card = el.querySelector('.showroom-card-wrapper') as HTMLElement | null;
-      if (!card) return;
-      const cardWidth = card.offsetWidth + 32;
-      const index = Math.round(el.scrollLeft / cardWidth);
-      setActiveIndex(Math.min(Math.max(index, 0), PORTFOLIO_PROJECTS.length - 1));
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (el) {
+            const cardWidth = el.clientWidth * 0.82;
+            const index = Math.round(el.scrollLeft / cardWidth);
+            setActiveIndex(Math.min(Math.max(index, 0), PORTFOLIO_PROJECTS.length - 1));
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
     el.addEventListener('scroll', handleScroll, { passive: true });
     return () => el.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleProjectClick = (url: string) => {
+  const handleProjectClick = useCallback((url: string) => {
     if (!url || url === '#') return;
     window.location.href = url;
-  };
+  }, []);
 
-  const scrollByAmount = (amount: number) => {
+  const scrollByAmount = useCallback((amount: number) => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({ left: amount, behavior: 'smooth' });
     }
-  };
-
-  const handleMouseEnterCard = (id: string) => {
-    setVisibleIframes((prev) => (prev[id] ? prev : { ...prev, [id]: true }));
-  };
-
-  // Preload on intersection
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('data-project-id');
-            if (id) {
-              setVisibleIframes((prev) => ({ ...prev, [id]: true }));
-            }
-          }
-        });
-      },
-      { root: scrollContainerRef.current, rootMargin: '200px' }
-    );
-
-    const cards = document.querySelectorAll('.showroom-card-wrapper');
-    cards.forEach((card) => observer.observe(card));
-
-    return () => observer.disconnect();
   }, []);
 
   const domainMap: Record<string, string> = {
@@ -267,23 +323,27 @@ export default function DynamicShowroom() {
         aria-hidden="true"
       />
 
-      {/* Discrete Edge Hover Trigger Zones — Zero Re-Render on Mouse Movement */}
-      <div
-        onMouseEnter={() => setHoverSide('left')}
-        onMouseLeave={() => setHoverSide(null)}
-        className="hidden sm:block absolute left-0 top-0 bottom-0 w-24 z-30 pointer-events-auto"
-        aria-hidden="true"
-      />
-      <div
-        onMouseEnter={() => setHoverSide('right')}
-        onMouseLeave={() => setHoverSide(null)}
-        className="hidden sm:block absolute right-0 top-0 bottom-0 w-24 z-30 pointer-events-auto"
-        aria-hidden="true"
-      />
+      {/* Discrete Edge Hover Trigger Zones — Desktop Only */}
+      {!isMobile && (
+        <>
+          <div
+            onMouseEnter={() => setHoverSide('left')}
+            onMouseLeave={() => setHoverSide(null)}
+            className="hidden sm:block absolute left-0 top-0 bottom-0 w-24 z-30 pointer-events-auto"
+            aria-hidden="true"
+          />
+          <div
+            onMouseEnter={() => setHoverSide('right')}
+            onMouseLeave={() => setHoverSide(null)}
+            className="hidden sm:block absolute right-0 top-0 bottom-0 w-24 z-30 pointer-events-auto"
+            aria-hidden="true"
+          />
+        </>
+      )}
 
       {/* Floating Dynamic Edge Scroll Buttons */}
       <AnimatePresence>
-        {hoverSide === 'left' && (
+        {!isMobile && hoverSide === 'left' && (
           <motion.button
             key="left-scroll-btn"
             initial={{ opacity: 0, x: -25, scale: 0.85 }}
@@ -301,7 +361,7 @@ export default function DynamicShowroom() {
             ←
           </motion.button>
         )}
-        {hoverSide === 'right' && (
+        {!isMobile && hoverSide === 'right' && (
           <motion.button
             key="right-scroll-btn"
             initial={{ opacity: 0, x: 25, scale: 0.85 }}
@@ -332,7 +392,7 @@ export default function DynamicShowroom() {
               </span>
             </div>
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-tech font-bold text-white tracking-tight">
-              <span className="sr-only">Portfolio & Case Studies: </span>Live Client Deployments.
+              <span className="sr-only">Portfolio &amp; Case Studies: </span>Live Client Deployments.
             </h2>
             <p className="font-body text-sm sm:text-base text-zinc-300 mt-3 max-w-xl font-light">
               Every card below is an active, production-grade website. Tap or click any card to test the live deployment directly in your browser.
@@ -372,7 +432,7 @@ export default function DynamicShowroom() {
       >
         {PORTFOLIO_PROJECTS.map((project, index) => {
           const domain = domainMap[project.id] || `${project.client.toLowerCase().replace(/[^a-z0-9]/g, '')}.com`;
-          const isLoaded = visibleIframes[project.id];
+          const isHovered = hoveredCardId === project.id;
 
           return (
             <ShowroomCard
@@ -380,8 +440,10 @@ export default function DynamicShowroom() {
               project={project}
               index={index}
               domain={domain}
-              isLoaded={isLoaded}
-              onMouseEnter={() => handleMouseEnterCard(project.id)}
+              isMobile={isMobile}
+              isHovered={isHovered}
+              onMouseEnter={() => setHoveredCardId(project.id)}
+              onMouseLeave={() => setHoveredCardId(null)}
               onClick={handleProjectClick}
             />
           );
@@ -398,8 +460,7 @@ export default function DynamicShowroom() {
               onClick={() => {
                 const el = scrollContainerRef.current;
                 if (!el) return;
-                const card = el.querySelector('.showroom-card-wrapper') as HTMLElement | null;
-                const cardWidth = card ? card.offsetWidth + 32 : 320;
+                const cardWidth = el.clientWidth * 0.82;
                 el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
               }}
               aria-label={`Go to slide ${i + 1}`}

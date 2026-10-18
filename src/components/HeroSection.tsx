@@ -48,12 +48,23 @@ function useTextScramble(finalText: string, delay: number = 0) {
   return display;
 }
 
-export default function HeroSection() {
-  const nameTop = useTextScramble('MAHAD', 250);
-  const nameBot = useTextScramble('WAQAR', 500);
+// Isolated ScrambleText component so only the text span re-renders during scramble, not the entire HeroSection
+const ScrambleText = React.memo(function ScrambleText({
+  text,
+  delay = 0,
+}: {
+  text: string;
+  delay?: number;
+}) {
+  const display = useTextScramble(text, delay);
+  return <span>{display || '\u00A0'}</span>;
+});
 
+export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const containerRect = useRef<DOMRect | null>(null);
+  const cardRect = useRef<DOMRect | null>(null);
   const [isFinePointer, setIsFinePointer] = useState(true);
 
   // Check for fine pointer (desktop mouse) vs touch
@@ -84,13 +95,27 @@ export default function HeroSection() {
 
   const glareRafRef = useRef<number | null>(null);
 
+  const handleMouseEnter = () => {
+    if (!isFinePointer) return;
+    if (containerRef.current) {
+      containerRect.current = containerRef.current.getBoundingClientRect();
+    }
+    if (cardRef.current) {
+      cardRect.current = cardRef.current.getBoundingClientRect();
+    }
+  };
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isFinePointer) return;
     const clientX = e.clientX;
     const clientY = e.clientY;
 
-    if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
+    if (!containerRect.current && containerRef.current) {
+      containerRect.current = containerRef.current.getBoundingClientRect();
+    }
+
+    if (containerRect.current) {
+      const rect = containerRect.current;
       const xPct = (clientX - rect.left) / rect.width - 0.5;
       const yPct = (clientY - rect.top) / rect.height - 0.5;
       mouseX.set(xPct);
@@ -100,9 +125,12 @@ export default function HeroSection() {
     if (cardRef.current && !glareRafRef.current) {
       glareRafRef.current = requestAnimationFrame(() => {
         if (cardRef.current) {
-          const cardRect = cardRef.current.getBoundingClientRect();
-          cardRef.current.style.setProperty('--mouse-x', `${clientX - cardRect.left}px`);
-          cardRef.current.style.setProperty('--mouse-y', `${clientY - cardRect.top}px`);
+          if (!cardRect.current) {
+            cardRect.current = cardRef.current.getBoundingClientRect();
+          }
+          const cRect = cardRect.current;
+          cardRef.current.style.setProperty('--mouse-x', `${clientX - cRect.left}px`);
+          cardRef.current.style.setProperty('--mouse-y', `${clientY - cRect.top}px`);
         }
         glareRafRef.current = null;
       });
@@ -121,6 +149,7 @@ export default function HeroSection() {
   return (
     <div 
       ref={containerRef}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className="relative w-full min-h-[100dvh] overflow-hidden bg-[#070709] flex flex-col justify-between pt-24 pb-12 px-6 md:px-12 lg:px-24"
@@ -236,7 +265,7 @@ export default function HeroSection() {
                   transition={{ duration: 0.9, ease: EXPO, delay: 0.35 }}
                   className="text-[16vw] sm:text-[13vw] md:text-[10vw] uppercase text-white text-center drop-shadow-[0_4px_24px_rgba(255,255,255,0.15)]"
                 >
-                  {nameTop || '\u00A0'}
+                  <ScrambleText text="MAHAD" delay={250} />
                 </motion.div>
               </div>
               <div className="overflow-hidden pb-8 -mb-8">
@@ -246,7 +275,7 @@ export default function HeroSection() {
                   transition={{ duration: 0.9, ease: EXPO, delay: 0.5 }}
                   className="text-[16vw] sm:text-[13vw] md:text-[10vw] uppercase text-transparent bg-clip-text bg-gradient-to-r from-[#DEC1FC] via-white to-[#00B67A] text-center drop-shadow-[0_4px_30px_rgba(222,193,252,0.25)]"
                 >
-                  {nameBot || '\u00A0'}
+                  <ScrambleText text="WAQAR" delay={500} />
                 </motion.div>
               </div>
             </div>

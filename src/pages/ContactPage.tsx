@@ -69,8 +69,6 @@ export default function ContactPage() {
             <a href="/" className="hover:text-white transition-colors">Home</a>
             <span>/</span>
             <a href="/about" className="hover:text-white transition-colors">About</a>
-            <span>/</span>
-            <a href="/docs" className="hover:text-white transition-colors">API &amp; Docs</a>
           </div>
         </header>
 
@@ -257,7 +255,7 @@ export default function ContactPage() {
           <div className="flex gap-4">
             <a href="/privacy" className="hover:text-zinc-300">Privacy Policy</a>
             <a href="/about" className="hover:text-zinc-300">About</a>
-            <a href="/docs" className="hover:text-zinc-300">API Documentation</a>
+            <a href="/feedback" className="hover:text-zinc-300">Review Portal</a>
           </div>
         </footer>
       </div>

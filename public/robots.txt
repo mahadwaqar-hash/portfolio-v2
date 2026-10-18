@@ -3,12 +3,9 @@
 
 User-agent: *
 Allow: /
-Allow: /api/
-Allow: /openapi.json
-Allow: /docs
-Allow: /.well-known/
 Allow: /about
 Allow: /contact
+Allow: /feedback
 Allow: /privacy
 
 # OpenAI Crawlers
@@ -35,6 +32,4 @@ Allow: /
 
 # Agent Resources & Discovery
 # Machine Context: https://mahad-works.vercel.app/llms.txt
-# OpenAPI 3.1: https://mahad-works.vercel.app/openapi.json
-# MCP Manifest: https://mahad-works.vercel.app/.well-known/mcp
 Sitemap: https://mahad-works.vercel.app/sitemap.xml

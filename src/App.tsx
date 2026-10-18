@@ -15,7 +15,6 @@ import LocalServicePage from './pages/LocalServicePage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import PrivacyPage from './pages/PrivacyPage';
-import DocsPage from './pages/DocsPage';
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -36,10 +35,6 @@ export default function App() {
 
   if (currentPath === '/privacy' || currentPath.startsWith('/privacy')) {
     return <PrivacyPage />;
-  }
-
-  if (currentPath === '/docs' || currentPath.startsWith('/docs')) {
-    return <DocsPage />;
   }
 
   if (currentPath === '/feedback' || currentPath.startsWith('/feedback')) {

@@ -118,7 +118,7 @@ export default function PrivacyPage() {
           <div className="flex gap-4">
             <a href="/about" className="hover:text-zinc-300">About</a>
             <a href="/contact" className="hover:text-zinc-300">Contact</a>
-            <a href="/docs" className="hover:text-zinc-300">API Documentation</a>
+            <a href="/feedback" className="hover:text-zinc-300">Review Portal</a>
           </div>
         </footer>
       </div>
