@@ -6,17 +6,31 @@ export default function LenisScroller({ children }: { children: React.ReactNode 
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Disable smooth scroll on mobile to drastically improve performance and prevent lag
-    if (window.innerWidth < 768) return;
+    // 1. NEVER run Lenis if embedded inside an iframe (prevents multiple RAF loops)
+    try {
+      if (window.self !== window.top) return;
+    } catch {
+      return;
+    }
 
+    // 2. NEVER run Lenis on touch / mobile devices (preserves 120Hz native momentum physics)
+    if (
+      window.innerWidth < 768 ||
+      window.matchMedia('(pointer: coarse)').matches ||
+      'ontouchstart' in window
+    ) {
+      return;
+    }
+
+    // 3. Desktop smooth scroll tuned for snappy, responsive feel without floaty lag
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // standard easing
+      duration: 0.55,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
+      wheelMultiplier: 1.0,
+      syncTouch: false,
     });
     lenisRef.current = lenis;
 

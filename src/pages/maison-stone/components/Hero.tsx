@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 export default function Hero() {
+  const isEmbedded = typeof window !== 'undefined' && window.self !== window.top;
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -29,17 +30,19 @@ export default function Hero() {
         <div className="absolute inset-0 bg-brand-ms-obsidian/30" />
       </motion.div>
 
-      {/* Floating Header */}
-      <header className="fixed w-full top-0 px-4 md:px-8 py-6 md:py-8 z-50 flex justify-between items-center mix-blend-difference">
-        <h1 className="font-ms-heading text-lg sm:text-xl md:text-2xl tracking-[0.2em] uppercase text-brand-ms-alabaster">MAISON & STONE</h1>
-        <button 
-          onClick={() => { window.location.href = '/'; }}
-          className="font-ms-body text-[10px] md:text-xs tracking-widest text-brand-ms-alabaster uppercase hover:text-brand-ms-bronze transition-colors flex items-center gap-2"
-        >
-          <span>&#x2190;</span>
-          <span>PORTFOLIO</span>
-        </button>
-      </header>
+      {/* Floating Header - Only rendered in standalone mode, omitted inside showroom iframe */}
+      {!isEmbedded && (
+        <header className="fixed w-full top-0 px-4 md:px-8 py-6 md:py-8 z-50 flex justify-between items-center mix-blend-difference">
+          <h1 className="font-ms-heading text-lg sm:text-xl md:text-2xl tracking-[0.2em] uppercase text-brand-ms-alabaster">MAISON & STONE</h1>
+          <button 
+            onClick={() => { window.location.href = '/'; }}
+            className="font-ms-body text-[10px] md:text-xs tracking-widest text-brand-ms-alabaster uppercase hover:text-brand-ms-bronze transition-colors flex items-center gap-2"
+          >
+            <span>&#x2190;</span>
+            <span>PORTFOLIO</span>
+          </button>
+        </header>
+      )}
 
       {/* Center Typography */}
       <div className="relative z-10 flex flex-col items-center text-center px-4">

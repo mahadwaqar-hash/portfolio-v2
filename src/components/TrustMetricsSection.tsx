@@ -68,7 +68,7 @@ const steps = [
   },
 ];
 
-// Spring physics number counter component
+// Zero-re-render spring physics number counter component
 function MetricCounter({
   target,
   decimals,
@@ -80,7 +80,7 @@ function MetricCounter({
   suffix: string;
   inView: boolean;
 }) {
-  const [displayValue, setDisplayValue] = useState(target);
+  const spanRef = useRef<HTMLSpanElement>(null);
   const motionVal = useMotionValue(0);
   const springVal = useSpring(motionVal, { stiffness: 70, damping: 16, mass: 1 });
 
@@ -92,15 +92,16 @@ function MetricCounter({
 
   useEffect(() => {
     const unsubscribe = springVal.on('change', (latest) => {
-      setDisplayValue(Number(latest.toFixed(decimals)));
+      if (spanRef.current) {
+        spanRef.current.textContent = `${latest.toFixed(decimals)}${suffix}`;
+      }
     });
     return () => unsubscribe();
-  }, [springVal, decimals]);
+  }, [springVal, decimals, suffix]);
 
   return (
-    <span>
-      {displayValue.toFixed(decimals)}
-      {suffix}
+    <span ref={spanRef}>
+      {target.toFixed(decimals)}{suffix}
     </span>
   );
 }
@@ -114,7 +115,7 @@ function TimelineStepItem({
   isLast: boolean;
 }) {
   const stepRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(stepRef, { margin: '-30% 0px -30% 0px', once: false });
+  const inView = useInView(stepRef, { margin: '-20% 0px -20% 0px', once: true });
 
   return (
     <div

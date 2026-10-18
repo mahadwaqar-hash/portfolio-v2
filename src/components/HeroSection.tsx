@@ -162,14 +162,23 @@ export default function HeroSection() {
         Skip to main content
       </a>
       
-      {/* Optimized static ambient gradients (GPU layer promoted) */}
+      {/* Ambient soft glow — Pure GPU radial gradients (zero blur filter cost) */}
       <div 
-        className="absolute inset-0 z-0 pointer-events-none transform-gpu" 
-        style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}
+        className="absolute inset-0 z-0 pointer-events-none" 
         aria-hidden="true"
       >
-        <div className="absolute top-[18%] left-[20%] w-[40vw] h-[35vh] bg-[#DEC1FC]/15 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[12%] right-[15%] w-[30vw] h-[25vh] bg-[#00B67A]/10 blur-[100px] rounded-full" />
+        <div 
+          className="absolute top-[15%] left-[15%] w-[50vw] h-[40vh] rounded-full pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle, rgba(222, 193, 252, 0.14) 0%, transparent 70%)',
+          }}
+        />
+        <div 
+          className="absolute bottom-[10%] right-[10%] w-[45vw] h-[35vh] rounded-full pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle, rgba(0, 182, 122, 0.11) 0%, transparent 70%)',
+          }}
+        />
       </div>
 
       {/* Center Content */}

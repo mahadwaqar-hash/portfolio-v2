@@ -34,12 +34,11 @@ const Word = React.memo(function Word({
   // Strict contrast floor of 0.45 opacity with direct Lenis 1:1 scroll tracking
   const opacity = useTransform(scrollYProgress, [start, end], [0.45, 1]);
   const color = useTransform(scrollYProgress, [start, end], ['#8a8a93', targetColor]);
-  const y = useTransform(scrollYProgress, [start, end], [4, 0]);
   
   return (
     <motion.span 
-      style={{ opacity, color, y }} 
-      className="inline-block mr-[0.3em] transform-gpu will-change-transform"
+      style={{ opacity, color }} 
+      className="inline-block mr-[0.3em]"
     >
       {word}
     </motion.span>
@@ -60,10 +59,12 @@ const ScrollScrubManifesto: React.FC<ScrollScrubManifestoProps> = ({ text }) => 
   return (
     <div ref={containerRef} className="relative max-w-6xl mx-auto py-24 md:py-40 px-6 md:px-12">
       
-      {/* Asymmetric glow — GPU layer promoted */}
+      {/* Asymmetric glow — Pure GPU radial gradient (zero blur cost) */}
       <div 
-        className="absolute top-[30%] -left-[10%] w-[50vw] h-[40vh] bg-[#DEC1FC]/12 blur-[140px] rounded-full pointer-events-none -z-10 transform-gpu"
-        style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}
+        className="absolute top-[30%] -left-[10%] w-[50vw] h-[40vh] rounded-full pointer-events-none -z-10"
+        style={{
+          background: 'radial-gradient(circle, rgba(222, 193, 252, 0.12) 0%, transparent 70%)',
+        }}
         aria-hidden="true"
       />
 

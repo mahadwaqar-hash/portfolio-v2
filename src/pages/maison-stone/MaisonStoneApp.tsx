@@ -7,7 +7,10 @@ import Services from './components/Services';
 import Contact from './components/Contact';
 
 function App() {
+  const isEmbedded = typeof window !== 'undefined' && window.self !== window.top;
+
   useEffect(() => {
+    if (isEmbedded) return;
     window.scrollTo(0, 0);
     // Update Document Title & Favicon for Maison Stone route
     document.title = 'Maison Stone | Haute Couture Architectural Interior Design';
@@ -21,7 +24,15 @@ function App() {
       document.title = 'Website Development Lahore | Premium Web Architecture | Muhammad Mahad Waqar Piracha';
       if (link) link.href = '/favicon.jpg';
     };
-  }, []);
+  }, [isEmbedded]);
+
+  if (isEmbedded) {
+    return (
+      <main className="bg-brand-ms-obsidian min-h-screen text-brand-ms-alabaster overflow-hidden">
+        <Hero />
+      </main>
+    );
+  }
 
   return (
     <main className="bg-brand-ms-obsidian min-h-screen text-brand-ms-alabaster selection:bg-brand-ms-bronze selection:text-brand-ms-obsidian">

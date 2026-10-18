@@ -1,15 +1,11 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { PORTFOLIO_PROJECTS, PortfolioProject } from '../data/portfolioData';
 
 interface ShowroomCardProps {
   project: PortfolioProject;
   index: number;
   domain: string;
-  isMobile: boolean;
-  isHovered: boolean;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
   onClick: (url: string) => void;
 }
 
@@ -17,86 +13,26 @@ const ShowroomCard = React.memo(function ShowroomCard({
   project,
   index,
   domain,
-  isMobile,
-  isHovered,
-  onMouseEnter,
-  onMouseLeave,
   onClick,
 }: ShowroomCardProps) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const cardRectRef = useRef<DOMRect | null>(null);
-  const rafRef = useRef<number | null>(null);
-
-  const handleMouseEnter = () => {
-    if (!isMobile && cardRef.current) {
-      cardRectRef.current = cardRef.current.getBoundingClientRect();
-    }
-    onMouseEnter();
-  };
-
-  const handleMouseLeave = () => {
-    if (rafRef.current) {
-      cancelAnimationFrame(rafRef.current);
-      rafRef.current = null;
-    }
-    onMouseLeave();
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isMobile) return;
-    const clientX = e.clientX;
-    const clientY = e.clientY;
-    if (!rafRef.current) {
-      rafRef.current = requestAnimationFrame(() => {
-        if (cardRef.current) {
-          if (!cardRectRef.current) {
-            cardRectRef.current = cardRef.current.getBoundingClientRect();
-          }
-          const rect = cardRectRef.current;
-          cardRef.current.style.setProperty('--card-mouse-x', `${clientX - rect.left}px`);
-          cardRef.current.style.setProperty('--card-mouse-y', `${clientY - rect.top}px`);
-        }
-        rafRef.current = null;
-      });
-    }
-  };
-
   return (
     <div
       data-project-id={project.id}
-      className="showroom-card-wrapper w-[82vw] sm:w-[540px] md:w-[580px] flex-shrink-0 snap-center"
+      className="showroom-card-wrapper w-[82vw] sm:w-[540px] md:w-[580px] flex-shrink-0"
     >
-      <motion.div
-        ref={cardRef}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onMouseMove={handleMouseMove}
+      <div
         onClick={() => onClick(project.liveUrl)}
-        whileHover={{ y: -6, scale: 1.01 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-        className="group relative apple-glass-card rounded-3xl p-5 md:p-6 cursor-pointer border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.6)] flex flex-col justify-between overflow-hidden transform-gpu will-change-transform"
+        className="group relative rounded-3xl p-5 md:p-6 cursor-pointer bg-[#0D0D12] border border-white/10 hover:border-[#DEC1FC]/30 shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_25px_60px_rgba(222,193,252,0.1)] transition-all duration-300 flex flex-col justify-between overflow-hidden group-hover:-translate-y-1.5"
       >
-        {/* Cursor-Tracking Spotlight Glow & Border Lighting (Desktop Only) */}
-        {!isMobile && (
-          <>
-            <div
-              className="absolute inset-0 pointer-events-none rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              style={{
-                background:
-                  'radial-gradient(400px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%), rgba(222, 193, 252, 0.12), rgba(0, 182, 122, 0.1), transparent 75%)',
-              }}
-              aria-hidden="true"
-            />
-            <div
-              className="absolute inset-0 pointer-events-none rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"
-              style={{
-                background:
-                  'radial-gradient(300px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%), rgba(0, 182, 122, 0.45), rgba(222, 193, 252, 0.35), transparent 70%)',
-              }}
-              aria-hidden="true"
-            />
-          </>
-        )}
+        {/* Subtle Ambient Hover Sheen */}
+        <div
+          className="absolute inset-0 pointer-events-none rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"
+          style={{
+            background:
+              'radial-gradient(500px circle at 50% 0%, rgba(222, 193, 252, 0.08), rgba(0, 182, 122, 0.05), transparent 70%)',
+          }}
+          aria-hidden="true"
+        />
 
         {/* 1. Apple Safari macOS Browser Window Frame */}
         <div className="w-full rounded-2xl overflow-hidden border border-white/10 bg-[#0E0E12] shadow-inner mb-6 transition-all duration-300 group-hover:border-white/25">
@@ -111,95 +47,36 @@ const ShowroomCard = React.memo(function ShowroomCard({
 
             {/* URL Pill */}
             <div className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-black/50 border border-white/5 text-[11px] font-mono text-zinc-300">
-              <svg viewBox="0 0 24 24" className="w-3 h-3 text-[#00B67A]" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <svg viewBox="0 0 24 24" className="w-3 h-3 text-[#00B67A]" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                 <path d="M7 11V7a5 5 0 0110 0v4" />
               </svg>
               <span className="truncate max-w-[140px] sm:max-w-[200px]">{domain}</span>
             </div>
 
-            {/* Magnetic Pull VISIT ↗ Pill */}
-            <motion.div
-              whileHover={{ scale: 1.1, x: 2, y: -2 }}
-              transition={{ type: 'spring', stiffness: 350, damping: 20 }}
-              className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-tech uppercase tracking-wider text-[#DEC1FC] group-hover:text-[#00B67A] group-hover:border-[#00B67A]/50 group-hover:bg-[#00B67A]/10 group-hover:shadow-[0_0_12px_rgba(0,182,122,0.4)] transition-all duration-200 font-semibold"
-            >
+            {/* VISIT ↗ Pill */}
+            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-tech uppercase tracking-wider text-[#DEC1FC] group-hover:text-[#00B67A] group-hover:border-[#00B67A]/50 group-hover:bg-[#00B67A]/10 transition-all duration-200 font-semibold">
               <span className="hidden sm:inline">Visit</span>
               <span>↗</span>
-            </motion.div>
+            </div>
           </div>
 
-          {/* 2. Interactive Viewport: Native Hardware-Accelerated Preview on Mobile / Hover-Loaded Iframe on Desktop */}
-          <div className="relative w-full h-[200px] sm:h-[300px] overflow-hidden bg-black select-none pointer-events-none transform-gpu transition-transform duration-500 ease-out group-hover:scale-[1.03]">
-            {!isMobile && isHovered ? (
-              <iframe
-                src={project.liveUrl}
-                title={`${project.client} live preview`}
-                loading="lazy"
-                scrolling="no"
-                tabIndex={-1}
-                className="w-[1280px] h-[780px] border-0 transform origin-top-left scale-[0.24] sm:scale-[0.44] pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity duration-300 will-change-transform transform-gpu"
-              />
-            ) : (
-              /* Native High-Performance Showcase Preview (Zero GPU Memory Overhead) */
-              <div className="w-full h-full bg-[#09090D] flex flex-col justify-between p-5 sm:p-6 relative overflow-hidden">
-                {/* Brand-Specific Gradient Glow */}
-                <div
-                  className="absolute inset-0 pointer-events-none opacity-40 group-hover:opacity-60 transition-opacity duration-300"
-                  style={{
-                    background: `radial-gradient(circle at 75% 25%, ${project.accentColor}, transparent 65%)`,
-                  }}
-                  aria-hidden="true"
-                />
-
-                {/* Stylized Outline Number Watermark */}
-                <div 
-                  className="absolute right-4 bottom-2 text-7xl sm:text-9xl font-tech font-black text-white/[0.04] select-none pointer-events-none tracking-tighter"
-                  aria-hidden="true"
-                >
-                  0{index + 1}
-                </div>
-
-                {/* Top Status Bar */}
-                <div className="relative z-10 flex items-center justify-between">
-                  <div className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/5 border border-white/10">
-                    <span className="w-2 h-2 rounded-full bg-[#00B67A] animate-pulse" aria-hidden="true" />
-                    <span className="font-mono text-[10px] sm:text-xs text-[#00B67A] uppercase tracking-wider font-semibold">
-                      Live Deployment
-                    </span>
-                  </div>
-                  <span className="font-mono text-[10px] text-zinc-400">
-                    Sub-0.4s FCP
-                  </span>
-                </div>
-
-                {/* Center Title & Metrics */}
-                <div className="relative z-10 my-auto py-1">
-                  <span className="font-tech text-lg sm:text-2xl font-bold text-white tracking-tight block">
-                    {project.title}
-                  </span>
-                  <span className="font-mono text-xs text-zinc-400 mt-1 block">
-                    {project.metrics}
-                  </span>
-                </div>
-
-                {/* Bottom Action Pill */}
-                <div className="relative z-10 flex items-center justify-between pt-2 border-t border-white/10">
-                  <span className="font-mono text-[10px] text-[#DEC1FC] uppercase tracking-wider font-medium">
-                    {isMobile ? 'Tap to launch live app' : 'Hover for interactive preview'}
-                  </span>
-                  <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-black font-tech text-xs uppercase tracking-wider font-bold shadow-lg">
-                    <span>Explore</span>
-                    <span>↗</span>
-                  </div>
-                </div>
-              </div>
-            )}
+          {/* 2. Real Interactive Live Client Deployment Viewport */}
+          <div className="relative w-full h-[190px] sm:h-[300px] overflow-hidden bg-black select-none pointer-events-none transition-transform duration-500 ease-out group-hover:scale-[1.03]">
+            <iframe
+              src={project.liveUrl}
+              title={`${project.client} live preview`}
+              loading="lazy"
+              scrolling="no"
+              tabIndex={-1}
+              aria-hidden="true"
+              className="w-[1280px] h-[780px] border-0 transform origin-top-left scale-[0.24] sm:scale-[0.44] pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+            />
 
             {/* Translucent sheen overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none group-hover:opacity-20 transition-opacity" />
 
-            {/* Floating Launch Pill Button on Hover */}
+            {/* Floating Launch Pill Button */}
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <div className="px-5 py-2.5 rounded-full bg-white text-black font-tech text-xs uppercase tracking-widest font-bold shadow-2xl flex items-center gap-2 transform group-hover:scale-105 transition-transform">
                 <span>Launch Full Website</span>
@@ -250,32 +127,23 @@ const ShowroomCard = React.memo(function ShowroomCard({
 
         </div>
 
-      </motion.div>
+      </div>
     </div>
   );
 });
 
-export default function DynamicShowroom() {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [hoverSide, setHoverSide] = useState<'left' | 'right' | null>(null);
+// Isolated Mobile Pagination to prevent re-rendering the whole showroom on touch scroll
+function MobilePagination({
+  scrollContainerRef,
+}: {
+  scrollContainerRef: React.RefObject<HTMLDivElement>;
+}) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [hoveredCardId, setHoveredCardId] = useState<string | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
 
-  // Check device type once and on resize (zero re-render during scroll/mouse)
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile, { passive: true });
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  // Track active card on scroll for mobile pagination using RAF without DOM querying
   useEffect(() => {
     const el = scrollContainerRef.current;
-    if (!el) return;
+    if (!el || window.innerWidth >= 640) return;
+
     let ticking = false;
     const handleScroll = () => {
       if (!ticking) {
@@ -290,9 +158,41 @@ export default function DynamicShowroom() {
         ticking = true;
       }
     };
+
     el.addEventListener('scroll', handleScroll, { passive: true });
     return () => el.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [scrollContainerRef]);
+
+  return (
+    <div className="flex sm:hidden items-center justify-between px-8 mt-4 mb-2">
+      <div className="flex items-center gap-2">
+        {PORTFOLIO_PROJECTS.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => {
+              const el = scrollContainerRef.current;
+              if (!el) return;
+              const cardWidth = el.clientWidth * 0.82;
+              el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
+            }}
+            aria-label={`Go to slide ${i + 1}`}
+            className={`h-1.5 rounded-full transition-all duration-300 ${
+              activeIndex === i ? 'w-6 bg-[#DEC1FC]' : 'w-2 bg-white/20'
+            }`}
+          />
+        ))}
+      </div>
+      <div className="apple-glass rounded-full px-3 py-1 flex items-center gap-2 text-xs font-mono text-zinc-300">
+        <span>0{activeIndex + 1} / 0{PORTFOLIO_PROJECTS.length}</span>
+        <span className="text-zinc-500">•</span>
+        <span className="text-[#DEC1FC]">Swipe →</span>
+      </div>
+    </div>
+  );
+}
+
+export default function DynamicShowroom() {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const handleProjectClick = useCallback((url: string) => {
     if (!url || url === '#') return;
@@ -316,70 +216,14 @@ export default function DynamicShowroom() {
     <section 
       className="relative w-full py-24 md:py-36 overflow-hidden border-t border-white/5 bg-[#070709]"
     >
-      {/* Ambient Apple Glow in Background — GPU Layer Promoted */}
+      {/* Ambient Gradient in Background — Pure GPU Gradient, zero blur pass */}
       <div 
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[70vw] h-[50vh] bg-gradient-to-b from-[#DEC1FC]/10 via-[#00B67A]/10 to-transparent blur-[140px] pointer-events-none -z-10 transform-gpu" 
-        style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[70vw] h-[50vh] pointer-events-none -z-10" 
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(222, 193, 252, 0.08) 0%, rgba(0, 182, 122, 0.06) 40%, transparent 70%)',
+        }}
         aria-hidden="true"
       />
-
-      {/* Discrete Edge Hover Trigger Zones — Desktop Only */}
-      {!isMobile && (
-        <>
-          <div
-            onMouseEnter={() => setHoverSide('left')}
-            onMouseLeave={() => setHoverSide(null)}
-            className="hidden sm:block absolute left-0 top-0 bottom-0 w-24 z-30 pointer-events-auto"
-            aria-hidden="true"
-          />
-          <div
-            onMouseEnter={() => setHoverSide('right')}
-            onMouseLeave={() => setHoverSide(null)}
-            className="hidden sm:block absolute right-0 top-0 bottom-0 w-24 z-30 pointer-events-auto"
-            aria-hidden="true"
-          />
-        </>
-      )}
-
-      {/* Floating Dynamic Edge Scroll Buttons */}
-      <AnimatePresence>
-        {!isMobile && hoverSide === 'left' && (
-          <motion.button
-            key="left-scroll-btn"
-            initial={{ opacity: 0, x: -25, scale: 0.85 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: -25, scale: 0.85 }}
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.92 }}
-            onMouseEnter={() => setHoverSide('left')}
-            onMouseLeave={() => setHoverSide(null)}
-            transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-            onClick={() => scrollByAmount(-560)}
-            className="fixed left-6 top-1/2 -translate-y-1/2 z-50 w-16 h-16 rounded-full bg-white/10 hover:bg-white text-white hover:text-black border border-white/25 shadow-[0_10px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl flex items-center justify-center font-mono text-xl transition-colors duration-200"
-            aria-label="Scroll left"
-          >
-            ←
-          </motion.button>
-        )}
-        {!isMobile && hoverSide === 'right' && (
-          <motion.button
-            key="right-scroll-btn"
-            initial={{ opacity: 0, x: 25, scale: 0.85 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: 25, scale: 0.85 }}
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.92 }}
-            onMouseEnter={() => setHoverSide('right')}
-            onMouseLeave={() => setHoverSide(null)}
-            transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-            onClick={() => scrollByAmount(560)}
-            className="fixed right-6 top-1/2 -translate-y-1/2 z-50 w-16 h-16 rounded-full bg-white/10 hover:bg-white text-white hover:text-black border border-white/25 shadow-[0_10px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl flex items-center justify-center font-mono text-xl transition-colors duration-200"
-            aria-label="Scroll right"
-          >
-            →
-          </motion.button>
-        )}
-      </AnimatePresence>
 
       {/* Section Header */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 mb-12 md:mb-16">
@@ -399,40 +243,34 @@ export default function DynamicShowroom() {
             </p>
           </div>
 
-          {/* Static Carousel Controls with Spring Feedback */}
+          {/* Desktop Carousel Controls */}
           <div className="hidden sm:flex items-center gap-3">
-            <motion.button
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.92 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+            <button
               onClick={() => scrollByAmount(-560)}
-              className="w-12 h-12 rounded-full apple-glass flex items-center justify-center text-white hover:border-white/30 hover:bg-white hover:text-black transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC]"
+              className="w-12 h-12 rounded-full apple-glass flex items-center justify-center text-white hover:border-white/30 hover:bg-white hover:text-black transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC] active:scale-95"
               aria-label="Scroll showroom showcase backward"
             >
               ←
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.92 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+            </button>
+            <button
               onClick={() => scrollByAmount(560)}
-              className="w-12 h-12 rounded-full apple-glass flex items-center justify-center text-white hover:border-white/30 hover:bg-white hover:text-black transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC]"
+              className="w-12 h-12 rounded-full apple-glass flex items-center justify-center text-white hover:border-white/30 hover:bg-white hover:text-black transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC] active:scale-95"
               aria-label="Scroll showroom showcase forward"
             >
               →
-            </motion.button>
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Horizontal Showroom Carousel — Hardware Accelerated */}
+      {/* Horizontal Showroom Carousel — 60fps Native Touch & Wheel Inertia */}
       <div
         ref={scrollContainerRef}
-        className="flex w-full overflow-x-auto no-scrollbar snap-x snap-mandatory px-6 md:px-12 lg:px-24 pb-8 gap-8 scroll-smooth will-change-scroll transform-gpu"
+        className="flex w-full overflow-x-auto no-scrollbar px-6 md:px-12 lg:px-24 pb-8 gap-8"
+        style={{ WebkitOverflowScrolling: 'touch' }}
       >
         {PORTFOLIO_PROJECTS.map((project, index) => {
           const domain = domainMap[project.id] || `${project.client.toLowerCase().replace(/[^a-z0-9]/g, '')}.com`;
-          const isHovered = hoveredCardId === project.id;
 
           return (
             <ShowroomCard
@@ -440,47 +278,19 @@ export default function DynamicShowroom() {
               project={project}
               index={index}
               domain={domain}
-              isMobile={isMobile}
-              isHovered={isHovered}
-              onMouseEnter={() => setHoveredCardId(project.id)}
-              onMouseLeave={() => setHoveredCardId(null)}
               onClick={handleProjectClick}
             />
           );
         })}
       </div>
 
-      {/* Mobile Swipe Indicators & Pagination Dots with Spring Feedback */}
-      <div className="flex sm:hidden items-center justify-between px-8 mt-2 mb-4">
-        <div className="flex items-center gap-2">
-          {PORTFOLIO_PROJECTS.map((_, i) => (
-            <motion.button
-              key={i}
-              whileTap={{ scale: 0.92 }}
-              onClick={() => {
-                const el = scrollContainerRef.current;
-                if (!el) return;
-                const cardWidth = el.clientWidth * 0.82;
-                el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
-              }}
-              aria-label={`Go to slide ${i + 1}`}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                activeIndex === i ? 'w-6 bg-[#DEC1FC]' : 'w-2 bg-white/20'
-              }`}
-            />
-          ))}
-        </div>
-        <div className="apple-glass rounded-full px-3 py-1 flex items-center gap-2 text-xs font-mono text-zinc-300">
-          <span>0{activeIndex + 1} / 0{PORTFOLIO_PROJECTS.length}</span>
-          <span className="text-zinc-500">•</span>
-          <span className="text-[#DEC1FC]">Swipe →</span>
-        </div>
-      </div>
+      {/* Mobile Swipe Indicators & Pagination Dots (Isolated Component) */}
+      <MobilePagination scrollContainerRef={scrollContainerRef} />
 
       {/* Bottom Hint */}
       <div className="text-center mt-6">
         <p className="font-mono text-xs text-zinc-400 font-medium">
-          Tip: Move cursor to screen edges for quick navigation, or tap any card to open the live site
+          Tip: Tap or click any card to launch the live client deployment
         </p>
       </div>
 

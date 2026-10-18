@@ -23,6 +23,7 @@ export default function ContactNexus() {
     ref: React.RefObject<HTMLElement>,
     rafRef: React.MutableRefObject<number | null>
   ) => {
+    if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return;
     const clientX = e.clientX;
     const clientY = e.clientY;
     if (!rafRef.current) {
@@ -50,10 +51,12 @@ export default function ContactNexus() {
   return (
     <div className="relative w-full min-h-screen py-24 md:py-36 px-6 md:px-12 lg:px-24 flex flex-col justify-between items-start bg-[#070709] border-t border-white/5 overflow-hidden">
       
-      {/* Asymmetric glow — GPU layer promoted */}
+      {/* Asymmetric glow — Pure GPU radial gradient (zero blur cost) */}
       <div 
-        className="absolute bottom-0 right-0 w-[50vw] h-[50vh] bg-[#DEC1FC]/8 blur-[160px] rounded-full pointer-events-none transform-gpu" 
-        style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}
+        className="absolute bottom-0 right-0 w-[50vw] h-[50vh] rounded-full pointer-events-none" 
+        style={{
+          background: 'radial-gradient(circle, rgba(222, 193, 252, 0.1) 0%, transparent 70%)',
+        }}
         aria-hidden="true"
       />
 
