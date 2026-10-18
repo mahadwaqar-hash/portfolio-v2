@@ -124,10 +124,12 @@ export default async function handler(req: Request): Promise<Response> {
           'PROJECT_NOT_FOUND',
           `No case study found matching slug '${slug}'.`,
           `Valid project slugs are: ${PROJECTS.map((p) => p.slug).join(', ')}.`,
-          404
+          404,
+          {},
+          req
         );
       }
-      return jsonResponse({ project });
+      return jsonResponse({ project }, 200, {}, req);
     }
 
     return jsonResponse({
@@ -135,14 +137,16 @@ export default async function handler(req: Request): Promise<Response> {
       count: PROJECTS.length,
       averageFCP: '0.39s',
       averageLighthouse: 100,
-    });
+    }, 200, {}, req);
   } catch (err: unknown) {
     const error = err as Error;
     return errorResponse(
       'INTERNAL_SERVER_ERROR',
       error.message || 'An unexpected error occurred while fetching case studies.',
       'Retry your request or contact mahad.waqar@gmail.com.',
-      500
+      500,
+      {},
+      req
     );
   }
 }

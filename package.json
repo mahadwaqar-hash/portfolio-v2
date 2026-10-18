@@ -1,6 +1,20 @@
 {
   "name": "mahad-portfolio",
   "version": "1.0.0",
+  "description": "Official web architecture and CLI toolkit for Mahad Waqar — High-Performance Web Architecture, Local SEO & Conversion Design",
+  "bin": {
+    "mahad-works": "./bin/cli.mjs",
+    "mahad-cli": "./bin/cli.mjs"
+  },
+  "keywords": [
+    "cli",
+    "agent",
+    "mcp",
+    "model-context-protocol",
+    "web-architecture",
+    "technical-seo",
+    "framer-motion"
+  ],
   "private": true,
   "type": "module",
   "scripts": {

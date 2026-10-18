@@ -48,11 +48,16 @@ export default async function handler(req: Request): Promise<Response> {
 
   // GET: Retrieve official direct channels
   if (req.method === 'GET') {
-    return jsonResponse({
-      contactChannels: CONTACT_CHANNELS,
-      activeSprintCapacity: '2–3 projects at a time',
-      status: 'Available for freelance deployment',
-    });
+    return jsonResponse(
+      {
+        contactChannels: CONTACT_CHANNELS,
+        activeSprintCapacity: '2–3 projects at a time',
+        status: 'Available for freelance deployment',
+      },
+      200,
+      {},
+      req
+    );
   }
 
   // POST: Submit a project inquiry
@@ -66,7 +71,9 @@ export default async function handler(req: Request): Promise<Response> {
           'INVALID_JSON',
           'Could not parse request body as JSON.',
           'Send a valid JSON payload with Content-Type: application/json header.',
-          400
+          400,
+          {},
+          req
         );
       }
 
@@ -77,7 +84,9 @@ export default async function handler(req: Request): Promise<Response> {
           'MISSING_NAME',
           "Field 'name' is required and must be a non-empty string.",
           'Provide your full name or company representative name.',
-          400
+          400,
+          {},
+          req
         );
       }
 
@@ -86,7 +95,9 @@ export default async function handler(req: Request): Promise<Response> {
           'INVALID_EMAIL',
           "Field 'email' is required and must be a valid email address.",
           'Provide a valid email address (e.g. name@company.com).',
-          400
+          400,
+          {},
+          req
         );
       }
 
@@ -95,9 +106,16 @@ export default async function handler(req: Request): Promise<Response> {
           'INSUFFICIENT_DETAILS',
           "Field 'projectDetails' is required (minimum 10 characters).",
           'Describe your project goals, current performance bottlenecks, or timeline.',
-          400
+          400,
+          {},
+          req
         );
       }
+
+      const isSandbox =
+        req.headers.get('x-sandbox') === 'true' ||
+        req.headers.get('authorization')?.includes('sandbox') ||
+        new URL(req.url).searchParams.get('sandbox') === 'true';
 
       // Generate reference ID
       const inquiryId = `inq_${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 7)}`;
@@ -110,7 +128,11 @@ export default async function handler(req: Request): Promise<Response> {
         {
           success: true,
           inquiryId,
-          message: 'Project inquiry received. Mahad Waqar will review and reply within 4 hours.',
+          environment: isSandbox ? 'sandbox' : 'production',
+          simulated: isSandbox,
+          message: isSandbox
+            ? 'Sandbox inquiry simulation successful. No production notifications were dispatched.'
+            : 'Project inquiry received. Mahad Waqar will review and reply within 4 hours.',
           submittedData: {
             name,
             email,
@@ -121,7 +143,9 @@ export default async function handler(req: Request): Promise<Response> {
           },
           directWhatsAppUrl: prefilledWhatsApp,
         },
-        201
+        201,
+        isSandbox ? { 'X-Environment': 'sandbox' } : {},
+        req
       );
     } catch (err: unknown) {
       const error = err as Error;
@@ -129,7 +153,9 @@ export default async function handler(req: Request): Promise<Response> {
         'INTERNAL_SERVER_ERROR',
         error.message || 'An unexpected error occurred while processing the inquiry.',
         'Reach out directly via WhatsApp at https://wa.me/923334379962.',
-        500
+        500,
+        {},
+        req
       );
     }
   }
@@ -138,6 +164,8 @@ export default async function handler(req: Request): Promise<Response> {
     'METHOD_NOT_ALLOWED',
     `HTTP method ${req.method} is not supported on this endpoint.`,
     'Use HTTP GET to view contact channels, or HTTP POST to submit a project inquiry.',
-    405
+    405,
+    {},
+    req
   );
 }

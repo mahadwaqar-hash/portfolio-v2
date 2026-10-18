@@ -2,9 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "name": "mahad-waqar-mcp",
   "version": "1.0.0",
-  "description": "Official Model Context Protocol (MCP) server for Mahad Waqar — Web Architect & Technical SEO Engineer. Enables autonomous AI agents to inspect developer credentials, query engineering capabilities, review live production flagships, and initiate client project consultations.",
+  "description": "Official Model Context Protocol (MCP) server for Mahad Waqar — Web Architect & Technical SEO Engineer. Enables autonomous AI agents to inspect developer credentials, query engineering capabilities, review live production flagships, access sandbox environments, and initiate client consultations.",
   "transport": {
-    "type": "http",
+    "type": "streamable-http",
     "url": "https://mahad-works.vercel.app/api/mcp"
   },
   "capabilities": {
@@ -61,6 +61,22 @@
           "budgetTier": { "type": "string", "description": "Budget tier ($3,000-$5,000, $5,000-$10,000, or $10,000+)" }
         },
         "required": ["name", "email", "projectDetails"]
+      }
+    },
+    {
+      "name": "get_sandbox_info",
+      "description": "Retrieve developer sandbox credentials, dry-run instructions, and instant self-serve demo API keys for zero-friction testing.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "get_version_policy",
+      "description": "Retrieve API versioning lifecycle, RFC 8594 Sunset/Deprecation schedule, and 180-day advance notice deprecation guarantee.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
       }
     }
   ]

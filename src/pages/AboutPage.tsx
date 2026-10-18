@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 export default function AboutPage() {
+  useEffect(() => {
+    document.title = 'About Mahad Waqar | High-Performance Web Architecture';
+  }, []);
   return (
     <div className="min-h-screen bg-[#070709] text-[#F4F4F5] font-body selection:bg-[#DEC1FC] selection:text-[#070709] py-16 px-6 md:px-12 lg:px-24">
       <div className="max-w-4xl mx-auto">

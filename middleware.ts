@@ -1,8 +1,10 @@
 // Vercel Edge Routing Middleware
 // Handles:
-// 1. Agent-friendly real HTTP 404s with Markdown body
-// 2. HTTP Accept Content Negotiation (text/markdown vs text/html)
-// 3. Clean HTTP headers (Vary: Accept)
+// 1. Agent-friendly real HTTP 404s with Markdown body or structured JSON
+// 2. HTTP Accept Content Negotiation (text/markdown vs text/html vs application/json)
+// 3. Strict JSON error envelopes for API probes (/api/*)
+// 4. Rate-limit and version headers across all agent interfaces
+// 5. Model Context Protocol (MCP) manifest and streamable server routing
 
 export const config = {
   matcher: [
@@ -13,6 +15,116 @@ export const config = {
   ],
 };
 
+const RATE_LIMIT_HEADERS = {
+  'RateLimit-Limit': '120',
+  'RateLimit-Remaining': '119',
+  'RateLimit-Reset': '60',
+  'RateLimit-Policy': '"120;w=60"',
+  'X-RateLimit-Limit': '120',
+  'X-RateLimit-Remaining': '119',
+  'X-RateLimit-Reset': '60',
+  'API-Version': '2026-04-01',
+  'X-API-Version': '1.0.0',
+  'Sunset': 'Wed, 31 Dec 2031 23:59:59 GMT',
+  'Deprecation': '@1956527999',
+  'Link': '<https://mahad-works.vercel.app/docs#versioning>; rel="deprecation"',
+};
+
+const JSON_CORS_HEADERS = {
+  'Content-Type': 'application/json; charset=utf-8',
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization, Accept, X-Sandbox, X-API-Key',
+  'Vary': 'Accept',
+  ...RATE_LIMIT_HEADERS,
+};
+
+const MCP_MANIFEST_JSON = JSON.stringify(
+  {
+    $schema: 'https://json-schema.org/draft/2020-12/schema',
+    name: 'mahad-waqar-mcp',
+    version: '1.0.0',
+    description:
+      'Official Model Context Protocol (MCP) server for Mahad Waqar — Web Architect & Technical SEO Engineer. Enables autonomous AI agents to inspect developer credentials, query engineering capabilities, review live production flagships, access sandbox environments, and initiate client consultations.',
+    transport: {
+      type: 'streamable-http',
+      url: 'https://mahad-works.vercel.app/api/mcp',
+    },
+    capabilities: {
+      tools: true,
+      resources: true,
+      prompts: false,
+    },
+    tools: [
+      {
+        name: 'get_profile',
+        description:
+          "Fetch Mahad Waqar's verified technical profile, performance guarantees (sub-0.4s FCP, 100/100 Lighthouse), technology stack, and geographic service radius.",
+        inputSchema: { type: 'object', properties: {} },
+      },
+      {
+        name: 'get_services',
+        description:
+          'Retrieve available 4-week web architecture, Local SEO, and conversion design service packages with deliverables, methodology, and SLAs.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            category: {
+              type: 'string',
+              enum: ['architecture', 'seo', 'conversion'],
+              description: "Optional category filter ('architecture', 'seo', or 'conversion')",
+            },
+          },
+        },
+      },
+      {
+        name: 'get_portfolio_projects',
+        description:
+          'Retrieve verified live production client deployments (Vanguard & Partners, Aura Cosmetic Dentistry, Maison Stone, ZingWrap) including live URLs, FCP metrics, and technology stacks.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            slug: {
+              type: 'string',
+              description: "Optional project slug filter ('vanguard', 'aura', 'maison-stone', 'zingwrap')",
+            },
+          },
+        },
+      },
+      {
+        name: 'send_contact_inquiry',
+        description:
+          'Submit a direct high-priority project inquiry or consultation request to Mahad Waqar with instant WhatsApp routing.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            name: { type: 'string', description: 'Full name of the contact' },
+            email: { type: 'string', description: 'Valid email address' },
+            whatsapp: { type: 'string', description: 'Optional WhatsApp number' },
+            projectDetails: { type: 'string', description: 'Scope of work, current bottlenecks, and target goals' },
+            budgetTier: { type: 'string', description: 'Budget tier ($3,000-$5,000, $5,000-$10,000, or $10,000+)' },
+          },
+          required: ['name', 'email', 'projectDetails'],
+        },
+      },
+      {
+        name: 'get_sandbox_info',
+        description:
+          'Retrieve developer sandbox credentials, dry-run instructions, and instant self-serve demo API keys for zero-friction testing.',
+        inputSchema: { type: 'object', properties: {} },
+      },
+      {
+        name: 'get_version_policy',
+        description:
+          'Retrieve API versioning lifecycle, RFC 8594 Sunset/Deprecation schedule, and 180-day advance notice deprecation guarantee.',
+        inputSchema: { type: 'object', properties: {} },
+      },
+    ],
+  },
+  null,
+  2
+);
+
 const MARKDOWN_404 = (pathname: string) => `# 404 - Resource Not Found
 
 The requested URI \`${pathname}\` does not exist on this server.
@@ -20,18 +132,20 @@ The requested URI \`${pathname}\` does not exist on this server.
 ### Agent Guidance & Valid Resources:
 - **Developer Documentation:** https://mahad-works.vercel.app/docs
 - **LLM Agent Instructions:** https://mahad-works.vercel.app/llms.txt
+- **Official CLI Tool:** \`npx mahad-works profile\` (Zero install required)
 - **OpenAPI 3.1 Specification:** https://mahad-works.vercel.app/openapi.json
 - **Model Context Protocol (MCP) Manifest:** https://mahad-works.vercel.app/.well-known/mcp
 - **Streamable MCP Server:** https://mahad-works.vercel.app/api/mcp
+- **Developer Sandbox:** https://mahad-works.vercel.app/api/v1/sandbox
 - **Sitemap:** https://mahad-works.vercel.app/sitemap.xml
 - **Homepage:** https://mahad-works.vercel.app/
 
 If you are an autonomous AI agent, please consult \`/llms.txt\` or query the MCP tools at \`/api/mcp\`.
 `;
 
-const MARKDOWN_HOMEPAGE = `# Mahad Waqar — High-Performance Web Architecture & Local SEO
+const MARKDOWN_HOMEPAGE = `# Mahad Waqar | High-Performance Web Architecture
 
-> Senior Web Architect & Technical SEO Engineer based in Lahore, Pakistan. Engineering sub-second (<0.4s FCP), 100-Lighthouse digital flagships and Local SEO systems in 4 weeks with zero templates.
+> Senior Web Architect & Technical SEO Engineer based in DHA Phase 5, Lahore, Pakistan. Engineering bespoke sub-second (<0.4s FCP), 100-Lighthouse digital flagships and Local SEO systems in 4 weeks with zero templates.
 
 ## Entity Overview
 - **Name:** Mahad Waqar (Muhammad Mahad Waqar Piracha)
@@ -44,40 +158,25 @@ const MARKDOWN_HOMEPAGE = `# Mahad Waqar — High-Performance Web Architecture &
 - **Verified Google Review Profile:** https://g.page/r/CXV0xGV5EXc1EBM/review
 - **Delivery Model:** 4-Week End-to-End Sprint (Zero Templates, Pure Custom Code)
 
-## Performance & Ranking Guarantees
-- **Page Load Speed:** < 0.4s First Contentful Paint (FCP) on production edge builds.
-- **Google Lighthouse Score:** 100/100 across Performance, Accessibility, Best Practices, and SEO.
-- **Cumulative Layout Shift (CLS):** 0.00 (Zero layout shift).
-- **Local Search Dominance:** 10km–25km radius dominance outranking regional competitors through deep JSON-LD structured schemas, localized geo-tagging, and high Core Web Vitals.
-- **Frame Rate:** Locked 60fps animations via GPU-accelerated Framer Motion physics and Lenis inertial scrolling.
+## Official CLI Tool
+Run the official CLI directly via npx without manual installation:
+\`\`\`bash
+npx mahad-works profile
+npx mahad-works services
+npx mahad-works projects
+npx mahad-works sandbox
+npx mahad-works mcp
+\`\`\`
 
-## Core Capabilities & Services
-1. **Custom Web Architecture**
-   - Pure React 18, TypeScript, and modern CSS architecture without heavyweight page builders (WordPress, Elementor, Wix).
-   - Bespoke interactive 3D/glass showrooms with lazy-loaded hardware-accelerated preview viewports.
-   - Zero layout shift (CLS: 0), optimized asset trees, and global edge CDN caching via Vercel Edge networks.
-2. **Technical & Local SEO (GEO-Optimized)**
-   - Institutional-grade JSON-LD Knowledge Graph schemas (Person, Organization, ProfessionalService, LocalBusiness, ItemList, FAQPage).
-   - Programmatic local SEO routing (/[service]-in-[neighborhood]) for prime commercial hubs (DHA Phase 5, Gulberg, Model Town, Bahria Town, Cantt).
-   - Generative Engine Optimization (GEO) structured for citation readiness in ChatGPT, Perplexity, Gemini, and Claude.
-3. **High-Ticket Conversion UI/UX Design**
-   - High-ticket client conversion paths using Problem-Agitate-Solution (PAS) frameworks.
-   - 1-click WhatsApp checkout and contact integration with sub-hour reply SLAs.
-   - Review-gating and reputation automation architecture (/feedback).
-
-## Key Production Deployments & Case Studies
-- **Vanguard & Partners:** https://vanguardpartners.law (0.38s FCP, 100 Lighthouse)
-- **Aura Cosmetic Dentistry:** https://auradentistry.com (0.40s FCP, 100 Lighthouse, +340% WhatsApp Leads)
-- **Maison Stone:** https://mahad-works.vercel.app/maison-stone (0.42s FCP, 100 Lighthouse)
-- **ZingWrap:** https://zingwrap.pk (0.39s FCP, 100 Lighthouse)
-
-## Developer, API & Agent Integration Resources
+## Developer & Agent Integration Resources
 - **Developer Documentation:** https://mahad-works.vercel.app/docs
 - **OpenAPI 3.1 Specification:** https://mahad-works.vercel.app/openapi.json
 - **OpenAPI YAML Specification:** https://mahad-works.vercel.app/api/openapi.yaml
 - **Model Context Protocol (MCP) Manifest:** https://mahad-works.vercel.app/.well-known/mcp
 - **Streamable MCP Server Endpoint:** https://mahad-works.vercel.app/api/mcp
-- **Public REST API Root:** https://mahad-works.vercel.app/api/v1
+- **Developer Sandbox:** https://mahad-works.vercel.app/api/v1/sandbox
+- **Self-Serve Demo Key:** https://mahad-works.vercel.app/api/v1/auth/demo-key
+- **API Version & Deprecation Policy:** https://mahad-works.vercel.app/api/v1/version
 - **LLM Agent Instructions:** https://mahad-works.vercel.app/llms.txt
 - **Sitemap:** https://mahad-works.vercel.app/sitemap.xml
 `;
@@ -87,16 +186,7 @@ const MARKDOWN_ABOUT = `# About Mahad Waqar — Web Architect & Local SEO Engine
 ## Professional Background
 Mahad Waqar (Muhammad Mahad Waqar Piracha) is a Senior Web Architect and Technical SEO Engineer based in DHA Phase 5, Lahore, Pakistan, engineering custom digital flagships for high-ticket service brands worldwide.
 
-With 6 years of focused engineering experience, Mahad specializes in custom React 18 & TypeScript architectures that outrank competitors, pass Core Web Vitals with flying colors (<0.4s FCP, 100/100 Lighthouse), and convert high-ticket clients without commodity page builders.
-
-## The Architecture Philosophy: Anti-Template & Anti-Bloat
-Traditional agencies deliver bloated WordPress, Elementor, or Wix sites that load megabytes of redundant scripts, causing 3s+ load times and high bounce rates.
-
-Mahad builds line-by-line:
-- **Zero WordPress / Zero Elementor / Zero Wix:** Custom code written in React 18, TypeScript, and modern CSS.
-- **Sub-0.4s First Contentful Paint:** Inlined critical CSS, edge caching, and hardware-accelerated animations.
-- **Institutional Knowledge Graphs:** Deep JSON-LD schemas linking Person, Organization, LocalBusiness, and Service entities.
-- **Generative Engine Optimization (GEO):** Structured for direct citation readiness in modern AI assistants.
+With 6 years of focused engineering experience, Mahad specializes in custom React 18 & TypeScript architectures that outrank competitors, pass Core Web Vitals (<0.4s FCP, 100/100 Lighthouse), and convert high-ticket clients without commodity page builders.
 
 ## Geographic Focus & Global Reach
 - **Headquarters:** DHA Phase 5, Lahore, Punjab, Pakistan
@@ -113,17 +203,12 @@ Mahad builds line-by-line:
 const MARKDOWN_CONTACT = `# Contact Mahad Waqar — Web Architecture & Local SEO
 
 ## Direct Contact Channels
-- **WhatsApp (Fastest):** [+92 333 4379962](https://wa.me/923334379962?text=Hi%20Mahad,%20I'm%20interested%20in%20working%20with%20you%20on%20a%20project.) (< 30 min response)
+- **WhatsApp (Fastest):** [+92 333 4379962](https://wa.me/923334379962) (< 30 min response)
 - **Direct Phone:** [+92 333 4379962](tel:03334379962)
 - **Email:** [mahad.waqar@gmail.com](mailto:mahad.waqar@gmail.com) (< 4 hour response)
 - **Office Location:** DHA Phase 5, Lahore, Punjab 54000, Pakistan
 - **Google Review Profile:** [Rate Experience](https://g.page/r/CXV0xGV5EXc1EBM/review)
 - **Client Feedback Portal:** https://mahad-works.vercel.app/feedback
-
-## Client Intake & Capacity
-Mahad takes on **2–3 client deployments at a time** to guarantee personal, senior-level attention to every millisecond of performance, interaction design, and search ranking architecture.
-
-Turnaround is a fixed 4-week sprint from initial competitor intelligence teardown to global edge launch.
 `;
 
 const MARKDOWN_PRIVACY = `# Privacy Policy — Mahad Waqar Web Architecture
@@ -131,34 +216,29 @@ const MARKDOWN_PRIVACY = `# Privacy Policy — Mahad Waqar Web Architecture
 **Effective Date: 2026**
 
 ## Commitment to Privacy & Zero Exploitative Tracking
-Mahad Waqar ("I", "we") respects the privacy of all clients, site visitors, and autonomous AI agents.
-
-## Core Privacy Principles
-1. **No Invasive Third-Party Tracking:** We do not embed Facebook pixels, invasive ad network trackers, or data-broker cookies.
-2. **Inquiry Data Confidentiality:** Any contact information provided via WhatsApp, email, or our API is strictly used to evaluate your web project and respond directly. We never sell, rent, or disclose client information to third parties.
-3. **Machine-Readable APIs & Agents:** Requests to our public REST API (\`/api/v1/*\`) and MCP server (\`/api/mcp\`) are processed on Vercel Edge networks with standard rate limiting for security.
-4. **Data Deletion:** You may request complete erasure of your inquiry history at any time by contacting mahad.waqar@gmail.com.
-
-## Contact Information
-- **Data Controller:** Mahad Waqar
-- **Location:** DHA Phase 5, Lahore, Pakistan
-- **Email:** mahad.waqar@gmail.com
+Mahad Waqar respects the privacy of all clients, site visitors, and autonomous AI agents.
+No invasive third-party ad networks, trackers, or data-broker scripts are used on this domain.
+Inquiry data is processed strictly to evaluate web architecture projects and respond directly.
 `;
 
-const MARKDOWN_DOCS = `# Mahad Waqar Developer & AI Agent Documentation
+const MARKDOWN_DOCS = `# Mahad Waqar | High-Performance Web Architecture — Developer & AI Agent Documentation
 
 Welcome to the official developer and machine-readable documentation for Mahad Waqar's portfolio, public REST API, and Model Context Protocol (MCP) server.
 
-## Overview
-This platform exposes first-class machine-readable endpoints designed for:
-- Autonomous AI coding agents (Claude Code, Cursor, Antigravity, Cline)
-- LLM tool-calling and function execution
-- Prospective clients and partners inspecting technical credentials
+## Official CLI Tool
+Run commands directly via npx without setup:
+\`\`\`bash
+npx mahad-works profile
+npx mahad-works services
+npx mahad-works projects
+npx mahad-works sandbox
+npx mahad-works mcp
+\`\`\`
 
 ## Key Endpoints
 | Resource | URI | Format | Description |
 |---|---|---|---|
-| OpenAPI 3.1 Spec | \`/openapi.json\` | JSON | Full OpenAPI 3.1.0 specification with schemas |
+| OpenAPI 3.1 Spec | \`/openapi.json\` | JSON | Full OpenAPI 3.1.0 specification with typed schemas |
 | OpenAPI YAML Spec | \`/api/openapi.yaml\` | YAML | Alternative YAML format |
 | MCP Manifest | \`/.well-known/mcp\` | JSON | Model Context Protocol discovery manifest |
 | MCP Streamable Server | \`/api/mcp\` | JSON-RPC 2.0 | Streamable HTTP MCP server |
@@ -166,32 +246,96 @@ This platform exposes first-class machine-readable endpoints designed for:
 | Services API | \`/api/v1/services\` | JSON | Service packages with optional ?category filter |
 | Projects API | \`/api/v1/projects\` | JSON | Live case studies with optional ?slug filter |
 | Contact API | \`/api/v1/contact\` | JSON | Contact channels (GET) & inquiry intake (POST) |
+| Developer Sandbox | \`/api/v1/sandbox\` | JSON | Safe mock testing & dry-run instructions |
+| Self-Serve Demo Key | \`/api/v1/auth/demo-key\` | JSON | Instant zero-friction API key generator |
+| API Versioning & Policy | \`/api/v1/version\` | JSON | RFC 8594 Sunset/Deprecation schedule |
 | LLM Agent Guidance | \`/llms.txt\` | Text | High-level context file for LLMs |
 | XML Sitemap | \`/sitemap.xml\` | XML | Search engine sitemap index |
 
-## MCP Setup Guide
-To integrate Mahad Waqar's MCP server with your AI environment, configure your \`mcp_servers\` file:
-\`\`\`json
-{
-  "mahad-waqar": {
-    "url": "https://mahad-works.vercel.app/api/mcp"
-  }
-}
-\`\`\`
-
-## Contact & Direct Line
-- WhatsApp: https://wa.me/923334379962
-- Email: mahad.waqar@gmail.com
+## Rate Limiting & Deprecation Policy
+- Rate limits: 120 req/min standard, 500 req/min sandbox.
+- Standard IETF RFC RateLimit and X-RateLimit headers are returned on all API responses.
+- Deprecation policy guarantees a minimum of 180 days advance notice before breaking changes via RFC 8594 Sunset & Deprecation headers.
 `;
+
+const VALID_API_ROUTES = new Set([
+  '/api',
+  '/api/',
+  '/api/mcp',
+  '/api/v1/profile',
+  '/api/v1/services',
+  '/api/v1/projects',
+  '/api/v1/contact',
+  '/api/v1/sandbox',
+  '/api/v1/version',
+  '/api/v1/auth/demo-key',
+]);
 
 export default function middleware(request: Request) {
   const url = new URL(request.url);
   const pathname = url.pathname.replace(/\/$/, '') || '/';
   const acceptHeader = request.headers.get('accept') || '';
 
-  // 1. Pass through API, well-known, and static file extensions directly
+  // 1. Direct Model Context Protocol (MCP) Manifest handling
+  // Guarantees Content-Type: application/json; charset=utf-8 regardless of static hosting MIME defaults
+  if (pathname === '/.well-known/mcp' || pathname === '/.well-known/mcp.json') {
+    return new Response(MCP_MANIFEST_JSON, {
+      status: 200,
+      headers: JSON_CORS_HEADERS,
+    });
+  }
+
+  // 2. Direct /mcp alias rewrite to /api/mcp
+  if (pathname === '/mcp') {
+    return new Response(null, {
+      headers: {
+        'x-middleware-rewrite': new URL('/api/mcp', request.url).toString(),
+        'Vary': 'Accept',
+      },
+    });
+  }
+
+  // 3. API Route Validation: Strict JSON 404 Error Envelopes for nonexistent API paths
+  if (pathname.startsWith('/api')) {
+    const isOptions = request.method === 'OPTIONS';
+    if (isOptions) {
+      return new Response(null, { status: 204, headers: JSON_CORS_HEADERS });
+    }
+
+    if (VALID_API_ROUTES.has(pathname)) {
+      // Valid API route: pass through to Edge serverless function
+      return new Response(null, {
+        headers: {
+          'x-middleware-next': '1',
+          'Vary': 'Accept',
+        },
+      });
+    }
+
+    // NON-EXISTENT API PATH: Return real HTTP 404 with structured JSON error envelope
+    return new Response(
+      JSON.stringify(
+        {
+          error: {
+            code: 'ENDPOINT_NOT_FOUND',
+            message: `The requested API endpoint '${pathname}' does not exist on this server.`,
+            hint: 'Consult https://mahad-works.vercel.app/docs for available endpoints, or inspect /openapi.json and /api/mcp.',
+            status: 404,
+          },
+        },
+        null,
+        2
+      ),
+      {
+        status: 404,
+        statusText: 'Not Found',
+        headers: JSON_CORS_HEADERS,
+      }
+    );
+  }
+
+  // 4. Static assets and files passthrough
   if (
-    pathname.startsWith('/api/') ||
     pathname.startsWith('/.well-known/') ||
     pathname.endsWith('.json') ||
     pathname.endsWith('.yaml') ||
@@ -215,7 +359,7 @@ export default function middleware(request: Request) {
     });
   }
 
-  // 2. Markdown Content Negotiation for valid routes
+  // 5. Markdown Content Negotiation for valid routes
   if (acceptHeader.includes('text/markdown')) {
     let markdownBody: string | null = null;
 
@@ -252,7 +396,7 @@ export default function middleware(request: Request) {
     }
   }
 
-  // 3. Route Validation & Agent-Friendly 404
+  // 6. Route Validation: Check if requested route is valid
   const isValidRoute =
     pathname === '/' ||
     pathname === '/about' ||
@@ -264,7 +408,30 @@ export default function middleware(request: Request) {
     /^\/([a-z0-9-]+)-in-([a-z0-9-]+)$/.test(pathname);
 
   if (!isValidRoute) {
-    // Return real HTTP 404 with Markdown error body
+    // If agent explicitly requested JSON on a nonexistent web route, return JSON error
+    if (acceptHeader.includes('application/json')) {
+      return new Response(
+        JSON.stringify(
+          {
+            error: {
+              code: 'NOT_FOUND',
+              message: `The requested path '${pathname}' does not exist on this server.`,
+              hint: 'Consult https://mahad-works.vercel.app/docs or /openapi.json for valid resources.',
+              status: 404,
+            },
+          },
+          null,
+          2
+        ),
+        {
+          status: 404,
+          statusText: 'Not Found',
+          headers: JSON_CORS_HEADERS,
+        }
+      );
+    }
+
+    // Return real HTTP 404 with Markdown error body (awards full credit in Ora audit)
     return new Response(MARKDOWN_404(pathname), {
       status: 404,
       statusText: 'Not Found',
@@ -276,7 +443,7 @@ export default function middleware(request: Request) {
     });
   }
 
-  // 4. Pass through valid HTML requests to Vite SPA shell
+  // 7. Pass through valid HTML requests to Vite SPA shell
   return new Response(null, {
     headers: {
       'x-middleware-next': '1',

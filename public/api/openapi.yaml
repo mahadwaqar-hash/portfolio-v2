@@ -1,18 +1,24 @@
 openapi: 3.1.0
 info:
-  title: Mahad Waqar Web Architecture & Local SEO API
+  title: Mahad Waqar | High-Performance Web Architecture API
   version: 1.0.0
-  description: Production REST API for Mahad Waqar — Senior Web Architect & Technical SEO Engineer. Provides structured endpoints for developer profile, core capabilities, live case studies, client reviews, direct consultation booking, and agent tool execution.
+  description: Production REST API and LLM function-calling tools for Mahad Waqar — Senior Web Architect & Technical SEO Engineer based in DHA Phase 5, Lahore, Pakistan. Engineering sub-second (<0.4s FCP), 100-Lighthouse digital flagships and Local SEO systems in 4 weeks.
   contact:
     name: Mahad Waqar
     email: mahad.waqar@gmail.com
-    url: https://mahad-works.vercel.app
+    url: "https://mahad-works.vercel.app"
   license:
     name: MIT
-    url: https://opensource.org/licenses/MIT
+    url: "https://opensource.org/licenses/MIT"
+  x-api-version: 1.0.0
+  x-cli-tool: npx mahad-works
+  x-versioning-policy:
+    scheme: URL path (/api/v1) and API-Version response header
+    deprecationNotice: 180 days advance notice via RFC 8594 Sunset and Deprecation headers
+    policyUrl: "https://mahad-works.vercel.app/docs#versioning"
 servers:
-  - url: https://mahad-works.vercel.app
-    description: Production Edge API Server
+  - url: "https://mahad-works.vercel.app"
+    description: Production Edge CDN Server (Vercel Edge Network)
 tags:
   - name: Profile
     description: Architect background, credentials, and technical stack
@@ -22,33 +28,48 @@ tags:
     description: Live production deployments, case studies, and audit metrics
   - name: Contact
     description: Direct communication channels, intake forms, and consultation booking
+  - name: Sandbox
+    description: Developer test environment and zero-friction self-serve authentication
+  - name: Version
+    description: API lifecycle, RFC 8594 Sunset/Deprecation headers, and deprecation policy
 paths:
-  /api/v1/profile:
+  "/api/v1/profile":
     get:
       tags:
         - Profile
-      summary: Retrieve architect profile, bio, stack, and guarantees
-      description: Returns full professional profile for Mahad Waqar including primary specialization, Core Web Vitals guarantees, location coordinates, and active client capacity.
+      summary: Retrieve architect credentials, tech stack, and guarantees
+      description: Returns full professional profile for Mahad Waqar including primary specialization, Core Web Vitals guarantees (<0.4s FCP, 100/100 Lighthouse), location coordinates, and active client capacity.
       operationId: getProfile
+      parameters:
+        - name: format
+          in: query
+          required: false
+          description: Format tier for profile data ('full' or 'compact')
+          schema:
+            type: string
+            enum:
+              - full
+              - compact
+            default: full
       responses:
-        '200':
+        200:
           description: Profile data retrieved successfully
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/Profile'
-        '500':
+                "$ref": "#/components/schemas/ProfileResponse"
+        500:
           description: Internal server error
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /api/v1/services:
+                "$ref": "#/components/schemas/ErrorResponse"
+  "/api/v1/services":
     get:
       tags:
         - Services
-      summary: List available engineering and SEO service packages
-      description: Returns the list of 3 flagship service packages (Custom Web Architecture, Local SEO & GEO, High-Ticket Conversion UI/UX) with deliverables, duration, and SLAs.
+      summary: List available engineering and SEO sprint packages
+      description: Returns the 3 flagship service packages (Custom Web Architecture, Local SEO & GEO, High-Ticket Conversion UI/UX) with deliverables, duration, and SLAs.
       operationId: listServices
       parameters:
         - name: category
@@ -57,36 +78,30 @@ paths:
           description: "Filter services by category: 'architecture', 'seo', or 'conversion'"
           schema:
             type: string
-            enum: [architecture, seo, conversion]
+            enum:
+              - architecture
+              - seo
+              - conversion
       responses:
-        '200':
+        200:
           description: List of services retrieved successfully
           content:
-            application/json:
+            "application/json":
               schema:
-                type: object
-                properties:
-                  services:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Service'
-                  deliveryTimeline:
-                    type: string
-                    example: 4-Week End-to-End Sprint
-                  capacity:
-                    type: string
-                    example: 2-3 projects at a time
-                required:
-                  - services
-                  - deliveryTimeline
-                  - capacity
-        '500':
+                "$ref": "#/components/schemas/ServicesResponse"
+        400:
+          description: Invalid category parameter
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        500:
           description: Internal server error
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /api/v1/projects:
+                "$ref": "#/components/schemas/ErrorResponse"
+  "/api/v1/projects":
     get:
       tags:
         - Projects
@@ -97,47 +112,60 @@ paths:
         - name: slug
           in: query
           required: false
-          description: Filter by project slug
+          description: "Filter by project slug: 'vanguard', 'aura', 'maison-stone', or 'zingwrap'"
           schema:
             type: string
+            enum:
+              - vanguard
+              - aura
+              - maison-stone
+              - zingwrap
       responses:
-        '200':
-          description: Projects retrieved successfully
+        200:
+          description: Case studies retrieved successfully
           content:
-            application/json:
+            "application/json":
               schema:
-                type: object
-                properties:
-                  projects:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Project'
-                  count:
-                    type: integer
-                    example: 4
-                required:
-                  - projects
-                  - count
-        '500':
+                "$ref": "#/components/schemas/ProjectsResponse"
+        404:
+          description: Project slug not found
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        500:
           description: Internal server error
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /api/v1/contact:
+                "$ref": "#/components/schemas/ErrorResponse"
+  "/api/v1/contact":
     get:
       tags:
         - Contact
       summary: Get official direct communication channels
       description: Returns verified WhatsApp, telephone, email, physical office address, and verified Google Review links with current response times.
       operationId: getContactChannels
+      parameters:
+        - name: channel
+          in: query
+          required: false
+          description: "Filter by communication channel: 'all', 'whatsapp', 'email', or 'phone'"
+          schema:
+            type: string
+            enum:
+              - all
+              - whatsapp
+              - email
+              - phone
+            default: all
       responses:
-        '200':
+        200:
           description: Contact channels retrieved
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ContactChannels'
+                "$ref": "#/components/schemas/ContactChannelsResponse"
     post:
       tags:
         - Contact
@@ -147,48 +175,73 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          "application/json":
             schema:
-              $ref: '#/components/schemas/ContactInquiry'
+              "$ref": "#/components/schemas/ContactInquiryRequest"
       responses:
-        '201':
+        201:
           description: Inquiry submitted successfully
           content:
-            application/json:
+            "application/json":
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: Inquiry received. Mahad Waqar will respond within 4 hours.
-                  inquiryId:
-                    type: string
-                    example: inq_9f8e7d6c
-                  directWhatsAppUrl:
-                    type: string
-                    example: https://wa.me/923334379962
-                required:
-                  - success
-                  - message
-                  - directWhatsAppUrl
-        '400':
+                "$ref": "#/components/schemas/ContactInquiryResponse"
+        400:
           description: Validation error or missing fields
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                "$ref": "#/components/schemas/ErrorResponse"
+        500:
           description: Server error
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                "$ref": "#/components/schemas/ErrorResponse"
+  "/api/v1/sandbox":
+    get:
+      tags:
+        - Sandbox
+      summary: Inspect developer sandbox status and dry-run instructions
+      description: Inspects sandbox test environment and returns demo credentials, simulated mock endpoints, and zero-friction developer onboarding instructions.
+      operationId: getSandboxStatus
+      responses:
+        200:
+          description: Sandbox configuration retrieved successfully
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/SandboxResponse"
+  "/api/v1/auth/demo-key":
+    post:
+      tags:
+        - Sandbox
+      summary: Generate instant self-serve demo API key
+      description: Generates a zero-friction demo API token without sales calls or credit cards for immediate agent integration.
+      operationId: generateDemoKey
+      responses:
+        200:
+          description: Demo API token generated successfully
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/DemoKeyResponse"
+  "/api/v1/version":
+    get:
+      tags:
+        - Version
+      summary: Get API version lifecycle and RFC 8594 deprecation policy
+      description: Returns current API version, active lifecycle status, RFC 8594 Sunset/Deprecation headers, and 180-day deprecation timeline guarantee.
+      operationId: getVersionPolicy
+      responses:
+        200:
+          description: Version policy retrieved successfully
+          content:
+            "application/json":
+              schema:
+                "$ref": "#/components/schemas/VersionPolicyResponse"
 components:
   schemas:
-    Profile:
+    ProfileResponse:
       type: object
       properties:
         name:
@@ -200,6 +253,9 @@ components:
         title:
           type: string
           example: Senior Web Architect & Technical SEO Engineer
+        tagline:
+          type: string
+          example: Custom Web Architecture, Local SEO & Conversion Design for High-Ticket Brands
         location:
           type: object
           properties:
@@ -212,6 +268,9 @@ components:
             region:
               type: string
               example: Punjab
+            postalCode:
+              type: string
+              example: 54000
             country:
               type: string
               example: Pakistan
@@ -224,9 +283,20 @@ components:
                 longitude:
                   type: number
                   example: 74.3587
+              required:
+                - latitude
+                - longitude
+              additionalProperties: false
+          required:
+            - city
+            - neighborhood
+            - region
+            - country
+            - coordinates
+          additionalProperties: false
         bio:
           type: string
-          example: I engineer sub-second (0.4s FCP), 100-Lighthouse digital flagships and Local SEO systems in 4 weeks with zero templates or page builders.
+          example: I engineer sub-second (<0.4s FCP), 100-Lighthouse digital flagships and Local SEO systems in 4 weeks.
         experienceYears:
           type: integer
           example: 6
@@ -234,25 +304,45 @@ components:
           type: array
           items:
             type: string
-          example: [React 18, TypeScript, Tailwind CSS, Framer Motion, Lenis, Vercel Edge CDN]
+          example:
+            - React 18
+            - TypeScript
+            - Tailwind CSS
+            - Framer Motion
+            - Lenis Smooth Scroll
+            - Vercel Edge Network
         performanceGuarantees:
           type: object
           properties:
             firstContentfulPaint:
               type: string
-              example: "< 0.4s"
+              example: < 0.4s on production edge builds
             googleLighthouse:
               type: string
-              example: 100/100 across Performance, Accessibility, Best Practices, SEO
+              example: 100/100 across Performance, Accessibility, Best Practices, and SEO
+            cumulativeLayoutShift:
+              type: string
+              example: 0.00 (Zero layout shift)
             frameRate:
               type: string
               example: 60fps locked animations
-            localRadius:
+            localSearchRadius:
               type: string
-              example: 10km–25km Map Pack Dominance
+              example: 10km–25km Map Pack & local search dominance
             sprintDuration:
               type: string
-              example: 4 Weeks Fixed Turnaround
+              example: 4 Weeks fixed delivery timeline
+          required:
+            - firstContentfulPaint
+            - googleLighthouse
+            - cumulativeLayoutShift
+            - frameRate
+            - localSearchRadius
+            - sprintDuration
+          additionalProperties: false
+        capacity:
+          type: string
+          example: Taking on 2–3 client deployments concurrently
       required:
         - name
         - title
@@ -260,6 +350,8 @@ components:
         - bio
         - coreStack
         - performanceGuarantees
+        - capacity
+      additionalProperties: false
     Service:
       type: object
       properties:
@@ -271,14 +363,17 @@ components:
           example: Custom Web Architecture
         category:
           type: string
-          enum: [architecture, seo, conversion]
+          enum:
+            - architecture
+            - seo
+            - conversion
           example: architecture
         tagline:
           type: string
           example: Sub-0.4s Digital Flagships with Zero Templates
         description:
           type: string
-          example: Bespoke React 18, TypeScript, and modern CSS architecture without heavyweight page builders. Delivering perfect 100/100 Lighthouse performance.
+          example: Bespoke React 18, TypeScript, and modern CSS architecture without heavyweight page builders.
         deliverables:
           type: array
           items:
@@ -299,10 +394,36 @@ components:
         - description
         - deliverables
         - turnaround
+      additionalProperties: false
+    ServicesResponse:
+      type: object
+      properties:
+        services:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Service"
+        totalCount:
+          type: integer
+          example: 3
+        deliveryTimeline:
+          type: string
+          example: 4-Week End-to-End Sprint
+        capacity:
+          type: string
+          example: 2-3 projects at a time
+      required:
+        - services
+        - totalCount
+        - deliveryTimeline
+        - capacity
+      additionalProperties: false
     Project:
       type: object
       properties:
         id:
+          type: string
+          example: vanguard
+        slug:
           type: string
           example: vanguard
         name:
@@ -313,7 +434,7 @@ components:
           example: Corporate Law & Architecture
         url:
           type: string
-          example: https://vanguardpartners.law
+          example: "https://vanguardpartners.law"
         fcp:
           type: string
           example: 0.38s
@@ -324,12 +445,17 @@ components:
           type: array
           items:
             type: string
-          example: [React 18, TypeScript, Tailwind CSS, Framer Motion]
+          example:
+            - React 18
+            - TypeScript
+            - Tailwind CSS
+            - Framer Motion
         summary:
           type: string
           example: High-ticket corporate law flagship engineered with sub-0.4s FCP, interactive 60fps showroom, and authoritative typography.
       required:
         - id
+        - slug
         - name
         - industry
         - url
@@ -337,46 +463,131 @@ components:
         - lighthouse
         - stack
         - summary
-    ContactChannels:
+      additionalProperties: false
+    ProjectsResponse:
       type: object
       properties:
-        whatsapp:
-          type: object
-          properties:
-            number:
-              type: string
-              example: "+92 333 4379962"
-            url:
-              type: string
-              example: https://wa.me/923334379962
-            responseTime:
-              type: string
-              example: "< 30 minutes"
-        email:
-          type: object
-          properties:
-            address:
-              type: string
-              example: mahad.waqar@gmail.com
-            responseTime:
-              type: string
-              example: "< 4 hours"
-        phone:
+        projects:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Project"
+        count:
+          type: integer
+          example: 4
+        averageFCP:
           type: string
-          example: "+92 333 4379962"
-        googleReviewProfile:
-          type: string
-          example: https://g.page/r/CXV0xGV5EXc1EBM/review
-        office:
-          type: string
-          example: DHA Phase 5, Lahore, Punjab 54000, Pakistan
+          example: 0.39s
+        averageLighthouse:
+          type: integer
+          example: 100
       required:
-        - whatsapp
-        - email
-        - phone
-        - googleReviewProfile
-        - office
-    ContactInquiry:
+        - projects
+        - count
+        - averageFCP
+        - averageLighthouse
+      additionalProperties: false
+    ContactChannelsResponse:
+      type: object
+      properties:
+        contactChannels:
+          type: object
+          properties:
+            whatsapp:
+              type: object
+              properties:
+                number:
+                  type: string
+                  example: +92 333 4379962
+                url:
+                  type: string
+                  example: "https://wa.me/923334379962"
+                responseTime:
+                  type: string
+                  example: < 30 minutes
+              required:
+                - number
+                - url
+                - responseTime
+              additionalProperties: false
+            email:
+              type: object
+              properties:
+                address:
+                  type: string
+                  example: mahad.waqar@gmail.com
+                responseTime:
+                  type: string
+                  example: < 4 hours guaranteed
+              required:
+                - address
+                - responseTime
+              additionalProperties: false
+            phone:
+              type: object
+              properties:
+                number:
+                  type: string
+                  example: +92 333 4379962
+                tel:
+                  type: string
+                  example: "tel:03334379962"
+              required:
+                - number
+                - tel
+              additionalProperties: false
+            googleReviews:
+              type: object
+              properties:
+                url:
+                  type: string
+                  example: "https://g.page/r/CXV0xGV5EXc1EBM/review"
+                portal:
+                  type: string
+                  example: "https://mahad-works.vercel.app/feedback"
+              required:
+                - url
+                - portal
+              additionalProperties: false
+            office:
+              type: object
+              properties:
+                address:
+                  type: string
+                  example: DHA Phase 5, Lahore, Punjab 54000, Pakistan
+                timezone:
+                  type: string
+                  example: Asia/Karachi (PKT / UTC+5)
+                hours:
+                  type: string
+                  example: "Mon-Sat 09:00 - 21:00 PKT"
+                serviceRadius:
+                  type: string
+                  example: Global service reach with local 25km dominance
+              required:
+                - address
+                - timezone
+                - hours
+                - serviceRadius
+              additionalProperties: false
+          required:
+            - whatsapp
+            - email
+            - phone
+            - googleReviews
+            - office
+          additionalProperties: false
+        activeSprintCapacity:
+          type: string
+          example: 2–3 projects at a time
+        status:
+          type: string
+          example: Available for freelance deployment
+      required:
+        - contactChannels
+        - activeSprintCapacity
+        - status
+      additionalProperties: false
+    ContactInquiryRequest:
       type: object
       properties:
         name:
@@ -391,7 +602,7 @@ components:
         whatsapp:
           type: string
           description: Optional WhatsApp number with country code
-          example: "+447123456789"
+          example: +447123456789
         brandName:
           type: string
           description: Company, firm, or practice name
@@ -402,8 +613,11 @@ components:
           example: Need a sub-second high-ticket aesthetic medicine flagship to outrank regional Harley St clinics.
         budgetTier:
           type: string
-          enum: ["$3,000 - $5,000", "$5,000 - $10,000", "$10,000+"]
-          example: "$5,000 - $10,000"
+          enum:
+            - $3,000 - $5,000
+            - $5,000 - $10,000
+            - $10,000+
+          example: $5,000 - $10,000
         targetLaunch:
           type: string
           example: Within 4-6 weeks
@@ -411,6 +625,153 @@ components:
         - name
         - email
         - projectDetails
+      additionalProperties: false
+    ContactInquiryResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        inquiryId:
+          type: string
+          example: inq_9f8e7d6c
+        environment:
+          type: string
+          example: production
+        simulated:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: Inquiry received. Mahad Waqar will respond within 4 hours.
+        directWhatsAppUrl:
+          type: string
+          example: "https://wa.me/923334379962"
+      required:
+        - success
+        - inquiryId
+        - environment
+        - simulated
+        - message
+        - directWhatsAppUrl
+      additionalProperties: false
+    SandboxResponse:
+      type: object
+      properties:
+        environment:
+          type: string
+          example: sandbox
+        status:
+          type: string
+          example: ready
+        testMode:
+          type: boolean
+          example: true
+        description:
+          type: string
+          example: Safe dry-run sandbox and developer test environment
+        rateLimitTier:
+          type: string
+          example: unlimited_sandbox (500 req/min)
+        selfServeAuth:
+          type: object
+          properties:
+            instantDemoKeyUrl:
+              type: string
+              example: /api/v1/auth/demo-key
+            demoKey:
+              type: string
+              example: mhd_sandbox_demo_token_unlimited
+            instructions:
+              type: string
+              example: "Pass header Authorization: Bearer mhd_sandbox_demo_token_unlimited or X-Sandbox: true"
+          required:
+            - instantDemoKeyUrl
+            - demoKey
+            - instructions
+          additionalProperties: false
+      required:
+        - environment
+        - status
+        - testMode
+        - rateLimitTier
+        - selfServeAuth
+      additionalProperties: false
+    DemoKeyResponse:
+      type: object
+      properties:
+        apiKey:
+          type: string
+          example: mhd_demo_abc123_1792330000
+        tokenType:
+          type: string
+          example: Bearer
+        tier:
+          type: string
+          example: free_developer_sandbox
+        rateLimit:
+          type: string
+          example: 120 requests/minute
+        environment:
+          type: string
+          example: sandbox
+        message:
+          type: string
+          example: Zero-friction self-serve API key generated.
+      required:
+        - apiKey
+        - tokenType
+        - tier
+        - rateLimit
+        - environment
+        - message
+      additionalProperties: false
+    VersionPolicyResponse:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+          example: 1.0.0
+        activeVersions:
+          type: array
+          items:
+            type: string
+          example:
+            - v1
+        lifecycleStatus:
+          type: string
+          example: GA (General Availability)
+        deprecationPolicy:
+          type: object
+          properties:
+            minimumNoticePeriodDays:
+              type: integer
+              example: 180
+            signalingProtocol:
+              type: string
+              example: RFC 8594 Sunset and Deprecation HTTP response headers
+            currentSunsetHeader:
+              type: string
+              example: "Wed, 31 Dec 2031 23:59:59 GMT"
+            currentDeprecationHeader:
+              type: string
+              example: "@1956527999"
+            guarantee:
+              type: string
+              example: No endpoint in v1 will be removed without a minimum of 180 days advance deprecation signaling.
+          required:
+            - minimumNoticePeriodDays
+            - signalingProtocol
+            - currentSunsetHeader
+            - currentDeprecationHeader
+            - guarantee
+          additionalProperties: false
+      required:
+        - apiVersion
+        - activeVersions
+        - lifecycleStatus
+        - deprecationPolicy
+      additionalProperties: false
     ErrorResponse:
       type: object
       properties:
@@ -426,9 +787,15 @@ components:
             hint:
               type: string
               example: Provide a projectDetails string explaining your project scope.
+            status:
+              type: integer
+              example: 400
           required:
             - code
             - message
             - hint
+            - status
+          additionalProperties: false
       required:
         - error
+      additionalProperties: false

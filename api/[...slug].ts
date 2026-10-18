@@ -14,6 +14,8 @@ export default async function handler(req: Request): Promise<Response> {
     'ENDPOINT_NOT_FOUND',
     `The requested API endpoint '${url.pathname}' does not exist on this server.`,
     'Consult https://mahad-works.vercel.app/openapi.json or https://mahad-works.vercel.app/docs for available endpoints.',
-    404
+    404,
+    {},
+    req
   );
 }

@@ -84,7 +84,9 @@ export default async function handler(req: Request): Promise<Response> {
           'INVALID_PARAMETER',
           `Unknown category '${category}'. Valid categories are: ${validCategories.join(', ')}.`,
           'Omit the category query parameter to list all services, or filter by a valid category.',
-          400
+          400,
+          {},
+          req
         );
       }
       filtered = SERVICES.filter((s) => s.category === category);
@@ -97,14 +99,16 @@ export default async function handler(req: Request): Promise<Response> {
       capacity: '2-3 projects at a time',
       bookingUrl: 'https://mahad-works.vercel.app/contact',
       inquiryApiUrl: 'https://mahad-works.vercel.app/api/v1/contact',
-    });
+    }, 200, {}, req);
   } catch (err: unknown) {
     const error = err as Error;
     return errorResponse(
       'INTERNAL_SERVER_ERROR',
       error.message || 'An unexpected error occurred while fetching services.',
       'Retry your request or contact mahad.waqar@gmail.com.',
-      500
+      500,
+      {},
+      req
     );
   }
 }

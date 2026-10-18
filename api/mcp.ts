@@ -59,6 +59,24 @@ const MCP_TOOLS = [
       required: ['name', 'email', 'projectDetails'],
     },
   },
+  {
+    name: 'get_sandbox_info',
+    description:
+      'Retrieve developer sandbox credentials, dry-run instructions, and instant self-serve demo API keys for zero-friction testing.',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+    },
+  },
+  {
+    name: 'get_version_policy',
+    description:
+      'Retrieve API versioning lifecycle, RFC 8594 Sunset/Deprecation schedule, and 180-day advance notice deprecation guarantee.',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+    },
+  },
 ];
 
 interface JsonRpcRequest {
@@ -75,18 +93,28 @@ export default async function handler(req: Request): Promise<Response> {
 
   // GET: Return server information & manifest overview
   if (req.method === 'GET') {
-    return jsonResponse({
-      name: 'mahad-waqar-mcp',
-      version: '1.0.0',
-      protocolVersion: '2024-11-05',
-      description: 'Model Context Protocol (MCP) Streamable HTTP Server for Mahad Waqar Portfolio & Services',
-      manifestUrl: 'https://mahad-works.vercel.app/.well-known/mcp',
-      endpoints: {
-        jsonRpc: 'https://mahad-works.vercel.app/api/mcp',
-        docs: 'https://mahad-works.vercel.app/docs',
+    return jsonResponse(
+      {
+        name: 'mahad-waqar-mcp',
+        version: '1.0.0',
+        protocolVersion: '2024-11-05',
+        description: 'Model Context Protocol (MCP) Streamable HTTP Server for Mahad Waqar Portfolio & Services',
+        manifestUrl: 'https://mahad-works.vercel.app/.well-known/mcp',
+        endpoints: {
+          jsonRpc: 'https://mahad-works.vercel.app/api/mcp',
+          docs: 'https://mahad-works.vercel.app/docs',
+          openApi: 'https://mahad-works.vercel.app/openapi.json',
+        },
+        transport: {
+          type: 'streamable-http',
+          url: 'https://mahad-works.vercel.app/api/mcp',
+        },
+        availableTools: MCP_TOOLS.map((t) => t.name),
       },
-      availableTools: MCP_TOOLS.map((t) => t.name),
-    });
+      200,
+      {},
+      req
+    );
   }
 
   if (req.method !== 'POST') {
@@ -94,7 +122,9 @@ export default async function handler(req: Request): Promise<Response> {
       'METHOD_NOT_ALLOWED',
       `HTTP method ${req.method} is not supported on MCP endpoint.`,
       'Send a JSON-RPC 2.0 POST request to interact with the MCP server.',
-      405
+      405,
+      {},
+      req
     );
   }
 
@@ -108,7 +138,9 @@ export default async function handler(req: Request): Promise<Response> {
         id: null,
         error: { code: -32700, message: 'Parse error: Invalid JSON' },
       },
-      400
+      400,
+      {},
+      req
     );
   }
 
@@ -121,46 +153,64 @@ export default async function handler(req: Request): Promise<Response> {
         id,
         error: { code: -32600, message: "Invalid Request: 'jsonrpc': '2.0' and 'method' are required." },
       },
-      400
+      400,
+      {},
+      req
     );
   }
 
   // Handle MCP initialize
   if (method === 'initialize') {
-    return jsonResponse({
-      jsonrpc: '2.0',
-      id,
-      result: {
-        protocolVersion: '2024-11-05',
-        capabilities: {
-          tools: {},
-        },
-        serverInfo: {
-          name: 'mahad-waqar-mcp',
-          version: '1.0.0',
+    return jsonResponse(
+      {
+        jsonrpc: '2.0',
+        id,
+        result: {
+          protocolVersion: '2024-11-05',
+          capabilities: {
+            tools: {},
+            resources: {},
+          },
+          serverInfo: {
+            name: 'mahad-waqar-mcp',
+            version: '1.0.0',
+          },
         },
       },
-    });
+      200,
+      {},
+      req
+    );
   }
 
   // Handle MCP ping
   if (method === 'ping') {
-    return jsonResponse({
-      jsonrpc: '2.0',
-      id,
-      result: {},
-    });
+    return jsonResponse(
+      {
+        jsonrpc: '2.0',
+        id,
+        result: {},
+      },
+      200,
+      {},
+      req
+    );
   }
 
   // Handle MCP tools/list
   if (method === 'tools/list') {
-    return jsonResponse({
-      jsonrpc: '2.0',
-      id,
-      result: {
-        tools: MCP_TOOLS,
+    return jsonResponse(
+      {
+        jsonrpc: '2.0',
+        id,
+        result: {
+          tools: MCP_TOOLS,
+        },
       },
-    });
+      200,
+      {},
+      req
+    );
   }
 
   // Handle MCP tools/call
@@ -187,18 +237,23 @@ export default async function handler(req: Request): Promise<Response> {
             reviews: 'https://g.page/r/CXV0xGV5EXc1EBM/review',
           },
         };
-        return jsonResponse({
-          jsonrpc: '2.0',
-          id,
-          result: {
-            content: [
-              {
-                type: 'text',
-                text: JSON.stringify(profile, null, 2),
-              },
-            ],
+        return jsonResponse(
+          {
+            jsonrpc: '2.0',
+            id,
+            result: {
+              content: [
+                {
+                  type: 'text',
+                  text: JSON.stringify(profile, null, 2),
+                },
+              ],
+            },
           },
-        });
+          200,
+          {},
+          req
+        );
       }
 
       case 'get_services': {
@@ -228,18 +283,23 @@ export default async function handler(req: Request): Promise<Response> {
         ];
 
         const filtered = category ? services.filter((s) => s.category === category) : services;
-        return jsonResponse({
-          jsonrpc: '2.0',
-          id,
-          result: {
-            content: [
-              {
-                type: 'text',
-                text: JSON.stringify({ services: filtered }, null, 2),
-              },
-            ],
+        return jsonResponse(
+          {
+            jsonrpc: '2.0',
+            id,
+            result: {
+              content: [
+                {
+                  type: 'text',
+                  text: JSON.stringify({ services: filtered }, null, 2),
+                },
+              ],
+            },
           },
-        });
+          200,
+          {},
+          req
+        );
       }
 
       case 'get_portfolio_projects': {
@@ -280,18 +340,23 @@ export default async function handler(req: Request): Promise<Response> {
         ];
 
         const filtered = slug ? projects.filter((p) => p.slug === slug) : projects;
-        return jsonResponse({
-          jsonrpc: '2.0',
-          id,
-          result: {
-            content: [
-              {
-                type: 'text',
-                text: JSON.stringify({ projects: filtered }, null, 2),
-              },
-            ],
+        return jsonResponse(
+          {
+            jsonrpc: '2.0',
+            id,
+            result: {
+              content: [
+                {
+                  type: 'text',
+                  text: JSON.stringify({ projects: filtered }, null, 2),
+                },
+              ],
+            },
           },
-        });
+          200,
+          {},
+          req
+        );
       }
 
       case 'send_contact_inquiry': {
@@ -300,38 +365,109 @@ export default async function handler(req: Request): Promise<Response> {
         const projectDetails = args.projectDetails as string;
 
         if (!name || !email || !projectDetails) {
-          return jsonResponse({
-            jsonrpc: '2.0',
-            id,
-            error: {
-              code: -32602,
-              message: "Invalid params: 'name', 'email', and 'projectDetails' are required.",
+          return jsonResponse(
+            {
+              jsonrpc: '2.0',
+              id,
+              error: {
+                code: -32602,
+                message: "Invalid params: 'name', 'email', and 'projectDetails' are required.",
+              },
             },
-          });
+            400,
+            {},
+            req
+          );
         }
 
         const inquiryId = `mcp_inq_${Date.now().toString(36)}`;
-        return jsonResponse({
-          jsonrpc: '2.0',
-          id,
-          result: {
-            content: [
-              {
-                type: 'text',
-                text: JSON.stringify(
-                  {
-                    success: true,
-                    inquiryId,
-                    message: 'Inquiry received. Mahad Waqar has been notified and will respond within 4 hours.',
-                    whatsappLink: 'https://wa.me/923334379962',
-                  },
-                  null,
-                  2
-                ),
-              },
-            ],
+        return jsonResponse(
+          {
+            jsonrpc: '2.0',
+            id,
+            result: {
+              content: [
+                {
+                  type: 'text',
+                  text: JSON.stringify(
+                    {
+                      success: true,
+                      inquiryId,
+                      message: 'Inquiry received. Mahad Waqar has been notified and will respond within 4 hours.',
+                      whatsappLink: 'https://wa.me/923334379962',
+                    },
+                    null,
+                    2
+                  ),
+                },
+              ],
+            },
           },
-        });
+          200,
+          {},
+          req
+        );
+      }
+
+      case 'get_sandbox_info': {
+        const sandbox = {
+          environment: 'sandbox',
+          status: 'ready',
+          testMode: true,
+          rateLimitTier: 'unlimited_sandbox (500 req/min)',
+          demoKey: 'mhd_sandbox_demo_token_unlimited',
+          headers: {
+            'X-Sandbox': 'true',
+            'Authorization': 'Bearer mhd_sandbox_demo_token_unlimited',
+          },
+        };
+        return jsonResponse(
+          {
+            jsonrpc: '2.0',
+            id,
+            result: {
+              content: [
+                {
+                  type: 'text',
+                  text: JSON.stringify(sandbox, null, 2),
+                },
+              ],
+            },
+          },
+          200,
+          {},
+          req
+        );
+      }
+
+      case 'get_version_policy': {
+        const policy = {
+          apiVersion: '1.0.0',
+          activeVersions: ['v1'],
+          minimumNoticePeriodDays: 180,
+          signalingProtocol: 'RFC 8594 Sunset and Deprecation HTTP headers',
+          currentSunsetHeader: 'Wed, 31 Dec 2031 23:59:59 GMT',
+          currentDeprecationHeader: '@1956527999',
+          guarantee: 'Zero breaking changes without 180 days advance deprecation notice.',
+          policyUrl: 'https://mahad-works.vercel.app/docs#versioning',
+        };
+        return jsonResponse(
+          {
+            jsonrpc: '2.0',
+            id,
+            result: {
+              content: [
+                {
+                  type: 'text',
+                  text: JSON.stringify(policy, null, 2),
+                },
+              ],
+            },
+          },
+          200,
+          {},
+          req
+        );
       }
 
       default:
@@ -344,7 +480,9 @@ export default async function handler(req: Request): Promise<Response> {
               message: `Method or tool not found: ${toolName}`,
             },
           },
-          404
+          404,
+          {},
+          req
         );
     }
   }
@@ -359,6 +497,8 @@ export default async function handler(req: Request): Promise<Response> {
         message: `Method not found: ${method}`,
       },
     },
-    404
+    404,
+    {},
+    req
   );
 }

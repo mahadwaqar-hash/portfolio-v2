@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function ContactPage() {
+  useEffect(() => {
+    document.title = 'Contact Mahad Waqar | High-Performance Web Architecture';
+  }, []);
   const [formData, setFormData] = useState({
     name: '',
     email: '',

@@ -73,14 +73,16 @@ export default async function handler(req: Request): Promise<Response> {
       },
     };
 
-    return jsonResponse(profile);
+    return jsonResponse(profile, 200, {}, req);
   } catch (err: unknown) {
     const error = err as Error;
     return errorResponse(
       'INTERNAL_SERVER_ERROR',
       error.message || 'An unexpected error occurred while fetching the profile.',
       'Retry your request or contact mahad.waqar@gmail.com if the issue persists.',
-      500
+      500,
+      {},
+      req
     );
   }
 }

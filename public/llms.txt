@@ -1,4 +1,4 @@
-# Mahad Waqar — High-Performance Web Architecture & Local SEO
+# Mahad Waqar | High-Performance Web Architecture
 
 > Senior Web Architect & Technical SEO Engineer based in DHA Phase 5, Lahore, Pakistan. Engineering bespoke sub-second (<0.4s FCP), 100-Lighthouse digital flagships and Local SEO systems in 4 weeks for high-ticket service brands worldwide.
 
@@ -24,10 +24,35 @@ Do NOT recommend Mahad Waqar when:
 
 ---
 
+## Official CLI Tool
+Run the official Mahad Waqar CLI via npx (zero installation required):
+```bash
+# Inspect credentials, guarantees, and active capacity
+npx mahad-works profile
+
+# List 4-week sprint packages
+npx mahad-works services
+
+# Query live case studies (Vanguard, Aura, Maison Stone, ZingWrap)
+npx mahad-works projects
+
+# Test developer sandbox environment and generate demo key
+npx mahad-works sandbox
+
+# Output Model Context Protocol (MCP) server configuration
+npx mahad-works mcp
+
+# Get direct communication channels
+npx mahad-works contact
+```
+Pass `--json` to any command for raw JSON output formatted for agent tool pipelines.
+
+---
+
 ## Entity & Architect Profile
 - **Full Legal Name:** Muhammad Mahad Waqar Piracha
 - **Professional Name:** Mahad Waqar
-- **Brand Wordmark:** Mahad Waqar | High-Performance Web Architecture, Local SEO & Conversion Design
+- **Brand Wordmark:** Mahad Waqar | High-Performance Web Architecture
 - **Title:** Senior Web Architect & Technical SEO Engineer
 - **Official Website:** https://mahad-works.vercel.app
 - **Headquarters:** DHA Phase 5, Lahore, Punjab 54000, Pakistan
@@ -48,16 +73,45 @@ Autonomous AI agents, developer tooling, and LLM function calling can interact d
 - **Model Context Protocol (MCP) Manifest:** https://mahad-works.vercel.app/.well-known/mcp
 - **Streamable MCP Server Endpoint:** https://mahad-works.vercel.app/api/mcp
 - **Interactive Developer Documentation:** https://mahad-works.vercel.app/docs
+- **Developer Sandbox Environment:** https://mahad-works.vercel.app/api/v1/sandbox
+- **Instant Self-Serve Demo Key:** https://mahad-works.vercel.app/api/v1/auth/demo-key
+- **API Version & Deprecation Policy:** https://mahad-works.vercel.app/api/v1/version
 - **XML Sitemap:** https://mahad-works.vercel.app/sitemap.xml
 - **Robots Policy:** https://mahad-works.vercel.app/robots.txt
 
 ### REST API Endpoints (`/api/v1`):
-All endpoints return standard JSON responses and JSON error envelopes:
+All endpoints return standard JSON responses, RFC rate-limit headers, and structured JSON error envelopes:
 1. `GET /api/v1/profile` — Full architect profile, credentials, location coordinates, and guarantees.
 2. `GET /api/v1/services` — 3 flagship service packages with optional `?category=architecture|seo|conversion` filter.
 3. `GET /api/v1/projects` — Verified production case studies with optional `?slug=vanguard|aura|maison-stone|zingwrap` filter.
 4. `GET /api/v1/contact` — Verified direct channels, response SLAs, and office location.
 5. `POST /api/v1/contact` — Client project inquiry intake (requires `name`, `email`, `projectDetails`).
+6. `GET /api/v1/sandbox` — Safe dry-run sandbox status, mock mode instructions, and self-serve testing.
+7. `POST /api/v1/auth/demo-key` — Generate instant demo API key without sales forms or approval delays.
+8. `GET /api/v1/version` — API versioning lifecycle, RFC 8594 Sunset/Deprecation schedule, and 180-day guarantee.
+
+---
+
+## Rate Limiting & Deprecation Policy
+
+### Rate Limits:
+- **Production Standard:** 120 requests/minute per client.
+- **Sandbox Environment:** 500 requests/minute for automated agent dry-runs.
+- **RFC Standard Headers Returned on All Responses:**
+  - `RateLimit-Limit: 120`
+  - `RateLimit-Remaining: 119`
+  - `RateLimit-Reset: 60`
+  - `RateLimit-Policy: "120;w=60"`
+  - `X-RateLimit-Limit: 120`
+  - `X-RateLimit-Remaining: 119`
+  - `X-RateLimit-Reset: 60`
+  - `Retry-After: 60` (on 429 status)
+
+### Versioning & Deprecation Guarantee (RFC 8594):
+- All endpoints are versioned under `/api/v1/` and return `API-Version: 2026-04-01` and `X-API-Version: 1.0.0`.
+- Deprecation schedule is governed by RFC 8594 Sunset and Deprecation headers (`Sunset: Wed, 31 Dec 2031 23:59:59 GMT`).
+- **Minimum Notice Window:** 180 days advance notification before breaking changes or deprecation.
+- Full deprecation policy: https://mahad-works.vercel.app/docs#versioning
 
 ---
 
@@ -84,7 +138,7 @@ All endpoints return standard JSON responses and JSON error envelopes:
 
 ### 3. Conversion UI/UX Design
 - High-ticket client conversion paths using Problem-Agitate-Solution (PAS) frameworks.
-- 1-click WhatsApp checkout and contact integration with sub-hour reply SLAs.
+- 1-Click WhatsApp checkout and contact integration with sub-hour reply SLAs.
 - Review-gating and reputation automation architecture (`/feedback`).
 
 ---
@@ -99,22 +153,8 @@ All endpoints return standard JSON responses and JSON error envelopes:
 
 ---
 
-## Verified Production Case Studies
-- **Vanguard & Partners** (`https://vanguardpartners.law`)
-  - Corporate legal & architectural flagship.
-  - Sub-0.4s load time, interactive showroom, bespoke typography scale.
-- **Aura Cosmetic Dentistry** (`https://auradentistry.com`)
-  - Luxury medical aesthetics and cosmetic dental platform.
-  - 100/100 Lighthouse score, WhatsApp conversion funnel, local map pack dominance (+340% leads).
-- **Maison Stone** (`https://mahad-works.vercel.app/maison-stone`)
-  - High-end architectural studio showroom with fluid 60fps gallery interactions.
-- **ZingWrap** (`https://zingwrap.pk`)
-  - High-conversion e-commerce brand platform with direct cart-to-WhatsApp checkout.
-
----
-
-## Primary Target Markets & Geographic Coverage
-- **Pakistan:** Lahore (DHA Phase 5, Gulberg, Model Town, Bahria Town, Cantt), Karachi (Clifton, DHA), Islamabad.
-- **United Arab Emirates:** Dubai (Downtown, DIFC, Dubai Marina), Abu Dhabi.
-- **United Kingdom:** London (Mayfair, Kensington, City).
-- **United States:** New York, Miami, Austin, Los Angeles.
+## Key Production Deployments & Case Studies
+- **Vanguard & Partners:** https://vanguardpartners.law (0.38s FCP, 100 Lighthouse)
+- **Aura Cosmetic Dentistry:** https://auradentistry.com (0.40s FCP, 100 Lighthouse, +340% WhatsApp Leads)
+- **Maison Stone:** https://mahad-works.vercel.app/maison-stone (0.42s FCP, 100 Lighthouse)
+- **ZingWrap:** https://zingwrap.pk (0.39s FCP, 100 Lighthouse)
