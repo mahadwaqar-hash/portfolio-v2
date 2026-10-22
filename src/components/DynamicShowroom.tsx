@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { PORTFOLIO_PROJECTS, PortfolioProject } from '../data/portfolioData';
 
 interface ShowroomCardProps {
@@ -15,27 +15,68 @@ const ShowroomCard = React.memo(function ShowroomCard({
   domain,
   onClick,
 }: ShowroomCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const cardX = useMotionValue(0);
+  const cardY = useMotionValue(0);
+
+  const springConfig = { stiffness: 220, damping: 20, mass: 0.5 };
+  const springX = useSpring(cardX, springConfig);
+  const springY = useSpring(cardY, springConfig);
+
+  const rotateX = useTransform(springY, [-0.5, 0.5], [8, -8]);
+  const rotateY = useTransform(springX, [-0.5, 0.5], [-8, 8]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+    cardX.set(xPct);
+    cardY.set(yPct);
+    cardRef.current.style.setProperty('--card-mouse-x', `${e.clientX - rect.left}px`);
+    cardRef.current.style.setProperty('--card-mouse-y', `${e.clientY - rect.top}px`);
+  };
+
+  const handleMouseLeave = () => {
+    cardX.set(0);
+    cardY.set(0);
+  };
+
   return (
     <div
       data-project-id={project.id}
+      style={{ perspective: 1400 }}
       className="showroom-card-wrapper w-[82vw] sm:w-[540px] md:w-[580px] flex-shrink-0"
     >
-      <div
+      <motion.div
+        ref={cardRef}
         onClick={() => onClick(project.liveUrl)}
-        className="group relative rounded-3xl p-5 md:p-6 cursor-pointer bg-[#0D0D12] border border-white/10 hover:border-[#DEC1FC]/30 shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_25px_60px_rgba(222,193,252,0.1)] transition-all duration-300 flex flex-col justify-between overflow-hidden group-hover:-translate-y-1.5"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: 'preserve-3d',
+        }}
+        whileHover={{ scale: 1.015 }}
+        transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+        className="group relative rounded-3xl p-5 md:p-6 cursor-pointer bg-[#0D0D12] border border-white/10 hover:border-[#DEC1FC]/40 shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_25px_60px_rgba(222,193,252,0.15)] transition-colors duration-200 transition-shadow duration-300 flex flex-col justify-between overflow-hidden transform-gpu will-change-transform"
       >
         {/* Subtle Ambient Hover Sheen */}
         <div
           className="absolute inset-0 pointer-events-none rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"
           style={{
             background:
-              'radial-gradient(500px circle at 50% 0%, rgba(222, 193, 252, 0.08), rgba(0, 182, 122, 0.05), transparent 70%)',
+              'radial-gradient(450px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%), rgba(222, 193, 252, 0.12), rgba(0, 182, 122, 0.08), transparent 70%)',
           }}
           aria-hidden="true"
         />
 
-        {/* 1. Apple Safari macOS Browser Window Frame */}
-        <div className="w-full rounded-2xl overflow-hidden border border-white/10 bg-[#0E0E12] shadow-inner mb-6 transition-all duration-300 group-hover:border-white/25">
+        {/* 1. Apple Safari macOS Browser Window Frame with 3D Depth */}
+        <div 
+          style={{ transform: 'translateZ(20px)', transformStyle: 'preserve-3d' }}
+          className="w-full rounded-2xl overflow-hidden border border-white/10 bg-[#0E0E12] shadow-inner mb-6 transition-all duration-300 group-hover:border-white/25"
+        >
           
           {/* macOS Title Bar */}
           <div className="h-9 px-4 bg-[#14141B] border-b border-white/10 flex items-center justify-between">
@@ -127,7 +168,7 @@ const ShowroomCard = React.memo(function ShowroomCard({
 
         </div>
 
-      </div>
+      </motion.div>
     </div>
   );
 });

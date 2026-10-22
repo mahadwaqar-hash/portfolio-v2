@@ -74,8 +74,7 @@ export default function ServicesSection() {
                   aria-selected={isSelected}
                   aria-controls={`panel-${s.id}`}
                   onClick={() => setActive(idx)}
-                  onMouseEnter={() => setActive(idx)}
-                  className="relative text-left py-8 pr-8 pl-4 border-b border-white/10 transition-colors duration-300 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC] focus-visible:ring-inset"
+                  className="relative text-left py-8 pr-8 pl-4 border-b border-white/10 transition-colors duration-200 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC] focus-visible:ring-inset active:bg-white/[0.02]"
                 >
                   {/* Sliding layoutId Indicator & Pill Highlight */}
                   {isSelected && (
@@ -117,21 +116,34 @@ export default function ServicesSection() {
                   aria-hidden={!isActive}
                   animate={{
                     opacity: isActive ? 1 : 0,
-                    y: isActive ? 0 : 12,
+                    y: isActive ? 0 : 8,
+                    filter: isActive ? 'blur(0px)' : 'blur(3px)',
                     pointerEvents: isActive ? 'auto' : 'none',
                   }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 26 }}
-                  className="col-start-1 row-start-1 flex flex-col justify-center will-change-transform transform-gpu"
+                  transition={{
+                    duration: isActive ? 0.22 : 0.10,
+                    ease: [0.23, 1, 0.32, 1],
+                  }}
+                  className="col-start-1 row-start-1 flex flex-col justify-center transform-gpu"
                 >
                   <p className="font-body text-base md:text-lg text-zinc-100 font-normal leading-relaxed mb-10">
                     {s.description}
                   </p>
 
-                  {/* Tools as playful bouncing pills */}
-                  <div className="flex flex-wrap gap-2.5 mb-8">
+                  {/* Tools as playful bouncing pills with stagger */}
+                  <motion.div 
+                    className="flex flex-wrap gap-2.5 mb-8"
+                    initial="initial"
+                    animate={isActive ? "animate" : "initial"}
+                    transition={{ staggerChildren: 0.03 }}
+                  >
                     {s.tools.map((t) => (
                       <motion.span
                         key={t}
+                        variants={{
+                          initial: { opacity: 0, scale: 0.95 },
+                          animate: { opacity: 1, scale: 1 }
+                        }}
                         whileHover={{ y: -3, scale: 1.05 }}
                         transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                         className="px-3.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs font-mono text-zinc-300 hover:text-white hover:border-[#DEC1FC]/50 hover:bg-white/[0.08] transition-colors duration-200 cursor-default shadow-sm"
@@ -139,7 +151,7 @@ export default function ServicesSection() {
                         {t}
                       </motion.span>
                     ))}
-                  </div>
+                  </motion.div>
 
                   {/* Key stat — bold callout with pulse */}
                   <div className="flex items-center gap-3">

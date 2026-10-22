@@ -66,7 +66,7 @@ export default function FaqSection() {
                   onClick={() => toggle(index)}
                   aria-expanded={isOpen}
                   aria-controls={`faq-answer-${index}`}
-                  className="w-full p-6 sm:p-8 flex items-center justify-between gap-6 text-left group hover:bg-white/[0.02] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC]"
+                  className="w-full p-6 sm:p-8 flex items-center justify-between gap-6 text-left group hover:bg-white/[0.02] active:scale-[0.995] transition-[background-color,transform] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC]"
                 >
                   <span className="font-tech text-lg sm:text-xl font-bold text-white tracking-tight group-hover:text-[#DEC1FC] transition-colors">
                     {item.question}
@@ -88,9 +88,22 @@ export default function FaqSection() {
                     <motion.div
                       id={`faq-answer-${index}`}
                       initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                      animate={{ 
+                        height: 'auto', 
+                        opacity: 1,
+                        transition: { 
+                          height: { duration: 0.22, ease: [0.23, 1, 0.32, 1] },
+                          opacity: { duration: 0.18, ease: 'easeOut', delay: 0.04 }
+                        }
+                      }}
+                      exit={{ 
+                        height: 0, 
+                        opacity: 0,
+                        transition: { 
+                          height: { duration: 0.13, ease: [0.23, 1, 0.32, 1] },
+                          opacity: { duration: 0.10, ease: 'easeIn' }
+                        }
+                      }}
                       className="overflow-hidden"
                     >
                       <div className="px-6 pb-6 sm:px-8 sm:pb-8 pt-0">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform, useScroll, useReducedMotion } from 'framer-motion';
 
 const EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -61,6 +61,7 @@ const ScrambleText = React.memo(function ScrambleText({
 });
 
 export default function HeroSection() {
+  const shouldReduceMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const containerRect = useRef<DOMRect | null>(null);
@@ -82,12 +83,12 @@ export default function HeroSection() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const springConfig = { stiffness: 180, damping: 25, mass: 0.5 };
+  const springConfig = { stiffness: 220, damping: 20, mass: 0.5 };
   const springX = useSpring(mouseX, springConfig);
   const springY = useSpring(mouseY, springConfig);
 
-  const rotateX = useTransform(springY, [-0.5, 0.5], [8, -8]);
-  const rotateY = useTransform(springX, [-0.5, 0.5], [-8, 8]);
+  const rotateX = useTransform(springY, [-1, 1], [14, -14]);
+  const rotateY = useTransform(springX, [-1, 1], [-14, 14]);
 
   // Scroll indicator fadeout when scrollY > 80
   const { scrollY } = useScroll();
@@ -97,9 +98,6 @@ export default function HeroSection() {
 
   const handleMouseEnter = () => {
     if (!isFinePointer) return;
-    if (containerRef.current) {
-      containerRect.current = containerRef.current.getBoundingClientRect();
-    }
     if (cardRef.current) {
       cardRect.current = cardRef.current.getBoundingClientRect();
     }
@@ -110,30 +108,22 @@ export default function HeroSection() {
     const clientX = e.clientX;
     const clientY = e.clientY;
 
-    if (!containerRect.current && containerRef.current) {
-      containerRect.current = containerRef.current.getBoundingClientRect();
-    }
-
-    if (containerRect.current) {
-      const rect = containerRect.current;
-      const xPct = (clientX - rect.left) / rect.width - 0.5;
-      const yPct = (clientY - rect.top) / rect.height - 0.5;
+    if (cardRef.current) {
+      const rect = cardRect.current || cardRef.current.getBoundingClientRect();
+      const xPct = Math.max(-1.2, Math.min(1.2, (clientX - (rect.left + rect.width / 2)) / (rect.width / 2)));
+      const yPct = Math.max(-1.2, Math.min(1.2, (clientY - (rect.top + rect.height / 2)) / (rect.height / 2)));
       mouseX.set(xPct);
       mouseY.set(yPct);
-    }
 
-    if (cardRef.current && !glareRafRef.current) {
-      glareRafRef.current = requestAnimationFrame(() => {
-        if (cardRef.current) {
-          if (!cardRect.current) {
-            cardRect.current = cardRef.current.getBoundingClientRect();
+      if (!glareRafRef.current) {
+        glareRafRef.current = requestAnimationFrame(() => {
+          if (cardRef.current) {
+            cardRef.current.style.setProperty('--mouse-x', `${clientX - rect.left}px`);
+            cardRef.current.style.setProperty('--mouse-y', `${clientY - rect.top}px`);
           }
-          const cRect = cardRect.current;
-          cardRef.current.style.setProperty('--mouse-x', `${clientX - cRect.left}px`);
-          cardRef.current.style.setProperty('--mouse-y', `${clientY - cRect.top}px`);
-        }
-        glareRafRef.current = null;
-      });
+          glareRafRef.current = null;
+        });
+      }
     }
   };
 
@@ -211,7 +201,7 @@ export default function HeroSection() {
         </motion.div>
 
         {/* 3D TILT MONOLITH — Oversized Visual Brand Identity */}
-        <div style={{ perspective: 1000 }} className="relative select-none z-10 mb-8">
+        <div style={{ perspective: 1200 }} className="relative select-none z-10 mb-8">
           <motion.div
             ref={cardRef}
             role="heading"
@@ -266,7 +256,11 @@ export default function HeroSection() {
             {/* Subtle sheen highlight */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent pointer-events-none rounded-3xl" aria-hidden="true" />
             
-            <div className="flex flex-col items-center leading-[0.85] tracking-tighter font-tech font-black" aria-hidden="true">
+            <div 
+              style={{ transform: "translateZ(35px)", transformStyle: "preserve-3d" }}
+              className="flex flex-col items-center leading-[0.85] tracking-tighter font-tech font-black" 
+              aria-hidden="true"
+            >
               <div className="overflow-hidden pb-4 -mb-4">
                 <motion.div
                   initial={{ y: "110%" }}

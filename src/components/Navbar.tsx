@@ -1,6 +1,35 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const drawerVariants = {
+  closed: { 
+    opacity: 0, 
+    scale: 0.98,
+    y: -8, 
+    transition: { duration: 0.15, ease: 'easeIn' as const } 
+  },
+  open: { 
+    opacity: 1, 
+    scale: 1,
+    y: 0, 
+    transition: { 
+      duration: 0.24, 
+      ease: [0.23, 1, 0.32, 1],
+      staggerChildren: 0.035,
+      delayChildren: 0.04
+    } 
+  }
+};
+
+const itemVariants = {
+  closed: { opacity: 0, x: -8 },
+  open: { 
+    opacity: 1, 
+    x: 0, 
+    transition: { duration: 0.18, ease: [0.23, 1, 0.32, 1] } 
+  }
+};
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
@@ -130,10 +159,10 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
+            variants={drawerVariants}
+            initial="closed"
+            animate="open"
+            exit="closed"
             className="md:hidden fixed top-16 inset-x-4 z-40 bg-[#101015]/95 border border-white/15 rounded-2xl p-6 backdrop-blur-2xl flex flex-col gap-3 shadow-2xl"
           >
             <div className="flex justify-between items-center pb-3 border-b border-white/10 text-xs font-mono text-zinc-400">
@@ -141,15 +170,16 @@ export default function Navbar() {
               <span className="text-[#00B67A]">STATUS: ONLINE</span>
             </div>
             {links.map((link) => (
-              <a
+              <motion.a
                 key={link.label}
                 href={link.href}
+                variants={itemVariants}
                 onClick={(e) => handleScroll(e, link.href)}
                 className="font-tech text-lg text-white hover:text-[#DEC1FC] py-1.5 flex items-center justify-between"
               >
                 <span>{link.label}</span>
                 <span className="text-zinc-500 font-mono text-xs">↗</span>
-              </a>
+              </motion.a>
             ))}
           </motion.div>
         )}

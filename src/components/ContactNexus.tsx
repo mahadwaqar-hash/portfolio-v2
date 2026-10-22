@@ -115,7 +115,7 @@ export default function ContactNexus() {
             whileTap={{ scale: 0.97 }}
             viewport={{ once: true }}
             transition={{ type: 'spring', stiffness: 350, damping: 22 }}
-            className="group relative p-6 sm:p-8 apple-glass-card rounded-3xl overflow-hidden border border-white/10 hover:border-[#00B67A]/50 transition-all duration-300 hover:shadow-[0_20px_50px_rgba(0,182,122,0.2)] flex flex-col justify-between h-44 sm:h-52 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B67A]"
+            className="group relative p-6 sm:p-8 apple-glass-card rounded-3xl overflow-hidden border border-white/10 hover:border-[#00B67A]/50 transition-colors duration-200 transition-shadow duration-300 hover:shadow-[0_20px_50px_rgba(0,182,122,0.2)] flex flex-col justify-between h-44 sm:h-52 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B67A]"
           >
             {/* Cursor-Following Radial Glow */}
             <div
@@ -159,7 +159,7 @@ export default function ContactNexus() {
             whileTap={{ scale: 0.97 }}
             viewport={{ once: true }}
             transition={{ type: 'spring', stiffness: 350, damping: 22 }}
-            className={`group relative p-6 sm:p-8 apple-glass-card rounded-3xl overflow-hidden transition-all duration-300 flex flex-col justify-between text-left h-44 sm:h-52 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC] ${
+            className={`group relative p-6 sm:p-8 apple-glass-card rounded-3xl overflow-hidden transition-colors duration-200 transition-shadow duration-300 flex flex-col justify-between text-left h-44 sm:h-52 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DEC1FC] ${
               copied
                 ? 'border-[#00B67A] shadow-[0_0_35px_rgba(0,182,122,0.3)] bg-[#00B67A]/5'
                 : 'border-white/10 hover:border-[#DEC1FC]/50 hover:shadow-[0_20px_50px_rgba(222,193,252,0.2)]'
@@ -196,10 +196,10 @@ export default function ContactNexus() {
                   {copied ? (
                     <motion.svg
                       key="check"
-                      initial={{ scale: 0.4, rotate: -45, opacity: 0 }}
+                      initial={{ scale: 0.88, rotate: -15, opacity: 0 }}
                       animate={{ scale: 1, rotate: 0, opacity: 1 }}
-                      exit={{ scale: 0.4, rotate: 45, opacity: 0 }}
-                      transition={{ type: 'spring', stiffness: 450, damping: 20 }}
+                      exit={{ scale: 0.92, opacity: 0 }}
+                      transition={{ type: 'spring', stiffness: 420, damping: 25 }}
                       viewBox="0 0 24 24"
                       className="w-4 h-4 text-[#00B67A]"
                       fill="none"
@@ -213,10 +213,10 @@ export default function ContactNexus() {
                   ) : (
                     <motion.svg
                       key="copy"
-                      initial={{ scale: 0.4, opacity: 0 }}
+                      initial={{ scale: 0.90, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0.4, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
+                      exit={{ scale: 0.92, opacity: 0 }}
+                      transition={{ duration: 0.16, ease: [0.23, 1, 0.32, 1] }}
                       viewBox="0 0 24 24"
                       className="w-4 h-4"
                       fill="none"
@@ -289,7 +289,7 @@ export default function ContactNexus() {
           whileTap={{ scale: 0.98 }}
           viewport={{ once: true }}
           transition={{ type: 'spring', stiffness: 350, damping: 22 }}
-          className="group relative mt-4 w-full p-4 sm:p-5 apple-glass-card rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 hover:border-amber-400/40 transition-all duration-300 hover:shadow-[0_15px_40px_rgba(251,191,36,0.15)] flex items-center justify-between cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+          className="group relative mt-4 w-full p-4 sm:p-5 apple-glass-card rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 hover:border-amber-400/40 transition-colors duration-200 transition-shadow duration-300 hover:shadow-[0_15px_40px_rgba(251,191,36,0.15)] flex items-center justify-between cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
         >
           {/* Cursor-Following Radial Glow (Gold/Amber & Emerald) */}
           <div

@@ -194,7 +194,7 @@ export default function TrustMetricsSection() {
               key={idx}
               whileHover={{ y: -4, scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 350, damping: 20 }}
-              className={`p-5 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-sm transition-all duration-300 flex flex-col justify-between ${m.glowClass}`}
+              className={`p-5 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-sm transition-colors duration-200 transition-shadow duration-300 flex flex-col justify-between ${m.glowClass}`}
             >
               <div className="flex items-baseline gap-1">
                 {m.prefix && <span className="font-mono text-lg text-zinc-400 font-medium">{m.prefix}</span>}

@@ -17,6 +17,7 @@ export default function LenisScroller({ children }: { children: React.ReactNode 
     if (
       window.innerWidth < 768 ||
       window.matchMedia('(pointer: coarse)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
       'ontouchstart' in window
     ) {
       return;
