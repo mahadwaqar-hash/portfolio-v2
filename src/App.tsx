@@ -7,6 +7,7 @@ import ScrollScrubManifesto from './components/ScrollScrubManifesto';
 import DynamicShowroom from './components/DynamicShowroom';
 import ServicesSection from './components/ServicesSection';
 import TrustMetricsSection from './components/TrustMetricsSection';
+import ReviewsSection from './components/ReviewsSection';
 import FaqSection from './components/FaqSection';
 import ContactNexus from './components/ContactNexus';
 import MaisonStoneApp from './pages/maison-stone/MaisonStoneApp';
@@ -95,7 +96,10 @@ export default function App() {
             <TrustMetricsSection />
           </section>
 
-          {/* 6. Frequently Asked Questions (GEO + Schema Grounding) */}
+          {/* 6. Verified Google Reviews & Social Proof */}
+          <ReviewsSection />
+
+          {/* 7. Frequently Asked Questions (GEO + Schema Grounding) */}
           <section id="faq" aria-label="Frequently asked questions">
             <FaqSection />
           </section>

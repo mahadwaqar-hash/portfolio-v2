@@ -39,6 +39,7 @@ export default function Navbar() {
     { label: 'Beliefs', href: '#manifesto' },
     { label: 'Capabilities', href: '#services' },
     { label: 'Process', href: '#process' },
+    { label: 'Reviews', href: '#reviews' },
     { label: 'FAQ', href: '#faq' },
     { label: 'Contact', href: '#contact' },
   ];

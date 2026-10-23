@@ -191,6 +191,28 @@ export default function FeedbackPage() {
         </div>
       </div>
 
+      {/* Verified Google Review Proof Snippet */}
+      <div className="w-full max-w-lg mt-6 p-5 rounded-2xl apple-glass border border-white/10 text-left shadow-lg">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#00B67A]" aria-hidden="true" />
+            <a
+              href="https://www.google.com/maps/contrib/101380046943796443936/reviews?hl=en-GB"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-tech text-xs text-white font-bold hover:text-[#DEC1FC] transition-colors"
+            >
+              Nayaab Rehan ↗
+            </a>
+            <span className="font-mono text-[10px] text-zinc-400">• Textile Designer</span>
+          </div>
+          <span className="font-mono text-[10px] text-amber-400 font-semibold">★★★★★ Google Verified</span>
+        </div>
+        <p className="font-body text-xs text-zinc-300 leading-relaxed italic">
+          &ldquo;Working with Mahad to build my textile design portfolio was an absolute pleasure. Delivered a sleek, modern, and high-performing website that showcases my artwork with stunning precision…&rdquo;
+        </p>
+      </div>
+
       {/* Footer */}
       <footer className="w-full max-w-xl text-center py-4">
         <span className="font-mono text-[10px] text-zinc-600 uppercase tracking-widest">

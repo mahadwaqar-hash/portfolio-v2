@@ -275,14 +275,15 @@ export default function ContactNexus() {
           ref={reviewRef}
           onMouseEnter={() => handleCardMouseEnter(reviewRef)}
           onMouseMove={(e) => handleCardMouseMove(e, reviewRef, reviewRafRef)}
-          href="/feedback"
+          href="#reviews"
           onClick={(e) => {
             e.preventDefault();
-            window.history.pushState({}, '', '/feedback');
-            window.dispatchEvent(new PopStateEvent('popstate'));
-            window.scrollTo(0, 0);
+            const el = document.getElementById('reviews');
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth' });
+            }
           }}
-          aria-label="Open Client Experience & Review Portal"
+          aria-label="View Verified Client Reviews and Google Business Profile Rating"
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
           whileHover={{ y: -3, scale: 1.008 }}
@@ -312,21 +313,21 @@ export default function ContactNexus() {
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
                 <h3 className="font-tech text-base sm:text-lg text-white font-bold tracking-tight group-hover:text-amber-300 transition-colors">
-                  Client Feedback &amp; Review Portal
+                  Verified Google Reviews &amp; Client Feedback
                 </h3>
                 <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-400/10 border border-amber-400/20 text-[10px] font-mono text-amber-300 font-semibold">
                   ★ 5.0 Rating
                 </span>
               </div>
               <p className="font-mono text-[10px] sm:text-xs text-zinc-400 uppercase tracking-wider">
-                Share Deployment Experience • Direct Client Reviews
+                100% 5-Star Track Record • Read Client Testimonials
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2 z-10">
             <span className="hidden md:inline font-mono text-[10px] sm:text-xs text-zinc-400 group-hover:text-amber-300 transition-colors font-medium">
-              Leave Feedback
+              View Reviews
             </span>
             <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-amber-400/40 group-hover:bg-amber-400/10 transition-colors">
               <svg viewBox="0 0 24 24" className="w-4 h-4 text-zinc-400 group-hover:text-amber-300 transition-colors" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
